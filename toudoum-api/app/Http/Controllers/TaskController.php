@@ -57,9 +57,9 @@ class TaskController extends Controller
 
         // Description
         if($request->get("description")) {
-
+            $task->description = $request->get("description");
         } else {
-
+            
         }
 
         // Priority
