@@ -13,9 +13,26 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        
+        $filters = [];
+
+        // Name
+        if($request->has("name")) {
+            $filters[] = ["name", "like", "%" . $request->get("name") . "%"];
+        }
+
+        // Firstname
+        if($request->has("firstname")) {
+            $filters[] = ["firstname", "like", "%" . $request->get("firstname") . "%"];
+        }
+
+        // Email
+        if($request->has("email")) {
+            $filters[] = ["email", "like", "%" . $request->get("email") . "%"];
+        }
+
+        return User::where($filters)->get();
     }
 
     /**
@@ -37,7 +54,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return User::find($id);
     }
 
     /**
@@ -60,6 +77,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
     }
 }
