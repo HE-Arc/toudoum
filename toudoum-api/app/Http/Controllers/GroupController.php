@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Group\StoreGroupRequest;
+use App\Http\Requests\Group\UpdateGroupRequest;
+use App\Models\Group;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -11,9 +14,15 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filters = [];
+
+        if ($request->has("name")) {
+            $filters[] = ["name", "like,", "%" . $request->get("name") . "%"];
+        }
+
+        return Group::where($filters)->get();
     }
 
     /**
@@ -22,9 +31,11 @@ class GroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGroupRequest $request)
     {
-        //
+        $group = new Group();
+        $group->name = $request->input("name");
+        $group->save();
     }
 
     /**
@@ -35,7 +46,7 @@ class GroupController extends Controller
      */
     public function show($id)
     {
-        //
+        return Group::findOrFail($id);
     }
 
     /**
@@ -45,9 +56,12 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateGroupRequest $request, $id)
     {
-        //
+        $group = Group::findOrFail($id);
+
+        $group->name = $request->input('name');
+        $group->save();
     }
 
     /**
@@ -58,6 +72,7 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $group = Group::findOrFail($id);
+        $group->delete();
     }
 }
