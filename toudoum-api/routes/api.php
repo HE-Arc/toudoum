@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\WorkbookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -33,3 +35,11 @@ Route::get("state", function () {
  * User routes
  */
 Route::apiResource('users', UserController::class);
+/**
+ * Task routes
+ */
+Route::apiResource("tasks", TaskController::class);
+/**
+ * Workbook routes
+ */
+Route::apiResource('workbooks', WorkbookController::class);
