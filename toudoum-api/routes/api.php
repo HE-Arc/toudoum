@@ -4,6 +4,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\WorkbookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware("auth:api")->get("/user", function (Request $request) {
     return $request->user();
 });
 
+/**
+ * State routes
+ */
+Route::get("state", function () {
+    return [
+        "state" => "Server is running ! Toudoum is awesome !",
+        "date" => now()
+    ];
+});
+
+/**
+ * User routes
+ */
+Route::apiResource('users', UserController::class);
 /**
  * Task routes
  */
@@ -28,4 +43,3 @@ Route::apiResource("tasks", TaskController::class);
  * Workbook routes
  */
 Route::apiResource('workbooks', WorkbookController::class);
-
