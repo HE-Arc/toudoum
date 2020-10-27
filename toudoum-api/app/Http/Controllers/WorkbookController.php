@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Workbook\StoreWorkbookRequest;
+use App\Http\Requests\Workbook\UpdateWorkbookRequest;
 use Illuminate\Http\Request;
 use App\Models\Workbook;
 use Dotenv\Validator;
@@ -22,6 +23,14 @@ class WorkbookController extends Controller
             $filters[] = ["name", "like,", "%" . $request->get("name") . "%"];
         }
 
+        if ($request->has("group_id")) {
+            $filters[] = ["group_id", "like,", "%" . $request->get("group_id") . "%"];
+        }
+
+        if ($request->has("user_id")) {
+            $filters[] = ["user_id", "like,", "%" . $request->get("user_id") . "%"];
+        }
+        
         return Workbook::where($filters)->get();
     }
 
@@ -33,12 +42,10 @@ class WorkbookController extends Controller
      */
     public function store(StoreWorkbookRequest $request)
     {
-
         $workbook = new Workbook();
-        $workbook->name = $request->input('name');
-        $workbook->group_id = $request->input('group_id');
-        $workbook->user_id = $request->input('user_id');
-
+        $workbook->name = $request->input("name");
+        $workbook->group_id = $request->input("group_id");
+        $workbook->user_id = $request->input("user_id");
         $workbook->save();
     }
 
@@ -50,6 +57,7 @@ class WorkbookController extends Controller
      */
     public function show($id)
     {
+        return Workbook::findOrFail($id);
     }
 
     /**
@@ -59,9 +67,13 @@ class WorkbookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateWorkbookRequest $request, $id)
     {
-        //
+        $workbook = Workbook::findOrFail($id);
+
+        $workbook->name = $request->input('name');
+        $workbook->group_id = $request->input('group_id');
+        $workbook->save();
     }
 
     /**
@@ -72,6 +84,7 @@ class WorkbookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $workbook = Workbook::findOrFail($id);
+        $workbook->delete();
     }
 }

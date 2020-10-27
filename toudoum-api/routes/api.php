@@ -23,3 +23,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  * Workbook routes
  */
 Route::apiResource('workbooks', WorkbookController::class);
+// Route::apiResource('workbooks/{id}', [WorkbookController::class, 'update']);
