@@ -25,9 +25,7 @@ class Workbook extends Model
      *
      * @var array
      */
-    protected $hidden = [
-
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast to native types.
@@ -41,6 +39,4 @@ class Workbook extends Model
         'user_id' => 'integer',
 
     ];
-
-
 }
