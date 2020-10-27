@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\WorkbookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * Task routes
+ */
 Route::apiResource("tasks", TaskController::class);
+/**
+ * Workbook routes
+ */
+Route::apiResource('workbooks', WorkbookController::class);
+
