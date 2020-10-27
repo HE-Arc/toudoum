@@ -25,7 +25,6 @@ class StoreTaskRequest extends ApiRequest
     {
         return [
             'name.required'         => 'A name for the task is required.',
-            'workbook_id.required'  => 'A workbook for the task is required.'
         ];
     }
 
@@ -38,7 +37,6 @@ class StoreTaskRequest extends ApiRequest
     {
         return [
             'name'        => 'required',
-            'workbook_id' => 'required',
         ];
     }
 }

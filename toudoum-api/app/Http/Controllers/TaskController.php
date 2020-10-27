@@ -51,31 +51,24 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-
         $task = new Task();
         $task->name = $request->input(("name"));
 
         // Description
         if($request->get("description")) {
             $task->description = $request->get("description");
-        } else {
-            
         }
 
         // Priority
-        if($request->get("description")) {
-            $task->priority = $request->input("description");
-        } else {
-            $task->priority = 1;
+        if($request->get("priority")) {
+            $task->priority = $request->input("priority");
         }
 
         // Priority
         if($request->get("end_date")) {
             $task->end_date = $request->input("end_date");
-        } else {
-            $task->end_date = 1;
         }
-
+        $task->save();
     }
 
     /**
@@ -86,7 +79,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        return Task::findOrFail($id);
     }
 
     /**
@@ -98,7 +91,25 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        $task->name = $request->input(("name"));
+
+        // Description
+        if($request->get("description")) {
+            $task->description = $request->get("description");
+        }
+
+        // Priority
+        if($request->get("priority")) {
+            $task->priority = $request->input("priority");
+        }
+
+        // Priority
+        if($request->get("end_date")) {
+            $task->end_date = $request->input("end_date");
+        }
+        $task->save();
     }
 
     /**
@@ -109,6 +120,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->delete();
     }
 }

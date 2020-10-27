@@ -14,6 +14,9 @@ class TaskWorkbookidNull extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
+            $table->string("description")->nullable()->change();
+            $table->date("end_date")->nullable()->change();
+            $table->integer("priority")->default(1)->change();
             $table->foreignId("workbook_id")->nullable()->change();
         });
         Schema::enableForeignKeyConstraints();
