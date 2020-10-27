@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\WorkbookController;
 use Illuminate\Http\Request;
@@ -43,3 +44,7 @@ Route::apiResource("tasks", TaskController::class);
  * Workbook routes
  */
 Route::apiResource('workbooks', WorkbookController::class);
+/**
+ * Group routes
+ */
+Route::apiResource('groups', GroupController::class);
