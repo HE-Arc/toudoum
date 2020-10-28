@@ -14,8 +14,10 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
-        }
+        // Edouard : no redirect after the exception (AuthentificationException) beacause we are on API
+
+        // if (! $request->expectsJson()) {
+        //     return route('login');
+        // }
     }
 }

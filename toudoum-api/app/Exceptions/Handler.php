@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Auth\AuthenticationException;
 
 class Handler extends ExceptionHandler
 {
@@ -23,14 +24,15 @@ class Handler extends ExceptionHandler
 
     private function handleApiException($request, $exception)
     {
+
         $exception = $this->prepareException($exception);
+        
+        if ($exception instanceof AuthenticationException) {
+            return $this->unauthenticated($request, $exception);
+        }
 
         if ($exception instanceof HttpResponseException) {
             $exception = $exception->getResponse();
-        }
-
-        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
-            $exception = $this->unauthenticated($request, $exception);
         }
 
         if ($exception instanceof \Illuminate\Validation\ValidationException) {
