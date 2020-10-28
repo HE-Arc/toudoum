@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 
 class UserController extends Controller
@@ -43,7 +45,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO Authentication
+        User::create([
+            'name' => $request['name'],
+            'firstname' => $request["firstname"],
+            'email' => $request['email'],
+            'email_verified_at' => now(),
+            'password' => Hash::make($request['password']),
+            'remember_token' => Str::random(10),
+            ]);
     }
 
     /**
@@ -66,7 +75,22 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // TODO Authentication
+        $user = User::find($id);
+        if($request->get("name")) {
+            $user->name = $request->get("name");
+        }
+        if($request->get("firstname")) {
+            $user->firstname = $request->get("firstname");
+        }
+        if($request->get("email")) {
+            $user->email = $request->get("email");
+            $user->email_verified_at = now();
+        }
+        if($request->get("password") && $request["password_confirmation"]) {
+            $user->password = $request->get("password");
+        }
+        $user->save();
+        
     }
 
     /**

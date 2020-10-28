@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\WorkbookController;
@@ -18,10 +19,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware("auth:api")->get("/user", function (Request $request) {
-    return $request->user();
-});
-
 /**
  * State routes
  */
@@ -33,18 +30,36 @@ Route::get("state", function () {
 });
 
 /**
- * User routes
+ * Authentification routes
  */
-Route::apiResource('users', UserController::class);
-/**
- * Task routes
- */
-Route::apiResource("tasks", TaskController::class);
-/**
- * Workbook routes
- */
-Route::apiResource('workbooks', WorkbookController::class);
-/**
- * Group routes
- */
-Route::apiResource('groups', GroupController::class);
+Route::group(['prefix' => 'auth'], function(){
+    Route::post('signup', [AuthController::class, 'signup']);
+    Route::post('login', [AuthController::class, 'login']);
+});
+
+Route::group(['middleware' => 'auth:api'], function () {
+    /**
+     * Authentification routes
+     */
+    Route::get('user', [AuthController::class, 'user']);
+    Route::get('logout', [AuthController::class, 'logout']);
+    /**
+     * User routes
+     */
+    Route::apiResource('users', UserController::class);
+    /**
+     * Task routes
+     */
+    Route::apiResource("tasks", TaskController::class);
+    /**
+     * Workbook routes
+     */
+    Route::apiResource('workbooks', WorkbookController::class);
+    /**
+     * Group routes
+     */
+    Route::apiResource('groups', GroupController::class);
+    
+});
+
+
