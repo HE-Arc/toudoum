@@ -4,14 +4,18 @@ import { IRegister } from './IRegister';
 import { IToudoumResponse } from './IToudoumResponse';
 
 /**
- * The Singleton class defines the `getInstance` method that lets clients access
- * the unique singleton instance.
+ * Api Requester
+ * Allow developer to contact an APi with a Singleton pattern
  */
 class ApiRequester {
+    // Properties
     private static singleton: ApiRequester;
     private instanceAxios: AxiosInstance;
     private token: string | null;
 
+    /**
+     * Instanciate a new ApiRequester
+     */
     private constructor() {
         this.token = null;
         this.instanceAxios = Axios.create({
@@ -23,6 +27,11 @@ class ApiRequester {
         });
     }
 
+    /**
+     * Get the ApiRequester instance
+     * If does not exist; it will be initialized
+     * @returns instance of ApiRequester
+     */
     public static get instance(): ApiRequester {
         if (!ApiRequester.singleton) {
             this.singleton = new ApiRequester();
@@ -31,6 +40,11 @@ class ApiRequester {
         return ApiRequester.singleton;
     }
 
+    /**
+     * Log a User in the Web App
+     * @param credentials {email, password}
+     * @return Promise with information about login
+     */
     public async login(credentials: ILogin): Promise<void> {
         await this.instanceAxios
             .post("auth/login", credentials)
@@ -39,6 +53,11 @@ class ApiRequester {
             });
     }
 
+    /**
+     * Register an Account
+     * @param account Account information to register in Toudoum
+     * @return Promise with information about registration
+     */
     public async register(account: IRegister): Promise<void> {
         await this.instanceAxios
             .post("auth/login", account)
@@ -47,6 +66,10 @@ class ApiRequester {
             });
     }
 
+    /**
+     * Check if API server is up
+     * @return Promise
+     */
     public getStateServer(): Promise<AxiosResponse> {
         return this.instanceAxios.get("state");
     }
