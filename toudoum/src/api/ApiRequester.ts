@@ -6,8 +6,11 @@ import { ToudoumError } from './ToudoumError';
 import { ToudoumError422 } from './ToudoumError422';
 
 /**
- * Api Requester
+ * API Service to link Front-End and Back-End
  * Allow developer to contact an APi with a Singleton pattern
+ * 
+ * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+ * @class ApiRequester
  */
 class ApiRequester {
     // Properties
@@ -16,7 +19,8 @@ class ApiRequester {
     private token: string | null;
 
     /**
-     * Instanciate a new ApiRequester
+     * Creates an instance of ApiRequester.
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
      */
     private constructor() {
         this.token = null;
@@ -30,9 +34,12 @@ class ApiRequester {
     }
 
     /**
-     * Get the ApiRequester instance
-     * If does not exist; it will be initialized
-     * @returns instance of ApiRequester
+     * Get ApiRequester Instance (or create it if inexistant)
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @readonly
+     * @static
+     * @type {ApiRequester}
      */
     public static get instance(): ApiRequester {
         if (!ApiRequester.singleton) {
@@ -43,9 +50,11 @@ class ApiRequester {
     }
 
     /**
-     * Log a User in the Web App
-     * @param credentials {email, password}
-     * @return Promise with information about login
+     * Log User in Application and store his token
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {ILogin} credentials credentials to log
+     * @return {*}  {Promise<IToudoumResponse>} API Response
      */
     public async login(credentials: ILogin): Promise<IToudoumResponse> {
         try {
@@ -64,8 +73,10 @@ class ApiRequester {
 
     /**
      * Register an Account
-     * @param account Account information to register in Toudoum
-     * @return Promise with information about registration
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {IRegister} account account to register
+     * @return {*}  {Promise<AxiosResponse>} API Response
      */
     public async register(account: IRegister): Promise<AxiosResponse> {
         try {
@@ -83,13 +94,24 @@ class ApiRequester {
     }
 
     /**
-     * Check if API server is up
-     * @return Promise
+     * Check if API server is UP
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @return {*}  {Promise<AxiosResponse>} API Response
      */
     public getStateServer(): Promise<AxiosResponse> {
         return this.instanceAxios.get("state");
     }
 
+
+    /**
+     * Request a GET Method
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @template T type to cast the data got from API
+     * @param {string} url url to request 
+     * @return {*}  {Promise<T>} Promise of type T
+     */
     public async get<T>(url: string): Promise<T> {
         try {
             const response: AxiosResponse = await this.instanceAxios.get(url, {
@@ -106,6 +128,16 @@ class ApiRequester {
         }
     }
 
+    /**
+     * Request the API
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @private
+     * @param {("GET" | "POST" | "PUT" | "DELETE" | "PATCH")} method string method to use
+     * @param {string} url url to request
+     * @param {*} [body] body to add in request
+     * @return {*}  {Promise<IToudoumResponse>} Api Response
+     */
     private async request(method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH", url: string, body?: any): Promise<IToudoumResponse> {
 
         const requestConfig: AxiosRequestConfig = {
@@ -131,18 +163,49 @@ class ApiRequester {
         }
     }
 
+    /**
+     * POST data to API
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {string} url url to request
+     * @param {*} body body to post
+     * @return {*}  {Promise<IToudoumResponse>} API Response
+     */
     public async post(url: string, body: any): Promise<IToudoumResponse> {
         return this.request("POST", url, body);
     }
 
+    /**
+     * PUT data to API
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {string} url url to request
+     * @param {*} body body to put
+     * @return {*}  {Promise<IToudoumResponse>} API Response
+     */
     public async put(url: string, body: any): Promise<IToudoumResponse> {
         return this.request("PUT", url, body);
     }
 
+    /**
+     * DELETE method to API
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {string} url url to request
+     * @return {*}  {Promise<IToudoumResponse>} API Response
+     */
     public delete(url: string): Promise<IToudoumResponse> {
         return this.request("DELETE", url);
     }
 
+    /**
+     * PATCH method to API
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {string} url url to request
+     * @param {*} body body to PATCH
+     * @return {*}  {Promise<IToudoumResponse>} API Response
+     */
     public async patch(url: string, body: any): Promise<IToudoumResponse> {
         return this.request("PATCH", url, body);
     }
