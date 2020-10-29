@@ -1,4 +1,4 @@
-import Axios, { AxiosInstance, AxiosResponse } from "axios";
+import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { ILogin } from "./ILogin";
 import { IRegister } from './IRegister';
 import { IToudoumResponse } from './IToudoumResponse';
@@ -106,20 +106,45 @@ class ApiRequester {
         }
     }
 
-    public post(): void {
-        console.log("post");
+    private async request(method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH", url: string, body?: any): Promise<IToudoumResponse> {
+
+        const requestConfig: AxiosRequestConfig = {
+            method: method,
+            url: url,
+            headers: { Authorization: `Bearer ${this.token}` }
+        };
+
+        if (body) {
+            requestConfig.data = body;
+        }
+
+        try {
+            const response: AxiosResponse = await this.instanceAxios(requestConfig);
+            return response.data as IToudoumResponse;
+        } catch (error) {
+            const data = error.response.data;
+            if (data.data == undefined) {
+                throw new ToudoumError(data.code, data.message, data.status);
+            } else {
+                throw new ToudoumError422(data.code, data.message, data.status, data.data);
+            }
+        }
     }
 
-    public put(): void {
-        console.log("put");
+    public async post(url: string, body: any): Promise<IToudoumResponse> {
+        return this.request("POST", url, body);
     }
 
-    public delete(): void {
-        console.log("delete");
+    public async put(url: string, body: any): Promise<IToudoumResponse> {
+        return this.request("PUT", url, body);
     }
 
-    public patch(): void {
-        console.log("patch");
+    public delete(url: string): Promise<IToudoumResponse> {
+        return this.request("DELETE", url);
+    }
+
+    public async patch(url: string, body: any): Promise<IToudoumResponse> {
+        return this.request("PATCH", url, body);
     }
 }
 

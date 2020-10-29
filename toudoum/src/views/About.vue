@@ -20,11 +20,12 @@ export default Vue.extend({
   components: {},
   async mounted() {
     try {
-      const r = await Api.login({
+      await Api.login({
         email: "lucas.fridez@he-arc.ch",
         password: "123123",
       });
-      console.log(r);
+      // eslint-disable-next-line
+      await Api.post("tasks", {name: "hello", workbood_id: ""});
     } catch (e) {
       if (e instanceof ToudoumError422) {
         console.log(e.data); // Errors with sent data
