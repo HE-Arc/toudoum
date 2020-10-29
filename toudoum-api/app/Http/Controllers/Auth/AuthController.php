@@ -7,15 +7,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-Use App\Http\Requests\Auth\SignUpRequest;
-Use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\SignUpRequest;
+use App\Http\Requests\Auth\LoginRequest;
 
 
 class AuthController extends Controller
 {
 
     public function signup(SignUpRequest $request)
-    {   
+    {
         $user = User::create([
             'name' => $request['name'],
             'firstname' => $request["firstname"],
@@ -23,17 +23,20 @@ class AuthController extends Controller
             'email_verified_at' => now(),
             'password' => Hash::make($request['password']),
             'remember_token' => Str::random(10),
-            ]);
-            
+        ]);
+
         Auth::attempt(['email' => $request['email'], 'password' => $request['password']]);
-        
+
         return $this->token($user->createToken("Personal Access Token"), 'User Created', 201);
     }
 
     public function login(LoginRequest $request)
     {
-        if (!Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
-        {
+        $user = User::where([
+            ["email", "=", $request["email"]]
+        ])->get();
+
+        if (!Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
             return $this->error('Credentials mismatch', 401);
         }
         $user = Auth::user();

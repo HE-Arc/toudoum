@@ -7,12 +7,15 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Card from '@/components/Card.vue'; // @ is an alias to /src
+import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
   name: 'Home',
   components: {
-    Card,
+    
+  },
+  mounted() {
+    Api.get();
   },
   data: function() {
     return{
