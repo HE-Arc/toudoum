@@ -1,6 +1,9 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <div v-for="t in names" :key="t.id">
+        {{t.name}}
+    </div>
   </div>
 </template>
 
@@ -16,25 +19,20 @@ export default Vue.extend({
   name: "Home",
   components: {},
   async mounted() {
-      Api.login({
-        email: "lucas.fridez@he-arc.ch",
-        password: "123123",
-      });
       try {
+      await Api.login({email: "lucas.fridez@he-arc.ch",password: "123123"});
       const tabTask = await Api.get<Array<ITask>>("tasks");
-      // r is available
+      this.names = tabTask;
       tabTask.forEach((t: ITask) => {
           console.log(t.name);
-          
-      })
-      
+      });
     } catch (e) {
       console.error(e);
     }
   },
   data: function () {
     return {
-      names: ["Edouard", "Julien", "Lucas"],
+      names: [] as ITask[],
     };
   },
 });

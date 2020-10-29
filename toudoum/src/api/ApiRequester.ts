@@ -34,7 +34,6 @@ class ApiRequester {
         this.instanceAxios
             .post("auth/login", credentials)
             .then((response: AxiosResponse) => {
-                
                 this.token = response.data.data.access_token;
             });
     }
