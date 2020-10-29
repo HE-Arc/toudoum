@@ -1,4 +1,4 @@
-import Axios, { AxiosInstance } from 'axios';
+import Axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 /**
  * The Singleton class defines the `getInstance` method that lets clients access
@@ -10,7 +10,7 @@ class ApiRequester {
 
     private constructor() {
         this.instanceAxios = Axios.create({
-            baseURL: "http://localhost:8080/api/",
+            baseURL: "http://localhost:8000/api/",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
@@ -25,6 +25,18 @@ class ApiRequester {
         }
         
         return ApiRequester.singleton;
+    }
+
+    public login(): void {
+        console.log("login");
+    }
+
+    public register(): void {
+        console.log("register");
+    }
+
+    public getStateServer(): Promise<AxiosResponse> {
+        return this.instanceAxios.get("state");
     }
 
     public get(): void {

@@ -15,7 +15,9 @@ export default Vue.extend({
     
   },
   mounted() {
-    Api.get();
+    Api.getStateServer().then((response) => {
+      console.log("mounted -> response", response)
+    });
   },
   data: function() {
     return{
