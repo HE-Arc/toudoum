@@ -13,11 +13,21 @@ import Api from "@/api/ApiRequester";
 import { ITask } from "@/models/ITask";
 import { ToudoumError } from "@/api/ToudoumError";
 import { ToudoumError422 } from "@/api/ToudoumError422";
+import { IUser } from "@/models/IUser";
 
 export default Vue.extend({
     name: "Home",
     components: {},
     async mounted() {
+        const u: IUser = {
+            id: 1,
+            email: "aa@aa.com",
+            name: "lca",
+            firstname: "fraaa",
+            password: "ok",
+            token: "hjlkfd"
+        };
+
         try {
             await Api.login({
                 email: "lucas.fridez@he-arc.ch",

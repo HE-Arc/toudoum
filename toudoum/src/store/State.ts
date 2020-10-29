@@ -5,9 +5,9 @@ import { IUser } from "@/models/IUser";
  *
  * @author Lucas Fridez <lucas.fridez@he-arc.ch>
  * @export
- * @class State
+ * @interface State
  */
-export class State {
-    isUserLogged: boolean = false;
-    user: IUser | null = null;
+export interface State {
+    isUserLogged: boolean;
+    user: IUser | null;
 }

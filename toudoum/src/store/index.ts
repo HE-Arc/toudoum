@@ -1,24 +1,17 @@
-// Vue
-import Vue from 'vue'
-import { PluginObject } from 'vue/types/umd';
-
-// Vuex
-import Vuex, { Store, GetterTree, MutationTree, ActionTree, ActionContext } from 'vuex'
-import { actions } from './Actions';
+import Vue, { PluginObject } from 'vue';
+import Vuex, { Store } from 'vuex';
+import { ActionFacade, actions } from './Actions';
 import { getters } from './Getter';
 import { mutations } from './Mutations';
+import { State } from './State';
+import { TypedStore } from './TypedStore';
 
-// Internal properties
-import { State } from "./State"
-
-// Update Vue interface towith typedStore
 declare module "vue/types/vue" {
     interface Vue {
-        $typedStore: Store<State>;
+        $typedStore: TypedStore;
     }
 }
 
-// Define typedStore property in Vuex Store
 const typedStorePlugin: PluginObject<void> = {
     install(VueInstance: typeof Vue) {
         Object.defineProperty(VueInstance.prototype, '$typedStore', {
@@ -29,15 +22,18 @@ const typedStorePlugin: PluginObject<void> = {
     }
 };
 
-// Use Vuex and Typed Store
-Vue.use(Vuex)
+Vue.use(Vuex);
 Vue.use(typedStorePlugin);
 
-// Export typed Store !
-export default new Vuex.Store({
-    state: new State(),
-    mutations: mutations,
+const store = new Store<State>({
+    state: {
+        user: null,
+        isUserLogged: false
+    },
     getters: getters,
-    actions: actions,
-})
+    mutations: mutations,
+    actions: actions
+}) as TypedStore;
+store.actions = new ActionFacade(store);
 
+export default store;

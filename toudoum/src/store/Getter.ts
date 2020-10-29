@@ -1,8 +1,16 @@
 import { GetterTree } from 'vuex';
 import { State } from './State';
 
-export const getters = {
+export interface Getters {
+    userFullname: string;
+    userId: number;
+}
 
+type GettersDefinition = {
+    [P in keyof Getters]: (state: State, getters: Getters) => Getters[P];
+}
+
+export const getters: GettersDefinition = {
     /**
      * Get User Fullname (firstname + name)
      *
@@ -10,7 +18,7 @@ export const getters = {
      * @param {State} state Vuex State
      * @return {string} User Fullname 
      */
-    getUserFullname(state: State): string {
+    userFullname(state: State): string {
         return `${state.user?.name} ${state.user?.firstname}`;
     },
 
@@ -21,8 +29,7 @@ export const getters = {
      * @param {State} state Vuex State
      * @return {*}  {number} User Id
      */
-    getUserId(state: State): number {
+    userId(state: State): number {
         return state.user?.id ?? -1;
     }
-
-} as GetterTree<State, any>;
+};

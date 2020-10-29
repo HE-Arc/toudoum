@@ -1,20 +1,22 @@
 import { IUser } from '@/models/IUser';
-import { MutationTree } from "vuex";
+import { Mutation, CommitOptions } from 'vuex';
 import { State } from './State';
 
+export type Mutations = "LOGIN";
 
-export const mutations = {
+type MutationsDefinition = {
+    [P in Mutations]: Mutation<State>;
+}
 
-    /**
-     * Log user in Vuex state
-     *
-     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
-     * @param {State} state Vuex State
-     * @param {IUser} user user logged in
-     */
-    logUser(state: State, user: IUser): void {
-        state.user = user;
-        state.isUserLogged = true;
-    }
+interface BaseMutationPayloadWithType {
+    type: Mutations;
+}
 
-} as MutationTree<State>;
+export interface MyCommit {
+    (type: Mutations, payload?: any, options?: CommitOptions): void;
+    <P extends BaseMutationPayloadWithType>(payloadWithType: P, options?: CommitOptions): void;
+}
+
+export const mutations: MutationsDefinition = {
+    "LOGIN": (state: State, user: IUser) => state.user = user
+};
