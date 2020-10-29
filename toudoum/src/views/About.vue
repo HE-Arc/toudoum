@@ -6,23 +6,36 @@
 
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 import Api from "@/api/ApiRequester";
+import { ITask } from "@/models/ITask";
+import { AxiosResponse } from "axios";
+import { IToudoumResponse } from "@/api/IToudoumResponse";
 
 export default Vue.extend({
-  name: 'Home',
-  components: {
-    
-  },
-  mounted() {
-    Api.getStateServer().then((response) => {
-      console.log("mounted -> response", response)
-    });
-  },
-  data: function() {
-    return{
-      names: ["Edouard", "Julien", "Lucas"]
+  name: "Home",
+  components: {},
+  async mounted() {
+      Api.login({
+        email: "lucas.fridez@he-arc.ch",
+        password: "123123",
+      });
+      try {
+      const tabTask = await Api.get<Array<ITask>>("tasks");
+      // r is available
+      tabTask.forEach((t: ITask) => {
+          console.log(t.name);
+          
+      })
+      
+    } catch (e) {
+      console.error(e);
     }
-  }
+  },
+  data: function () {
+    return {
+      names: ["Edouard", "Julien", "Lucas"],
+    };
+  },
 });
 </script>
