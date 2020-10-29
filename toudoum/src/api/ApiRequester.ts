@@ -2,6 +2,8 @@ import Axios, { AxiosInstance, AxiosResponse } from "axios";
 import { ILogin } from "./ILogin";
 import { IRegister } from './IRegister';
 import { IToudoumResponse } from './IToudoumResponse';
+import { ToudoumError } from './ToudoumError';
+import { ToudoumError422 } from './ToudoumError422';
 
 /**
  * Api Requester
@@ -22,7 +24,7 @@ class ApiRequester {
             baseURL: "http://localhost:8000/api/",
             headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json",
+                "Accept": "application/json",
             },
         });
     }
@@ -45,12 +47,19 @@ class ApiRequester {
      * @param credentials {email, password}
      * @return Promise with information about login
      */
-    public async login(credentials: ILogin): Promise<void> {
-        await this.instanceAxios
-            .post("auth/login", credentials)
-            .then((response: AxiosResponse) => {
-                this.token = response.data.data.access_token;
-            });
+    public async login(credentials: ILogin): Promise<IToudoumResponse> {
+        try {
+            const response = await this.instanceAxios.post("auth/login", credentials);
+            this.token = response.data.data.access_token;
+            return response.data as IToudoumResponse;
+        } catch (error) {
+            const data = error.response.data;
+            if (data.data == undefined) {
+                throw new ToudoumError(data.code, data.message, data.status);
+            } else {
+                throw new ToudoumError422(data.code, data.message, data.status, data.data);
+            }
+        }
     }
 
     /**
@@ -58,12 +67,19 @@ class ApiRequester {
      * @param account Account information to register in Toudoum
      * @return Promise with information about registration
      */
-    public async register(account: IRegister): Promise<void> {
-        await this.instanceAxios
-            .post("auth/login", account)
-            .then((response: AxiosResponse) => {
-                this.token = response.data.data.access_token;
-            });
+    public async register(account: IRegister): Promise<AxiosResponse> {
+        try {
+            const response = await this.instanceAxios.post("auth/signup", account);
+            this.token = response.data.data.access_token;
+            return response;
+        } catch (error) {
+            const data = error.response.data;
+            if (data.data == undefined) {
+                throw new ToudoumError(data.code, data.message, data.status);
+            } else {
+                throw new ToudoumError422(data.code, data.message, data.status, data.data);
+            }
+        }
     }
 
     /**
@@ -81,8 +97,12 @@ class ApiRequester {
             });
             return response.data as T;
         } catch (error) {
-            console.log(error.response);
-            throw new Error(error);
+            const data = error.response.data;
+            if (data.data == undefined) {
+                throw new ToudoumError(data.code, data.message, data.status);
+            } else {
+                throw new ToudoumError422(data.code, data.message, data.status, data.data);
+            }
         }
     }
 

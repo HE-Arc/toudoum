@@ -2,7 +2,7 @@
   <div class="about">
     <h1>This is an about page</h1>
     <div v-for="t in names" :key="t.id">
-        {{t.name}}
+      {{ t.name }}
     </div>
   </div>
 </template>
@@ -12,22 +12,25 @@
 import Vue from "vue";
 import Api from "@/api/ApiRequester";
 import { ITask } from "@/models/ITask";
-import { AxiosResponse } from "axios";
-import { IToudoumResponse } from "@/api/IToudoumResponse";
+import { ToudoumError } from "@/api/ToudoumError";
+import { ToudoumError422 } from "@/api/ToudoumError422";
 
 export default Vue.extend({
   name: "Home",
   components: {},
   async mounted() {
-      try {
-      await Api.login({email: "lucas.fridez@he-arc.ch",password: "123123"});
-      const tabTask = await Api.get<Array<ITask>>("taskss");
-      this.names = tabTask;
-      tabTask.forEach((t: ITask) => {
-          console.log(t.name);
+    try {
+      const r = await Api.login({
+        email: "lucas.fridez@he-arc.ch",
+        password: "123123",
       });
+      console.log(r);
     } catch (e) {
-      console.error(e);
+      if (e instanceof ToudoumError422) {
+        console.log(e.data); // Errors with sent data
+      } else if (e instanceof ToudoumError) {
+        console.log(e.message); // Error (401, 404 or 500,...)
+      }
     }
   },
   data: function () {
