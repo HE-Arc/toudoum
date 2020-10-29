@@ -21,7 +21,7 @@ export default Vue.extend({
   async mounted() {
       try {
       await Api.login({email: "lucas.fridez@he-arc.ch",password: "123123"});
-      const tabTask = await Api.get<Array<ITask>>("tasks");
+      const tabTask = await Api.get<Array<ITask>>("taskss");
       this.names = tabTask;
       tabTask.forEach((t: ITask) => {
           console.log(t.name);

@@ -1,5 +1,6 @@
 import Axios, { AxiosInstance, AxiosResponse } from "axios";
 import { ILogin } from "./ILogin";
+import { IRegister } from './IRegister';
 import { IToudoumResponse } from './IToudoumResponse';
 
 /**
@@ -31,15 +32,19 @@ class ApiRequester {
     }
 
     public async login(credentials: ILogin): Promise<void> {
-        this.instanceAxios
+        await this.instanceAxios
             .post("auth/login", credentials)
             .then((response: AxiosResponse) => {
                 this.token = response.data.data.access_token;
             });
     }
 
-    public register(): void {
-        console.log("register");
+    public async register(account: IRegister): Promise<void> {
+        await this.instanceAxios
+            .post("auth/login", account)
+            .then((response: AxiosResponse) => {
+                this.token = response.data.data.access_token;
+            });
     }
 
     public getStateServer(): Promise<AxiosResponse> {
@@ -53,6 +58,7 @@ class ApiRequester {
             });
             return response.data as T;
         } catch (error) {
+            console.log(error.response);
             throw new Error(error);
         }
     }
