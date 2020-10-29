@@ -24,8 +24,7 @@ export default Vue.extend({
         email: "lucas.fridez@he-arc.ch",
         password: "123123",
       });
-      // eslint-disable-next-line
-      await Api.post("tasks", {name: "hello", workbood_id: ""});
+      await Api.post("tasks", { name: "hello", workbood_id: "" });
     } catch (e) {
       if (e instanceof ToudoumError422) {
         console.log(e.data); // Errors with sent data
