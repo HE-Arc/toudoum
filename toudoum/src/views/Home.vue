@@ -2,6 +2,7 @@
     <div class="home">
         <img alt="Vue logo" src="../assets/logo.png" />
         <p>Home page !</p>
+        {{$typedStore.getters.userFullname}}
     </div>
 </template>
 
