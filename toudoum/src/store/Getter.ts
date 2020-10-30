@@ -4,6 +4,7 @@ import { State } from './State';
 export interface Getters {
     userFullname: string;
     userId: number;
+    isLoggedIn: boolean;
 }
 
 type GettersDefinition = {
@@ -31,5 +32,16 @@ export const getters: GettersDefinition = {
      */
     userId(state: State): number {
         return state.user?.id ?? -1;
+    },
+
+    /**
+     * logged in user getter
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {State} state Vuex State
+     * @return {*}  {boolean} true if a user is logged in; false otherwise
+     */
+    isLoggedIn(state: State): boolean {
+        return state.user != null;
     }
 };
