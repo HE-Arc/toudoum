@@ -31,7 +31,7 @@
                     <v-btn
                         elevation="4"
                         x-large
-                        class="primary white--text my-3 mb-5"
+                        class="primary white--text my-3"
                         large
                         rounded
                         :loading="loading"
@@ -39,6 +39,7 @@
                         >Login</v-btn
                     >
                     <v-spacer></v-spacer>
+                    <v-btn to="/SignUp" text color="accent  mb-5 mt-0"> Create an account </v-btn>
                 </v-card>
             </v-col>
         </v-row>
@@ -46,10 +47,10 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";  
+import Vue from "vue";
 import Api from "@/api/ApiRequester";
-import { ToudoumError } from '@/api/ToudoumError';
-import { ToudoumError422 } from '@/api/ToudoumError422';
+import { ToudoumError } from "@/api/ToudoumError";
+import { ToudoumError422 } from "@/api/ToudoumError422";
 
 export default Vue.extend({
     name: "Login",
@@ -62,7 +63,7 @@ export default Vue.extend({
                     email: this.email,
                     password: this.password
                 });
-                this.$router.push({name: "About"})
+                this.$router.push({ name: "About" });
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     console.log(e.data); // Errors with sent data
