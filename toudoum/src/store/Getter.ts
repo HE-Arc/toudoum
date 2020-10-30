@@ -42,7 +42,6 @@ export const getters: GettersDefinition = {
      * @return {*}  {boolean} true if a user is logged in; false otherwise
      */
     isLoggedIn(state: State): boolean {
-        console.log(state.user);
         return state.user != null;
     }
 };
