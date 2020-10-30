@@ -1,3 +1,4 @@
+import store from '@/store';
 import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { ILogin } from "./ILogin";
 import { IRegister } from './IRegister';
@@ -60,6 +61,7 @@ class ApiRequester {
         try {
             const response = await this.instanceAxios.post("auth/login", credentials);
             this.token = response.data.data.access_token;
+            store.actions.logUser(response.data.data.user);
             return response.data as IToudoumResponse;
         } catch (error) {
             const data = error.response.data;
@@ -82,6 +84,7 @@ class ApiRequester {
         try {
             const response = await this.instanceAxios.post("auth/signup", account);
             this.token = response.data.data.access_token;
+            store.actions.logUser(response.data.data.user);
             return response;
         } catch (error) {
             const data = error.response.data;

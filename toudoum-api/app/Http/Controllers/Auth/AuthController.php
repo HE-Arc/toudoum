@@ -27,7 +27,7 @@ class AuthController extends Controller
             
         Auth::attempt(['email' => $request['email'], 'password' => $request['password']]);
         
-        return $this->token($user->createToken("Personal Access Token"), 'User Created', 201);
+        return $this->token($user->createToken("Personal Access Token"), $user, 'User Created', 201);
     }
 
     public function login(LoginRequest $request)
@@ -38,7 +38,7 @@ class AuthController extends Controller
         }
         $user = Auth::user();
 
-        return $this->token($user->createToken("Personal Access Token"));
+        return $this->token($user->createToken("Personal Access Token"), $user);
     }
 
     public function user()
