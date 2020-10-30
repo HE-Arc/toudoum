@@ -9,7 +9,7 @@ import { ToudoumError } from './ToudoumError';
  * @extends {ToudoumError}
  */
 export class ToudoumError422 extends ToudoumError {
-    public data: Array<any>;
+    public data: any;
 
     /**
      * Creates an instance of ToudoumError422.
