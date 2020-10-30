@@ -52,7 +52,7 @@ import { ToudoumError } from '@/api/ToudoumError';
 import { ToudoumError422 } from '@/api/ToudoumError422';
 
 export default Vue.extend({
-    name: "HelloWorld",
+    name: "Login",
     methods: {
         login: async function () {
             this.loading = true;
