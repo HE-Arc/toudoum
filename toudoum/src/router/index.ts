@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { NavigationGuardNext, Route, RouteConfig, RouteRecord } from 'vue-router'
 import SignUp from '../views/SignUp.vue'
+import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import store from '@/store'
 
@@ -10,9 +11,17 @@ const routes: Array<RouteConfig> = [
     {
         path: '/',
         name: 'Home',
+        component: Home,
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/login',
+        name: 'Login',
         component: Login,
         meta: {
-            AccessRight: true
+            onlyUnlogged: true
         }
     },
     {
@@ -20,7 +29,7 @@ const routes: Array<RouteConfig> = [
         name: 'SignUp',
         component: SignUp,
         meta: {
-            requiredAuth: true
+            onlyUnlogged: true
         }
     },
     {
@@ -31,7 +40,7 @@ const routes: Array<RouteConfig> = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
         meta: {
-            requiredAuth: true
+            onlyLogged: true
         }
     }
 ]
@@ -41,9 +50,15 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
-    if (to.matched.some((route: RouteRecord) => route.meta.requiredAuth)) {
+    if (to.matched.some((route: RouteRecord) => route.meta.onlyLogged)) {
         if (!store.getters.isLoggedIn) {
             next({ name: "Login" });
+        } else {
+            next();
+        }
+    } else if (to.matched.some((route: RouteRecord) => route.meta.onlyUnlogged)) {
+        if (store.getters.isLoggedIn) {
+            next({ name: "Home" });
         } else {
             next();
         }
