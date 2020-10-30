@@ -7,6 +7,7 @@
  */
 export interface ITask {
     created_at: string;
+    checked:boolean;
     description: string;
     end_date: string;
     id: number;
