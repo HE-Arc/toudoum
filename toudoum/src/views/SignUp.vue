@@ -109,7 +109,7 @@ export default Vue.extend({
                     password: this.password,
                     password_confirmation: this.passwordConfirmation
                 });
-                this.$router.push("Home");
+                this.$router.push({name: "Home"});
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;
