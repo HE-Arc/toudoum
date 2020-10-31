@@ -11,6 +11,7 @@
                 :items="usersNames"
             ></v-autocomplete
         ></v-row>
+        <v-row > <v-btn color="primary" v-on:click="save">Save</v-btn> </v-row>
     </v-card>
 </template>
 
@@ -52,6 +53,9 @@ export default Vue.extend({
             for (let i = 0; i < this.users.length; i++) {
                 this.usersNames[i] = this.users[i].name + " " + this.users[i].firstname;
             }
+        },
+        save: function(){
+            console.log("TODO: REQUEST POST TO CREATE OR UPDATE A GROUP");
         }
     }
 });
