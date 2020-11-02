@@ -37,6 +37,63 @@ const routes: Array<RouteConfig> = [
             onlyUnlogged: true
         }
     },
+
+    {
+        path: '/Logout',
+        name: 'Logout',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/Account',
+        name: 'Account',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/Dashboard',
+        name: 'Dashboard',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/Workbooks',
+        name: 'Workbooks',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/Account',
+        name: 'Account',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/Tasks',
+        name: 'Tasks',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/Groups',
+        name: 'Groups',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
     {
         path: '/About',
         name: 'About',
