@@ -33,9 +33,15 @@ import { ToudoumError422 } from "@/api/ToudoumError422";
 
 export default Vue.extend({
     name: "Logout",
-    mounted: async function() {
-        const logOutResponse = await Api.get("logout");
-        console.log("mounted:function -> logOutResponse", logOutResponse);
+    mounted: async function () {
+        try {
+            const logOutResponse = await Api.get("logout");
+            console.log("mounted:function -> logOutResponse", logOutResponse);
+        } catch (e) {
+            if (e instanceof ToudoumError) {
+                console.log(e.message); // Error (401, 404 or 500,...)
+            }
+        }
     }
 });
 </script>
