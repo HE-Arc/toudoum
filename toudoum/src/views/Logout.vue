@@ -30,13 +30,15 @@ import Vue from "vue";
 import Api from "@/api/ApiRequester";
 import { ToudoumError } from "@/api/ToudoumError";
 import { ToudoumError422 } from "@/api/ToudoumError422";
+import { IToudoumResponse } from '@/api/IToudoumResponse';
 
 export default Vue.extend({
     name: "Logout",
     mounted: async function () {
         try {
-            const logOutResponse = await Api.get("logout");
+            const logOutResponse = await Api.logout();
             console.log("mounted:function -> logOutResponse", logOutResponse);
+            this.$typedStore.actions.logout();
         } catch (e) {
             if (e instanceof ToudoumError) {
                 console.log(e.message); // Error (401, 404 or 500,...)

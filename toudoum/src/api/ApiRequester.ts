@@ -73,6 +73,12 @@ class ApiRequester {
         }
     }
 
+    public async logout(): Promise<IToudoumResponse> {
+        const response: IToudoumResponse = await this.get("logout");
+        this.token = null;
+        return response;
+    }
+
     /**
      * Register an Account
      *
