@@ -3,6 +3,7 @@ import VueRouter, { NavigationGuardNext, Route, RouteConfig, RouteRecord } from 
 import SignUp from '../views/SignUp.vue'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Logout from '../views/Logout.vue'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -30,6 +31,14 @@ const routes: Array<RouteConfig> = [
         component: SignUp,
         meta: {
             onlyUnlogged: true
+        }
+    },
+    {
+        path: '/Logout',
+        name: 'Logout',
+        component: Logout,
+        meta: {
+            onlyLogged: true
         }
     },
     {
