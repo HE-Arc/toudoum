@@ -3,6 +3,7 @@ import VueRouter, { NavigationGuardNext, Route, RouteConfig, RouteRecord } from 
 import SignUp from '../views/SignUp.vue'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Account from '../views/Account.vue'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -40,9 +41,18 @@ const routes: Array<RouteConfig> = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
         meta: {
-            onlyLogged: true
+            onlyLogged: false
+        },
+        
+    },
+    {
+        path: '/account',
+        name: 'Account',
+        component: Account,
+        meta: {
+            onlyLogged: false
         }
-    }
+    },
 ]
 
 const router = new VueRouter({
