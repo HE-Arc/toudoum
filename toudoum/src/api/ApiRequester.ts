@@ -50,6 +50,10 @@ class ApiRequester {
         return ApiRequester.singleton;
     }
 
+    public setToken(token: string) {
+        this.token = token;
+    }
+
     /**
      * Log User in Application and store his token
      *
@@ -61,7 +65,11 @@ class ApiRequester {
         try {
             const response = await this.instanceAxios.post("auth/login", credentials);
             this.token = response.data.data.access_token;
+
+            // Store user in Vuex store and sessionStorage
             store.actions.logUser(response.data.data.user);
+            window.sessionStorage.setItem("user", JSON.stringify(response.data.data.user));
+            window.sessionStorage.setItem("token", response.data.data.access_token);
             return response.data as IToudoumResponse;
         } catch (error) {
             const data = error.response.data;
