@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth:api'], function () {
      */
     Route::get('user', [AuthController::class, 'user']);
     Route::get('logout', [AuthController::class, 'logout']);
+
     /**
      * User routes
      */
@@ -59,6 +60,8 @@ Route::group(['middleware' => 'auth:api'], function () {
      * Group routes
      */
     Route::apiResource('groups', GroupController::class);
+
+
     
 });
 
