@@ -43,6 +43,7 @@ export default Vue.extend({
 
   beforeMount() {
     console.log("OK");
+
   }
 });
 </script>

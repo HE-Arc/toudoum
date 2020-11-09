@@ -4,6 +4,7 @@
         <v-row>
             <v-col v-for="w in workbooks" :key="w.id" :cols="6">
                 <Workbook :titleprops="w.name" />
+                
             </v-col>
         </v-row>
     </v-container>
@@ -18,10 +19,7 @@ import { IWorkbook } from "@/models/IWorkbook";
 
 export default Vue.extend({
     props: {
-        workbooks: {
-            type: Object as () => Array<IWorkbook>,
-            required: true
-        }
+        workbooks: {} as () => IWorkbook[]
     },
     components: { Workbook },
     data() {
