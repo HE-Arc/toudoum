@@ -4,6 +4,7 @@ import SignUp from '../views/SignUp.vue'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import store from '@/store'
+import Workbooks from '@/views/Workbooks.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,17 @@ const routes: Array<RouteConfig> = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/workbooks',
+        name: 'Workbooks',
+        // route level code-splitting
+        // this generates a separate chunk (workbook.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: Workbooks,
         meta: {
             onlyLogged: true
         }

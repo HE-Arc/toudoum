@@ -1,7 +1,7 @@
 <template>
     <div class="about">
         <h1>This is an about page</h1>
-        <CreateGroup/>
+        <WorkbookList/>
     </div>
 </template>
 
@@ -14,11 +14,11 @@ import { ToudoumError422 } from "@/api/ToudoumError422";
 import { IUser } from "@/models/IUser";
 import TasksList from "@/components/TasksList.vue";
 import Task from "@/components/Task.vue";
-import CreateGroup from "@/components/CreateGroup.vue";
+import WorkbookList from "@/components/WorkbookList.vue";
 
 export default Vue.extend({
     name: "Home",
-    components: {CreateGroup},
+    components: {WorkbookList},
     data: function () {
         return {
             names: [] as ITask[]
