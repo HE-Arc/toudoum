@@ -57,7 +57,6 @@ export default Vue.extend({
     methods: {
         login: async function () {
             this.loading = true;
-            console.log(this.email, this.password);
             try {
                 await Api.login({
                     email: this.email,

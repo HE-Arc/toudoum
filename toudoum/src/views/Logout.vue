@@ -37,7 +37,6 @@ export default Vue.extend({
     mounted: async function () {
         try {
             const logOutResponse = await Api.logout();
-            console.log("mounted:function -> logOutResponse", logOutResponse);
             this.$typedStore.actions.logout();
         } catch (e) {
             if (e instanceof ToudoumError) {
