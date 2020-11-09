@@ -82,6 +82,8 @@ class ApiRequester {
     }
 
     public async logout(): Promise<IToudoumResponse> {
+        window.sessionStorage.removeItem("user");
+        window.sessionStorage.removeItem("token");
         const response: IToudoumResponse = await this.get("logout");
         this.token = null;
         return response;

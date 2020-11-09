@@ -63,14 +63,6 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/Account',
-        name: 'Account',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
         path: '/Tasks',
         name: 'Tasks',
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
