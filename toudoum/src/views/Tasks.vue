@@ -1,8 +1,8 @@
 <template>
-    <div class="about">
+    <v-container class="marginTop">
         <h1>This is an workbook page id:{{workbook_id}}</h1>
         <!-- <TasksList /> -->
-    </div>
+    </v-container>
 </template>
 
 <script lang="ts">
@@ -34,3 +34,8 @@ export default Vue.extend({
     }
 });
 </script>
+<style>
+.marginTop {
+    margin-top:72px;
+}
+</style>

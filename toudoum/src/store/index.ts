@@ -28,7 +28,8 @@ Vue.use(typedStorePlugin);
 const store = new Store<State>({
     state: {
         user: null,
-        isUserLogged: false
+        isUserLogged: false,
+        isDrawerExpanded: true
     },
     getters: getters,
     mutations: mutations,

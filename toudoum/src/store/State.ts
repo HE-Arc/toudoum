@@ -10,4 +10,5 @@ import { IUser } from "@/models/IUser";
 export interface State {
     isUserLogged: boolean;
     user: IUser | null;
+    isDrawerExpanded: boolean;
 }
