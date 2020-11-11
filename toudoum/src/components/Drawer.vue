@@ -1,7 +1,7 @@
 <!-- TEMPLATE -->
 <template>
-    <v-navigation-drawer app v-if="$typedStore.getters.isLoggedIn" :mini-variant="false">
-        <v-list>
+    <v-navigation-drawer app v-if="$typedStore.getters.isLoggedIn" :mini-variant="!$typedStore.getters.isDrawerExpanded">
+        <v-list class="py-0">
 
             <v-list-item class="px-2" two-line>
           <v-list-item-avatar>

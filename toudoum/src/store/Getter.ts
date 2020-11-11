@@ -5,6 +5,7 @@ export interface Getters {
     userFullname: string;
     userId: number;
     isLoggedIn: boolean;
+    isDrawerExpanded: boolean;
 }
 
 type GettersDefinition = {
@@ -43,5 +44,11 @@ export const getters: GettersDefinition = {
      */
     isLoggedIn(state: State): boolean {
         return state.user != null;
+    },
+
+    isDrawerExpanded(state: State): boolean {
+        return state.isDrawerExpanded;
     }
+
+
 };

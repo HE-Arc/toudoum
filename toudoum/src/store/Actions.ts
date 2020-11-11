@@ -9,6 +9,9 @@ export class ActionFacade {
     logUser(user: IUser) {
         return this.store.dispatch("logUser", user);
     }
+    toggleDrawer() {
+        return this.store.dispatch("toggleDrawer");
+    }
 }
 
 type PayloadType<T> = T extends (payload: infer U) => any ? U : never;
@@ -18,5 +21,6 @@ type ActionsDefinition = {
 }
 
 export const actions: ActionsDefinition = {
-    logUser: (injectee: ActionContext<State, State>, user: IUser) => injectee.commit("LOGIN", user)
+    logUser: (injectee: ActionContext<State, State>, user: IUser) => injectee.commit("LOGIN", user),
+    toggleDrawer: (injectee: ActionContext<State, State>) => injectee.commit("DRAWER_TOGGLE")
 };
