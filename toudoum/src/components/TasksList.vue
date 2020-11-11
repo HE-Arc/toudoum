@@ -17,7 +17,7 @@
                     </v-list-item-action>
 
                     <!--TITLE AND PRIORITY-->
-                    <v-list-item-content v-on:click="clickOntask">
+                    <v-list-item-content v-on:click="clickOntask(task.id)">
                         <v-list-item-title>{{ task.name }}</v-list-item-title>
                         <v-list-item-subtitle>{{ task.description }}</v-list-item-subtitle>
                     </v-list-item-content>
@@ -36,6 +36,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { ITask } from "@/models/ITask";
+import router from "../router";
 
 export default Vue.extend({
     props: {
@@ -49,8 +50,8 @@ export default Vue.extend({
     },
 
     methods: {
-        clickOntask: function () {
-            console.log("TODO:Link to the Task detail views");
+        clickOntask: function (id: string) {
+            router.push({name: 'TaskDetail', params: { task_id: id }});
         },
         clickOnCheckbox: function (taskId: number) {
             for (let i = 0; i < this.tasks.length; i++) {

@@ -7,6 +7,7 @@ import Logout from '../views/Logout.vue'
 import store from '@/store'
 import Workbooks from '@/views/Workbooks.vue'
 import Tasks from '@/views/Tasks.vue'
+import TaskDetails from '@/views/TaskDetails.vue'
 import Api from "@/api/ApiRequester";
 import { IUser } from '@/models/IUser'
 
@@ -75,9 +76,6 @@ const routes: Array<RouteConfig> = [
     {
         path: '/',
         name: 'Workbooks',
-        // route level code-splitting
-        // this generates a separate chunk (workbook.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: Workbooks,
         meta: {
             onlyLogged: true
@@ -87,14 +85,16 @@ const routes: Array<RouteConfig> = [
         path: '/tasks/:workbook_id',
         name: 'Tasks',
         props: true,
-        // props: {
-        //     workbook_id: ''
-        // },
-
-        // route level code-splitting
-        // this generates a separate chunk (workbook.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: Tasks,
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/taskdetail/:task_id',
+        name: 'TaskDetail',
+        props: true,
+        component: TaskDetails,
         meta: {
             onlyLogged: true
         }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 //Requests
 use App\Http\Requests\Task\StoreTaskRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 // Model
 use App\Models\Task;
@@ -40,12 +42,28 @@ class TaskController extends Controller
             $filters[] = ["end_date", "=", $request->get("end_date")];
         }
 
-         // Workbook
-         if($request->has("workbook_id")) {
-            $filters[] = ["workbook_id", "=", $request->get("workbook_id")];
+        // Workbook
+        $workbookidFilter = false;
+        if($request->has("workbook_id")) {
+            // $filters[] = ["workbook_id", "=", $request->get("workbook_id")];
+            $workbookidFilter = true;
         }
-
-        return Task::where($filters)->get();
+        $tasks = Auth::user()->tasks;
+        // $task = $user[0]->tasks;
+        // $task = Task::where($filters)->get();
+        $taskToKeep = [];
+        if($workbookidFilter){
+            foreach ($tasks as $task) {
+                if($task['workbook_id'] == $request->get("workbook_id")){
+                    array_push($taskToKeep,$task);
+                }
+                
+            }
+        }else{
+            $taskToKeep = $tasks;
+        }
+        
+        return $taskToKeep;
     }
 
     /**

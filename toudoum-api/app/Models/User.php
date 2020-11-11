@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    public function tasks(){
+        return $this->belongsToMany('App\Models\Task','tasks_users','user_id','task_id')->withPivot('checked')->withTimestamps();
+    }
+
     /**
      * The attributes that are mass assignable.
      *

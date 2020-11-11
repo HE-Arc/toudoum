@@ -38,24 +38,27 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
+import Api from "@/api/ApiRequester";
 import { ITask } from "@/models/ITask";
 
 export default Vue.extend({
-    // props: {
-    //     tasks: Object as () => Array<ITask>
-    // },
+    props: {
+        task: {} as () => ITask,
+    },
+    
     data() {
         return {
             settings: [],
             //TODO:Replace by GET REQUEST ON TASK ID
-            task: {
-                id: 1,
-                name: "Ma meilleur tâche",
-                checked: true,
-                description: "Blablabalbal",
-                end_date: "2020-10-15",
-                priority: 1
-            } as ITask,
+            // task: {
+            //     id: 1,
+            //     name: "Ma meilleur tâche",
+            //     checked: true,
+            //     description: "Blablabalbal",
+            //     end_date: "2020-10-15",
+            //     priority: 1
+            // } as ITask,
+            
             priority: ["High", "Medium", "Low"]
         };
     },

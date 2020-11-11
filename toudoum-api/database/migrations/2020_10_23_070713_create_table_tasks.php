@@ -17,6 +17,7 @@ class CreateTableTasks extends Migration
             $table->id();
             $table->string("name", 100);
             $table->string("description");
+            // $table->boolean("checked");
             $table->date("end_date");
             $table->integer("priority");
             $table->foreignId("workbook_id")->references("id")->on("workbooks");
