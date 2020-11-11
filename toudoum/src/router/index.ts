@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import store from '@/store'
 import Workbooks from '@/views/Workbooks.vue'
+import Tasks from '@/views/Tasks.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,22 @@ const routes: Array<RouteConfig> = [
         // this generates a separate chunk (workbook.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: Workbooks,
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/tasks/:workbook_id',
+        name: 'Tasks',
+        props: true,
+        // props: {
+        //     workbook_id: ''
+        // },
+
+        // route level code-splitting
+        // this generates a separate chunk (workbook.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: Tasks,
         meta: {
             onlyLogged: true
         }

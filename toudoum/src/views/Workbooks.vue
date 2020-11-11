@@ -25,5 +25,6 @@ export default Vue.extend({
             w: {} as IWorkbook[]
         };
     }
+    
 });
 </script>
