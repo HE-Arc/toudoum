@@ -9,6 +9,9 @@ export class ActionFacade {
     logUser(user: IUser) {
         return this.store.dispatch("logUser", user);
     }
+    toggleDrawer() {
+        return this.store.dispatch("toggleDrawer");
+    }
     logout() {
         return this.store.dispatch("logout");
     }
@@ -22,6 +25,6 @@ type ActionsDefinition = {
 
 export const actions: ActionsDefinition = {
     logUser: (injectee: ActionContext<State, State>, user: IUser) => injectee.commit("LOGIN", user),
+    toggleDrawer: (injectee: ActionContext<State, State>) => injectee.commit("DRAWER_TOGGLE"),
     logout: (injectee: ActionContext<State, State>) => injectee.commit("LOGOUT")
-
 };

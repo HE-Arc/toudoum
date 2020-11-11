@@ -1,8 +1,10 @@
 <template>
-    <div class="about">
-        <h1>This is an about page</h1>
-        <CreateGroup/>
-    </div>
+    <v-container fill-height fluid>
+        <v-row align="start" justify="start">
+            <v-col align="center">
+                <h1>This is an about page</h1>
+                <CreateGroup /> </v-col></v-row
+    ></v-container>
 </template>
 
 <script lang="ts">
@@ -18,7 +20,7 @@ import CreateGroup from "@/components/CreateGroup.vue";
 
 export default Vue.extend({
     name: "Home",
-    components: {CreateGroup},
+    components: { CreateGroup },
     data: function () {
         return {
             names: [] as ITask[]
