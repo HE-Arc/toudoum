@@ -38,30 +38,13 @@ import Vue from "vue";
 import { ITask } from "@/models/ITask";
 
 export default Vue.extend({
-    // props: {
-    //     tasks: Object as () => Array<ITask>
-    // },
+    props: {
+        tasks: {} as () => ITask[],
+        workbook_title: String,
+    },
     data() {
         return {
             settings: [],
-            tasks: [
-                {
-                    id: 1,
-                    name: "Finir developpement mobile",
-                    priority: 0,
-                    end_date: "2020-11-30",
-                    description: "test"
-                },
-                {
-                    id: 2,
-                    name: "CP Crypto",
-                    priority: 2,
-                    end_date: "2020-11-30",
-                    checked: true,
-                    description: "blablabla"
-                }
-            ] as Array<ITask>,
-            workbook_title: "INF3dlm-B"
         };
     },
 
