@@ -1,7 +1,7 @@
 <template>
     <v-container class="marginTop">
-        <h1>This is an workbook page id:{{workbook_id}}</h1>
-        <!-- <TasksList /> -->
+        <h1>Tasks</h1>
+        <TasksList :tasks="t"/>
     </v-container>
 </template>
 
@@ -14,22 +14,18 @@ import { ToudoumError422 } from "@/api/ToudoumError422";
 import TasksList from "@/components/TasksList.vue";
 
 export default Vue.extend({
-    name: "Home",
-    // components: { TasksList },
+    name: "Tasks",
+    components: { TasksList },
     props: {
         workbook_id: String,
     },
-
-    beforeMount() {
-        console.log(this)
+    async beforeMount() {
+        this.t = await Api.get<ITask[]>("tasks?workbook_id="+this.workbook_id);
+        console.table(this.t);
     },
-    // async beforeMount() {
-    //     this.w = await Api.get<ITask[]>("tasks?workbook_id=");
-    //     console.table(this.w);
-    // },
     data: function () {
         return {
-            w: {} as ITask[]
+            t: {} as ITask[]
         };
     }
 });
