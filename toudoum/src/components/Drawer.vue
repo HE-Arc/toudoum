@@ -1,6 +1,6 @@
 <!-- TEMPLATE -->
 <template>
-    <v-navigation-drawer app>
+    <v-navigation-drawer app v-if="$typedStore.getters.isLoggedIn">
         <v-list>
             <v-list-item class="px-2">
                 <v-list-item-avatar>
