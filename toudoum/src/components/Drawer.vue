@@ -22,21 +22,27 @@
         <v-list nav dense>
             <v-list-item link>
                 <v-list-item-icon>
-                    <v-icon>mdi-folder</v-icon>
+                    <v-icon>mdi-account-circle</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>My Files</v-list-item-title>
+                <v-list-item-title>My account</v-list-item-title>
             </v-list-item>
             <v-list-item link>
                 <v-list-item-icon>
-                    <v-icon>mdi-account-multiple</v-icon>
+                    <v-icon>mdi-checkbox-marked-outline</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>Shared with me</v-list-item-title>
+                <v-list-item-title>My tasks</v-list-item-title>
             </v-list-item>
             <v-list-item link>
                 <v-list-item-icon>
-                    <v-icon>mdi-star</v-icon>
+                    <v-icon>mdi-book-outline</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>Starred</v-list-item-title>
+                <v-list-item-title>My workbooks</v-list-item-title>
+            </v-list-item>
+            <v-list-item link>
+                <v-list-item-icon>
+                    <v-icon>mdi-logout</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>Logout</v-list-item-title>
             </v-list-item>
         </v-list>
     </v-navigation-drawer>
