@@ -9,6 +9,9 @@ export class ActionFacade {
     logUser(user: IUser) {
         return this.store.dispatch("logUser", user);
     }
+    logout() {
+        return this.store.dispatch("logout");
+    }
 }
 
 type PayloadType<T> = T extends (payload: infer U) => any ? U : never;
@@ -18,5 +21,7 @@ type ActionsDefinition = {
 }
 
 export const actions: ActionsDefinition = {
-    logUser: (injectee: ActionContext<State, State>, user: IUser) => injectee.commit("LOGIN", user)
+    logUser: (injectee: ActionContext<State, State>, user: IUser) => injectee.commit("LOGIN", user),
+    logout: (injectee: ActionContext<State, State>) => injectee.commit("LOGOUT")
+
 };
