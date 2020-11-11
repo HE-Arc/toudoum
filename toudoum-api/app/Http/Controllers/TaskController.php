@@ -20,46 +20,33 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = [];
-
-        // Name
-        if($request->has("name")) {
-            $filters[] = ["name", "like", "%" . $request->get("name") . "%"];
+        // Id
+        $idFilter = false;
+        if($request->has("id")) {
+            $idFilter = true;
         }
-
-        // Description
-        if($request->has("description")) {
-            $filters[] = ["description", "like", "%" . $request->get("description") . "%"];
-        }
-
-        // Priority
-        if($request->has("priority")) {
-            $filters[] = ["priority", "=", $request->get("priority")];
-        }
-
-        // End date
-        if($request->has("end_date")) {
-            $filters[] = ["end_date", "=", $request->get("end_date")];
-        }
-
         // Workbook
         $workbookidFilter = false;
         if($request->has("workbook_id")) {
-            // $filters[] = ["workbook_id", "=", $request->get("workbook_id")];
             $workbookidFilter = true;
         }
+
         $tasks = Auth::user()->tasks;
-        // $task = $user[0]->tasks;
-        // $task = Task::where($filters)->get();
         $taskToKeep = [];
         if($workbookidFilter){
             foreach ($tasks as $task) {
                 if($task['workbook_id'] == $request->get("workbook_id")){
                     array_push($taskToKeep,$task);
                 }
-                
             }
-        }else{
+        }elseif($idFilter){
+            foreach ($tasks as $task) {
+                if($task['id'] == $request->get("id")){
+                    array_push($taskToKeep,$task);
+                }
+            }
+        }
+        else{
             $taskToKeep = $tasks;
         }
         

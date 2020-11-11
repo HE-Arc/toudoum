@@ -6,20 +6,20 @@
             <v-col > <v-btn v-on:click="dismiss" elevation="2" color="error">Dismiss</v-btn></v-col>
         </v-row>
         <v-row>
-            <v-col cols="2"><v-checkbox v-model="task.checked" :label="`DO`"></v-checkbox></v-col>
-            <v-col cols="6"><v-text-field label="Title" :value="task.name"></v-text-field></v-col>
+            <v-col cols="2"><v-checkbox :input-value="task[0].pivot['checked']" :label="`DO`"></v-checkbox></v-col>
+            <v-col cols="6"><v-text-field label="Title" :value="task[0].name"></v-text-field></v-col>
         </v-row>
         <v-row>
             <v-col cols="2">
                 <v-combobox
                     :items="priority"
                     label="Priority"
-                    :value="getPriority(task.priority)"
+                    :value="getPriority(task[0].priority)"
                 ></v-combobox
             ></v-col>
         </v-row>
         <v-row no-gutters>
-            <v-date-picker v-model="task.end_date"></v-date-picker>
+            <v-date-picker v-model="task[0].end_date"></v-date-picker>
         </v-row>
 
         <v-row>
@@ -27,7 +27,7 @@
                 <v-textarea
                     name="input-7-1"
                     label="Description"
-                    :value="task.description"
+                    :value="task[0].description"
                 ></v-textarea>
             </v-col>
         </v-row>
@@ -40,10 +40,11 @@
 import Vue from "vue";
 import Api from "@/api/ApiRequester";
 import { ITask } from "@/models/ITask";
+import router from "../router";
 
 export default Vue.extend({
     props: {
-        task: {} as () => ITask,
+        task: {} as () => ITask[],
     },
     
     data() {
@@ -65,16 +66,7 @@ export default Vue.extend({
 
     methods: {
         getPriority: function (priority: number) {
-            switch (priority) {
-                case 0:
-                    return "Low";
-                case 1:
-                    return "Medium";
-                case 2:
-                    return "High";
-                default:
-                    return "Err";
-            }
+            return this.priority[priority];
         },
 
         save: function(){
@@ -82,8 +74,7 @@ export default Vue.extend({
             console.log("TODO REQUEST PUSH OR PATCH WITH MODIFICATION");
         },
         dismiss: function(){
-            //TODO GO BACK WITHOUT SAVING
-            console.log("TODO GO BACK WITHOUT SAVING")
+            router.go(-1);
         }
     }
 });

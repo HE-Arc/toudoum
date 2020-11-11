@@ -11,13 +11,13 @@
                     <!--CHECKBOX-->
                     <v-list-item-action>
                         <v-checkbox
-                            :input-value="task.checked"
+                            :input-value="task.pivot['checked']"
                             @change="clickOnCheckbox(task.id)"
                         ></v-checkbox>
                     </v-list-item-action>
 
                     <!--TITLE AND PRIORITY-->
-                    <v-list-item-content v-on:click="clickOntask(task.id)">
+                    <v-list-item-content v-on:click="clickOntask(task.id+'')">
                         <v-list-item-title>{{ task.name }}</v-list-item-title>
                         <v-list-item-subtitle>{{ task.description }}</v-list-item-subtitle>
                     </v-list-item-content>

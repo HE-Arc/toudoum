@@ -23,12 +23,16 @@ class WorkbookController extends Controller
             $filters[] = ["name", "like,", "%" . $request->get("name") . "%"];
         }
 
+        if ($request->has("id")) {
+            $filters[] = ["id", "=", $request->get("id")];
+        }
+
         if ($request->has("group_id")) {
-            $filters[] = ["group_id", "like,", "%" . $request->get("group_id") . "%"];
+            $filters[] = ["group_id", "=", $request->get("group_id")];
         }
 
         if ($request->has("user_id")) {
-            $filters[] = ["user_id", "like,", "%" . $request->get("user_id") . "%"];
+            $filters[] = ["user_id", "=", $request->get("user_id")];
         }
         if ($request->has("by_token")) {
             $filters[] = ["user_id", "=",  Auth::user()->id ];

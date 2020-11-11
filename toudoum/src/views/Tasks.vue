@@ -1,7 +1,7 @@
 <template>
     <v-container class="marginTop">
         <h1>Tasks</h1>
-        <TasksList :tasks="t"/>
+        <TasksList :tasks="t" :workbook_title="w[0].name"/>
     </v-container>
 </template>
 
@@ -12,20 +12,24 @@ import { ITask } from "@/models/ITask";
 import { ToudoumError } from "@/api/ToudoumError";
 import { ToudoumError422 } from "@/api/ToudoumError422";
 import TasksList from "@/components/TasksList.vue";
+import { IWorkbook } from "../models/IWorkbook";
 
 export default Vue.extend({
     name: "Tasks",
     components: { TasksList },
     props: {
         workbook_id: String,
+        workbook_title: String,
     },
     async beforeMount() {
         this.t = await Api.get<ITask[]>("tasks?workbook_id="+this.workbook_id);
+        this.w = await Api.get<IWorkbook[]>("workbooks?id="+this.workbook_id);
         console.table(this.t);
     },
     data: function () {
         return {
-            t: {} as ITask[]
+            t: {} as ITask[],
+            w: {} as IWorkbook[],
         };
     }
 });
