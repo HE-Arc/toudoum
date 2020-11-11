@@ -11,8 +11,8 @@
                 </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title class="title"> Lucas Fridez </v-list-item-title>
-                    <v-list-item-subtitle>lucas.fridez@he-arc.ch</v-list-item-subtitle>
+            <v-list-item-title class="title"> {{$typedStore.getters.userFullname}} </v-list-item-title>
+                    <v-list-item-subtitle>{{$typedStore.getters.userEmail}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         </v-list>

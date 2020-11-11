@@ -3,6 +3,7 @@ import { State } from './State';
 
 export interface Getters {
     userFullname: string;
+    userEmail: string;
     userId: number;
     isLoggedIn: boolean;
     isDrawerExpanded: boolean;
@@ -22,6 +23,17 @@ export const getters: GettersDefinition = {
      */
     userFullname(state: State): string {
         return `${state.user?.name} ${state.user?.firstname}`;
+    },
+
+    /**
+     * Get User email
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {State} state Vuex State
+     * @return {string} User email 
+     */
+    userEmail(state: State): string {
+        return state.user?.email ?? "";
     },
 
     /**
@@ -46,9 +58,14 @@ export const getters: GettersDefinition = {
         return state.user != null;
     },
 
+    /**
+     * Get Drawer expanded state
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {State} state Vuex State
+     * @return {boolean} true is user expanded: false otherwise 
+     */
     isDrawerExpanded(state: State): boolean {
         return state.isDrawerExpanded;
     }
-
-
 };
