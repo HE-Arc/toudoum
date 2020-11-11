@@ -3,6 +3,7 @@ import VueRouter, { NavigationGuardNext, Route, RouteConfig, RouteRecord } from 
 import SignUp from '../views/SignUp.vue'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Logout from '../views/Logout.vue'
 import store from '@/store'
 import Api from "@/api/ApiRequester";
 import { IUser } from '@/models/IUser'
@@ -37,15 +38,6 @@ const routes: Array<RouteConfig> = [
             onlyUnlogged: true
         }
     },
-
-    {
-        path: '/Logout',
-        name: 'Logout',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
     {
         path: '/Account',
         name: 'Account',
@@ -71,14 +63,6 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/Account',
-        name: 'Account',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
         path: '/Tasks',
         name: 'Tasks',
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
@@ -90,6 +74,14 @@ const routes: Array<RouteConfig> = [
         path: '/Groups',
         name: 'Groups',
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/Logout',
+        name: 'Logout',
+        component: Logout,
         meta: {
             onlyLogged: true
         }
