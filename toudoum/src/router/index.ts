@@ -5,6 +5,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import store from '@/store'
+import Workbooks from '@/views/Workbooks.vue'
+import Tasks from '@/views/Tasks.vue'
 import Api from "@/api/ApiRequester";
 import { IUser } from '@/models/IUser'
 
@@ -14,14 +16,6 @@ Vue.use(VueRouter)
  * All routes for Toudoum App !
  */
 const routes: Array<RouteConfig> = [
-    {
-        path: '/',
-        name: 'Home',
-        component: Home,
-        meta: {
-            onlyLogged: true
-        }
-    },
     {
         path: '/Login', 
         name: 'Login',
@@ -55,22 +49,6 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/Workbooks',
-        name: 'Workbooks',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
-        path: '/Tasks',
-        name: 'Tasks',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
         path: '/Groups',
         name: 'Groups',
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
@@ -90,6 +68,33 @@ const routes: Array<RouteConfig> = [
         path: '/About',
         name: 'About',
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/',
+        name: 'Workbooks',
+        // route level code-splitting
+        // this generates a separate chunk (workbook.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: Workbooks,
+        meta: {
+            onlyLogged: true
+        }
+    },
+    {
+        path: '/tasks/:workbook_id',
+        name: 'Tasks',
+        props: true,
+        // props: {
+        //     workbook_id: ''
+        // },
+
+        // route level code-splitting
+        // this generates a separate chunk (workbook.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: Tasks,
         meta: {
             onlyLogged: true
         }

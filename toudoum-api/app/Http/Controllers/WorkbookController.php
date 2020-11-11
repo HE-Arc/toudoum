@@ -31,7 +31,7 @@ class WorkbookController extends Controller
             $filters[] = ["user_id", "like,", "%" . $request->get("user_id") . "%"];
         }
         if ($request->has("by_token")) {
-            $filters[] = ["user_id", "like,", "%" . Auth::user()->id . "%"];
+            $filters[] = ["user_id", "=",  Auth::user()->id ];
         }
 
         return Workbook::where($filters)->get();

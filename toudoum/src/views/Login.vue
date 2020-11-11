@@ -62,7 +62,7 @@ export default Vue.extend({
                     email: this.email,
                     password: this.password
                 });
-                this.$router.push({ name: "Home" });
+                this.$router.push({ name: "Workbooks" });
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     console.log(e.data); // Errors with sent data
