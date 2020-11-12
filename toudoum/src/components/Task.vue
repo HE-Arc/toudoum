@@ -2,24 +2,28 @@
 <template>
     <v-card elevation="4" class="pa-md-6 mx-lg-auto">
         <v-row>
-            <v-col cols="1"> <v-btn v-on:click="save"  elevation="2" color="primary">Save</v-btn></v-col>
-            <v-col > <v-btn v-on:click="dismiss" elevation="2" color="error">Dismiss</v-btn></v-col>
+            <v-col cols="1">
+                <v-btn v-on:click="save" elevation="2" color="primary">Save</v-btn></v-col
+            >
+            <v-col> <v-btn v-on:click="dismiss" elevation="2" color="error">Dismiss</v-btn></v-col>
         </v-row>
         <v-row>
-            <v-col cols="2"><v-checkbox :input-value="task[0].pivot['checked']" :label="`DO`"></v-checkbox></v-col>
-            <v-col cols="6"><v-text-field label="Title" :value="task[0].name"></v-text-field></v-col>
+            <v-col cols="2"
+                ><v-checkbox :input-value="isTaskChecked" :label="`DO`"></v-checkbox
+            ></v-col>
+            <v-col cols="6"><v-text-field label="Title" :value="task.name"></v-text-field></v-col>
         </v-row>
         <v-row>
             <v-col cols="2">
                 <v-combobox
                     :items="priority"
                     label="Priority"
-                    :value="getPriority(task[0].priority)"
+                    :value="getPriority(task.priority)"
                 ></v-combobox
             ></v-col>
         </v-row>
         <v-row no-gutters>
-            <v-date-picker v-model="task[0].end_date"></v-date-picker>
+            <v-date-picker v-model="task.end_date"></v-date-picker>
         </v-row>
 
         <v-row>
@@ -27,7 +31,7 @@
                 <v-textarea
                     name="input-7-1"
                     label="Description"
-                    :value="task[0].description"
+                    :value="task.description"
                 ></v-textarea>
             </v-col>
         </v-row>
@@ -44,24 +48,20 @@ import router from "../router";
 
 export default Vue.extend({
     props: {
-        task: {} as () => ITask[],
+        task: {} as () => ITask
     },
-    
+
     data() {
         return {
             settings: [],
-            //TODO:Replace by GET REQUEST ON TASK ID
-            // task: {
-            //     id: 1,
-            //     name: "Ma meilleur tâche",
-            //     checked: true,
-            //     description: "Blablabalbal",
-            //     end_date: "2020-10-15",
-            //     priority: 1
-            // } as ITask,
-            
             priority: ["High", "Medium", "Low"]
         };
+    },
+
+    computed: {
+        isTaskChecked: function () {
+            return this.task.pivot && this.task.pivot.checked;
+        }
     },
 
     methods: {
@@ -69,11 +69,11 @@ export default Vue.extend({
             return this.priority[priority];
         },
 
-        save: function(){
+        save: function () {
             //TODO REQUEST PUSH OR PATCH WITH MODIFICATION
             console.log("TODO REQUEST PUSH OR PATCH WITH MODIFICATION");
         },
-        dismiss: function(){
+        dismiss: function () {
             router.go(-1);
         }
     }

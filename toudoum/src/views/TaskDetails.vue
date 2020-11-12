@@ -1,7 +1,7 @@
 <template>
     <v-container class="marginTop">
         <h1>Tasks</h1>
-        <Task :task="t"/>
+        <Task :task="task"/>
     </v-container>
 </template>
 
@@ -20,13 +20,14 @@ export default Vue.extend({
         task_id: String,
     },
     async beforeMount() {
-        this.t = await Api.get<ITask[]>("tasks?id="+this.task_id);
-        console.log(this.task_id);
-        console.table(this.t);
+        Api.get<ITask[]>("tasks?id="+this.task_id).then((t: ITask[]) => {
+            this.task = t[0];
+            console.log(this.task);
+        });
     },
     data: function () {
         return {
-            t: {} as ITask[]
+            task: {} as ITask
         };
     }
 });

@@ -1,7 +1,7 @@
 <template>
     <v-container class="marginTop">
         <h1>Tasks</h1>
-        <TasksList :tasks="t" :workbook_title="w[0].name"/>
+        <TasksList :tasks="t" :workbook_title="workbookName"/>
     </v-container>
 </template>
 
@@ -23,13 +23,15 @@ export default Vue.extend({
     },
     async beforeMount() {
         this.t = await Api.get<ITask[]>("tasks?workbook_id="+this.workbook_id);
-        this.w = await Api.get<IWorkbook[]>("workbooks?id="+this.workbook_id);
-        console.table(this.t);
+        Api.get<IWorkbook[]>("workbooks?id="+this.workbook_id).then((w: IWorkbook[]) => {
+            this.workbookName = w[0].name;
+        });
+        
     },
     data: function () {
         return {
             t: {} as ITask[],
-            w: {} as IWorkbook[],
+            workbookName: "",
         };
     }
 });

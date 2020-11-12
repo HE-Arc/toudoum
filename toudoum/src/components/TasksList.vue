@@ -11,16 +11,17 @@
                     <!--CHECKBOX-->
                     <v-list-item-action>
                         <v-checkbox
-                            :input-value="task.pivot['checked']"
+                            :input-value="task.pivot.checked"
                             @change="clickOnCheckbox(task.id)"
                         ></v-checkbox>
                     </v-list-item-action>
 
                     <!--TITLE AND PRIORITY-->
-                    <v-list-item-content v-on:click="clickOntask(task.id+'')">
+                    <v-list-item-content v-on:click="clickOntask(task.id + '')">
                         <v-list-item-title>{{ task.name }}</v-list-item-title>
                         <v-list-item-subtitle>{{ task.description }}</v-list-item-subtitle>
                     </v-list-item-content>
+
                     <!--DO DATE-->
                     <v-list-item-content v-on:click="clickOntask" class="text-right">
                         <v-list-item-title>{{ task.end_date }}</v-list-item-title>
@@ -41,17 +42,17 @@ import router from "../router";
 export default Vue.extend({
     props: {
         tasks: {} as () => ITask[],
-        workbook_title: String,
+        workbook_title: String
     },
     data() {
         return {
-            settings: [],
+            settings: []
         };
     },
 
     methods: {
         clickOntask: function (id: string) {
-            router.push({name: 'TaskDetail', params: { task_id: id }});
+            router.push({ name: "TaskDetail", params: { task_id: id } });
         },
         clickOnCheckbox: function (taskId: number) {
             for (let i = 0; i < this.tasks.length; i++) {

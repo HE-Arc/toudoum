@@ -7,7 +7,7 @@
  */
 export interface ITask {
     created_at: string;
-    checked:boolean;
+    checked: boolean;
     description: string;
     end_date: string;
     id: number;
@@ -15,5 +15,9 @@ export interface ITask {
     priority: number;
     updated_at: string;
     workbook_id: number | null;
-    pivot:{};
+    pivot: {
+        checked: boolean;
+        task_id: number;
+        user_id: number;
+    };
 }
