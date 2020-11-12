@@ -1,7 +1,7 @@
 <template>
     <v-container class="marginTop">
         <h1>Tasks</h1>
-        <TasksList :tasks="t" :workbook_title="workbookName"/>
+        <TasksList :tasks="t" :workbook_title="workbookName" :workbook_id="this.workbookId"/>
     </v-container>
 </template>
 
@@ -19,25 +19,25 @@ export default Vue.extend({
     components: { TasksList },
     props: {
         workbook_id: String,
-        workbook_title: String,
     },
     async beforeMount() {
-        this.t = await Api.get<ITask[]>("tasks?workbook_id="+this.workbook_id);
-        Api.get<IWorkbook[]>("workbooks?id="+this.workbook_id).then((w: IWorkbook[]) => {
+        this.t = await Api.get<ITask[]>("tasks?workbook_id=" + this.workbook_id);
+        Api.get<IWorkbook[]>("workbooks?id=" + this.workbook_id).then((w: IWorkbook[]) => {
             this.workbookName = w[0].name;
+            this.workbookId = w[0].id;
         });
-        
     },
     data: function () {
         return {
             t: {} as ITask[],
             workbookName: "",
+            workbookId:0
         };
     }
 });
 </script>
 <style>
 .marginTop {
-    margin-top:72px;
+    margin-top: 72px;
 }
 </style>

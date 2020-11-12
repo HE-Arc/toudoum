@@ -73,7 +73,12 @@ class TaskController extends Controller
             $task->priority = $request->input("priority");
         }
 
-        // Priority
+        // Workbook ID
+        if ($request->get("workbook_id")) {
+            $task->workbook_id = $request->input("workbook_id");
+        }
+
+        // End_date
         if ($request->get("end_date")) {
             $task->end_date = $request->input("end_date");
         }
@@ -133,8 +138,6 @@ class TaskController extends Controller
             // Checked
             if ($request->get("checked")) {
                 $task->pivot->checked = !$task->pivot->checked;
-                print("\n");
-                print($task);
             }
 
             $task->save();

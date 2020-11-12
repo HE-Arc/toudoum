@@ -1,7 +1,17 @@
 <!-- TEMPLATE -->
 <template>
     <v-card elevation="4">
-        <v-divider></v-divider>
+        <v-dialog v-model="dialog" max-width="400px">
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark absolute top right fab v-bind="attrs" v-on="on">
+                    <v-icon>mdi-plus</v-icon>
+                </v-btn>
+            </template>
+            <v-card elevation="4" class="pa-md-4 mx-lg-auto">
+                <v-row> <v-text-field label="Title" v-model="taskName"></v-text-field></v-row>
+                <v-row> <v-btn color="primary" v-on:click="save">Save</v-btn> </v-row>
+            </v-card>
+        </v-dialog>
 
         <v-list flat subheader three-line>
             <v-subheader>{{ workbook_title }}</v-subheader>
@@ -43,11 +53,14 @@ import Api from "@/api/ApiRequester";
 export default Vue.extend({
     props: {
         tasks: {} as () => ITask[],
-        workbook_title: String
+        workbook_title: String,
+        workbook_id: Number,
     },
     data() {
         return {
-            settings: []
+            settings: [],
+            dialog: false,
+            taskName: "",
         };
     },
 
@@ -58,13 +71,24 @@ export default Vue.extend({
         clickOnCheckbox: function (taskId: number) {
             for (let i = 0; i < this.tasks.length; i++) {
                 if (this.tasks[i].id == taskId) {
-                    Api.patch("tasks/"+this.tasks[i].id,{
+                    Api.patch("tasks/" + this.tasks[i].id, {
                         checked: true
-                    })
+                    });
                     this.tasks[i].checked = !this.tasks[i].checked;
                 }
             }
-        }
+        },
+        save: function(){
+            const date = new Date();
+            const goodDate = date.toISOString().split('T')[0];
+            console.log(this.workbook_id);
+            Api.post("tasks", {
+                name:this.taskName,
+                end_date:goodDate,
+                workbook_id:this.workbook_id
+            });
+            this.dialog = false;
+        },
     }
 });
 </script>
