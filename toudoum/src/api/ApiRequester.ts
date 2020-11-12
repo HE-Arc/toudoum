@@ -228,6 +228,8 @@ class ApiRequester {
     public async patch(url: string, body: any): Promise<IToudoumResponse> {
         return this.request("PATCH", url, body);
     }
+
+
 }
 
 export default ApiRequester.instance;
