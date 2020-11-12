@@ -35,6 +35,5 @@ class Task extends Model
      * @var array
      */
     protected $casts = [
-        'end_date' => 'datetime',
     ];
 }

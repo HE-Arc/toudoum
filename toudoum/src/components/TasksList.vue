@@ -38,6 +38,7 @@
 import Vue from "vue";
 import { ITask } from "@/models/ITask";
 import router from "../router";
+import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
     props: {
@@ -57,11 +58,9 @@ export default Vue.extend({
         clickOnCheckbox: function (taskId: number) {
             for (let i = 0; i < this.tasks.length; i++) {
                 if (this.tasks[i].id == taskId) {
-                    console.log(
-                        "TODO:PATCH REQUEST ON TASK " +
-                            this.tasks[i].name +
-                            "TO CHANGE IF CHECKED OR UNCHECKEDS"
-                    );
+                    Api.patch("tasks/"+this.tasks[i].id,{
+                        checked: true
+                    })
                     this.tasks[i].checked = !this.tasks[i].checked;
                 }
             }

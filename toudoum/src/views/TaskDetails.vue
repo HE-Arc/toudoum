@@ -22,7 +22,6 @@ export default Vue.extend({
     async beforeMount() {
         Api.get<ITask[]>("tasks?id="+this.task_id).then((t: ITask[]) => {
             this.task = t[0];
-            console.log(this.task);
         });
     },
     data: function () {

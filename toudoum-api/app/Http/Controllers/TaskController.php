@@ -22,34 +22,33 @@ class TaskController extends Controller
     {
         // Id
         $idFilter = false;
-        if($request->has("id")) {
+        if ($request->has("id")) {
             $idFilter = true;
         }
         // Workbook
         $workbookidFilter = false;
-        if($request->has("workbook_id")) {
+        if ($request->has("workbook_id")) {
             $workbookidFilter = true;
         }
 
         $tasks = Auth::user()->tasks;
         $taskToKeep = [];
-        if($workbookidFilter){
+        if ($workbookidFilter) {
             foreach ($tasks as $task) {
-                if($task['workbook_id'] == $request->get("workbook_id")){
-                    array_push($taskToKeep,$task);
+                if ($task['workbook_id'] == $request->get("workbook_id")) {
+                    array_push($taskToKeep, $task);
                 }
             }
-        }elseif($idFilter){
+        } elseif ($idFilter) {
             foreach ($tasks as $task) {
-                if($task['id'] == $request->get("id")){
-                    array_push($taskToKeep,$task);
+                if ($task['id'] == $request->get("id")) {
+                    array_push($taskToKeep, $task);
                 }
             }
-        }
-        else{
+        } else {
             $taskToKeep = $tasks;
         }
-        
+
         return $taskToKeep;
     }
 
@@ -65,17 +64,17 @@ class TaskController extends Controller
         $task->name = $request->input(("name"));
 
         // Description
-        if($request->get("description")) {
+        if ($request->get("description")) {
             $task->description = $request->get("description");
         }
 
         // Priority
-        if($request->get("priority")) {
+        if ($request->get("priority")) {
             $task->priority = $request->input("priority");
         }
 
         // Priority
-        if($request->get("end_date")) {
+        if ($request->get("end_date")) {
             $task->end_date = $request->input("end_date");
         }
         $task->save();
@@ -101,25 +100,46 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $task = Task::findOrFail($id);
-
-        $task->name = $request->input(("name"));
-
-        // Description
-        if($request->get("description")) {
-            $task->description = $request->get("description");
+        // $task = Task::findOrFail($id);
+        $tasks = Auth::user()->tasks;
+        $task = null;
+        foreach ($tasks as $t) {
+            if ($t->id == $id) {
+                $task = $t;
+            }
         }
+        if ($task != null) {
+            print($task);
+            //name
+            if($request->get("name")){
+                $task->name = $request->input(("name"));
+            }            
 
-        // Priority
-        if($request->get("priority")) {
-            $task->priority = $request->input("priority");
-        }
+            // Description
+            if ($request->get("description")) {
+                $task->description = $request->get("description");
+            }
 
-        // Priority
-        if($request->get("end_date")) {
-            $task->end_date = $request->input("end_date");
+            // Priority
+            if ($request->get("priority")) {
+                $task->priority = $request->input("priority");
+            }
+
+            // End_date
+            if ($request->get("end_date")) {
+                $task->end_date = $request->input("end_date");
+            }
+
+            // Checked
+            if ($request->get("checked")) {
+                $task->pivot->checked = !$task->pivot->checked;
+                print("\n");
+                print($task);
+            }
+
+            $task->save();
+            $task->pivot->save();
         }
-        $task->save();
     }
 
     /**

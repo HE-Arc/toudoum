@@ -15,7 +15,7 @@ export interface ITask {
     priority: number;
     updated_at: string;
     workbook_id: number | null;
-    pivot: {
+    pivot?: {
         checked: boolean;
         task_id: number;
         user_id: number;
