@@ -12,10 +12,16 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    /**
+     * Make the relationchip n to n between users and tasks
+     */
     public function tasks(){
         return $this->belongsToMany('App\Models\Task','tasks_users','user_id','task_id')->withPivot('checked')->withTimestamps();
     }
 
+    /**
+     * Make the relationchip n to n between users and groups
+     */
     public function groups(){
         return $this->belongsToMany('App\Models\Group','user_group','user_id','group_id')->withTimestamps();
     }

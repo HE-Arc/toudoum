@@ -10,7 +10,6 @@
     </v-container>
 </template>
 
-
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";

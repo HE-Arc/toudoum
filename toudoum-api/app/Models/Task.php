@@ -9,6 +9,9 @@ class Task extends Model
 {
     use HasFactory;
 
+    /**
+     * Make the relationchip n to n between users and tasks
+     */
     public function users(){
         return $this->belongsToMany('App\Models\User','tasks_users','task_id','user_id')->withPivot('checked')->withTimestamps();
     }

@@ -30,6 +30,8 @@ class GroupController extends Controller
         return Group::where($filters)->get();
 
 
+        // TO KEEP FOR THE CREATION OF GROUPS
+        
         // $groups = Auth::user()->groups;
 
         // // Id
