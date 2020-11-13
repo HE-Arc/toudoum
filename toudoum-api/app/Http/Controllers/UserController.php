@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -33,6 +35,11 @@ class UserController extends Controller
         // Email
         if($request->has("email")) {
             $filters[] = ["email", "like", "%" . $request->get("email") . "%"];
+        }
+
+        // Email
+        if($request->has("by_token")) {
+            $filters[] = ["id", "=",Auth::user()->id];
         }
 
         return User::where($filters)->get();
@@ -74,24 +81,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request)
     {
-        $user = User::find($id);
-        if($request->get("name")) {
-            $user->name = $request->get("name");
-        }
-        if($request->get("firstname")) {
-            $user->firstname = $request->get("firstname");
-        }
-        if($request->get("email")) {
-            $user->email = $request->get("email");
-            $user->email_verified_at = now();
-        }
-        if($request->get("password") && $request["password_confirmation"]) {
-            $user->password = $request->get("password");
-        }
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->get("name");
+        $user->firstname = $request->get("firstname");
+        $user->email = $request->get("email");
+        $user->email_verified_at = now();
+        $user->password = $request->get("password");
         $user->save();
-        
     }
 
     /**
