@@ -9,8 +9,6 @@
 import Vue from "vue";
 import Api from "@/api/ApiRequester";
 import { ITask } from "@/models/ITask";
-import { ToudoumError } from "@/api/ToudoumError";
-import { ToudoumError422 } from "@/api/ToudoumError422";
 import Task from "@/components/Task.vue";
 
 export default Vue.extend({

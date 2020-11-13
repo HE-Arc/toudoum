@@ -29,14 +29,12 @@
 import Vue from "vue";
 import Api from "@/api/ApiRequester";
 import { ToudoumError } from "@/api/ToudoumError";
-import { ToudoumError422 } from "@/api/ToudoumError422";
-import { IToudoumResponse } from '@/api/IToudoumResponse';
 
 export default Vue.extend({
     name: "Logout",
     mounted: async function () {
         try {
-            const logOutResponse = await Api.logout();
+            await Api.logout();
             this.$typedStore.actions.logout();
         } catch (e) {
             if (e instanceof ToudoumError) {

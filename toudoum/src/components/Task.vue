@@ -74,7 +74,7 @@ export default Vue.extend({
             return this.priority[priority];
         },
 
-        changePriority: function (v) {
+        changePriority: function (v: any) {
             this.task.priority = this.priority.indexOf(v);
         },
 
