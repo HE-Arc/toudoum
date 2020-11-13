@@ -35,12 +35,16 @@ class WorkbookController extends Controller
             $filters[] = ["user_id", "=", $request->get("user_id")];
         }
         if ($request->has("by_token")) {
-            $filters[] = ["user_id", "=",  Auth::user()->id ];
+            $workbookToKeep = [];
+            $groups = Auth::user()->groups;
+            // $workbookToKeep[] = Workbook::where('user_id',Auth::user()->id)->first();
+            foreach ($groups as $group) {
+                $workbookToKeep[] = Workbook::where('group_id', $group->id)->first();
+            }
+            return $workbookToKeep;
         }
 
         return Workbook::where($filters)->get();
-        
-        
     }
 
     /**
