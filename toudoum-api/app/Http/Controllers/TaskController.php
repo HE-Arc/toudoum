@@ -7,6 +7,8 @@ use App\Http\Requests\Task\StoreTaskRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Group;
+use App\Models\Workbook;
 
 // Model
 use App\Models\Task;
@@ -82,7 +84,19 @@ class TaskController extends Controller
         if ($request->get("end_date")) {
             $task->end_date = $request->input("end_date");
         }
+
         $task->save();
+
+        //best find
+        $group_id = Workbook::find($task->workbook_id)->group_id;
+
+        $usersInGroup = Group::with("users")->find($group_id)->users;
+
+        $userIDs = [];
+        foreach($usersInGroup as $user){
+            $userIDs[$user->id] = ['checked' => false];
+        }
+        $task->users()->attach($userIDs);
     }
 
     /**

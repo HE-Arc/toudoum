@@ -16,6 +16,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Task','tasks_users','user_id','task_id')->withPivot('checked')->withTimestamps();
     }
 
+    public function groups(){
+        return $this->belongsToMany('App\Models\Group','user_group','user_id','group_id')->withTimestamps();
+    }
+
     /**
      * The attributes that are mass assignable.
      *

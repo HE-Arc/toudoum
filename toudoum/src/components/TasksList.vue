@@ -88,6 +88,7 @@ export default Vue.extend({
                 workbook_id:this.workbook_id
             });
             this.dialog = false;
+            router.go(0);
         },
     }
 });

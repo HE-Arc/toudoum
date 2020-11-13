@@ -9,6 +9,10 @@ class Group extends Model
 {
     use HasFactory;
 
+    public function users(){
+        return $this->belongsToMany('App\Models\User','user_group','group_id','user_id')->withTimestamps();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
