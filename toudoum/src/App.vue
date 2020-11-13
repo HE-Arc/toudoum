@@ -16,7 +16,6 @@ import Drawer from "@/components/Drawer.vue";
 export default Vue.extend({
     name: "App",
     components: { Header, Drawer },
-
     beforeMount() {
         console.log("OK");
     }
