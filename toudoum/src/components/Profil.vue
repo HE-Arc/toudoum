@@ -100,13 +100,14 @@ export default Vue.extend({
     methods: {
         validate: async function(){
             try {
-                await Api.patch("/user",{
+                await Api.patch("/users",{
                     name: this.user.name,
                     firstname: this.user.firstname,
                     email: this.user.email,
                     password: this.user.password,
                     password_confirmation: this.user.password_confirmation
                 });
+                this.succes()
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;
@@ -114,6 +115,10 @@ export default Vue.extend({
                     console.log(e.message); // Error (401, 404 or 500,...)
                 }
             }
+        },
+        succes: function()
+        {
+            alert("Modification sauvegardé")
         }
     }
 });

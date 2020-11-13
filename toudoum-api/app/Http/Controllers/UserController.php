@@ -88,7 +88,7 @@ class UserController extends Controller
         $user->firstname = $request->get("firstname");
         $user->email = $request->get("email");
         $user->email_verified_at = now();
-        $user->password = $request->get("password");
+        $user->password = Hash::make($request['password']);
         $user->save();
     }
 
