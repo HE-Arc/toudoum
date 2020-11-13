@@ -38,7 +38,7 @@
             </v-text-field>
             <v-text-field
                 v-model="user.password_confirmation"
-                label="Password' confirmation"
+                label="Password confirmation"
                 type="password"
                 :rules="[rules.required, rules.min, rules.password_conf]"
                 required

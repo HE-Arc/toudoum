@@ -36,7 +36,7 @@ const routes: Array<RouteConfig> = [
     {
         path: '/Account',
         name: 'Account',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/Account.vue'),
         meta: {
             onlyLogged: true
         }

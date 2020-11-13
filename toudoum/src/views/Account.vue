@@ -1,10 +1,10 @@
 
 <template>
-    <div class="account">
-        <img alt="Vue logo" src="../assets/logo.png" />
-        <p>Account page !</p>
-        <Profil :user="user"/>
-    </div>
+    <v-container class="marginTop">
+        <div class="account">
+            <Profil :user="user" />
+        </div>
+    </v-container>
 </template>
 
 <script lang="ts">
@@ -13,18 +13,24 @@ import Profil from "@/components/Profil.vue";
 import Api from "@/api/ApiRequester";
 import { ToudoumError } from "@/api/ToudoumError";
 import { ToudoumError422 } from "@/api/ToudoumError422";
-import { IUser } from '@/models/IUser';
+import { IUser } from "@/models/IUser";
 
-export default Vue.extend({ 
+export default Vue.extend({
     name: "Account",
-    components: {Profil},
-    async created(){
+    components: { Profil },
+    async created() {
         this.user = (await Api.get<IUser[]>("users?by_token=true"))[0];
     },
-    data(){
-        return{
-            user: {} as IUser,
-        }
+    data() {
+        return {
+            user: {} as IUser
+        };
     }
 });
 </script>
+
+<style>
+.marginTop {
+    margin-top: 72px;
+}
+</style>
