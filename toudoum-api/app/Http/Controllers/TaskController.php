@@ -40,6 +40,11 @@ class TaskController extends Controller
             $filters[] = ["end_date", "=", $request->get("end_date")];
         }
 
+         // Workbook
+         if($request->has("workbook_id")) {
+            $filters[] = ["workbook_id", "=", $request->get("workbook_id")];
+        }
+
         return Task::where($filters)->get();
     }
 

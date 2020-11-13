@@ -57,13 +57,12 @@ export default Vue.extend({
     methods: {
         login: async function () {
             this.loading = true;
-            console.log(this.email, this.password);
             try {
                 await Api.login({
                     email: this.email,
                     password: this.password
                 });
-                this.$router.push({ name: "Home" });
+                this.$router.push({ name: "Workbooks" });
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     console.log(e.data); // Errors with sent data

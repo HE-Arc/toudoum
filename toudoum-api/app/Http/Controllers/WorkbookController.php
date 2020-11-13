@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Workbook\StoreWorkbookRequest;
 use App\Http\Requests\Workbook\UpdateWorkbookRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Workbook;
 
@@ -28,6 +29,9 @@ class WorkbookController extends Controller
 
         if ($request->has("user_id")) {
             $filters[] = ["user_id", "like,", "%" . $request->get("user_id") . "%"];
+        }
+        if ($request->has("by_token")) {
+            $filters[] = ["user_id", "=",  Auth::user()->id ];
         }
 
         return Workbook::where($filters)->get();
