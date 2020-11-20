@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Workbook\StoreWorkbookRequest;
 use App\Http\Requests\Workbook\UpdateWorkbookRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Workbook;
 
@@ -35,13 +36,7 @@ class WorkbookController extends Controller
             $filters[] = ["user_id", "=", $request->get("user_id")];
         }
         if ($request->has("by_token")) {
-            $workbookToKeep = [];
-            $groups = Auth::user()->groups;
-            // $workbookToKeep[] = Workbook::where('user_id',Auth::user()->id)->first();
-            foreach ($groups as $group) {
-                $workbookToKeep[] = Workbook::where('group_id', $group->id)->first();
-            }
-            return $workbookToKeep;
+            return DB::select('select * from workbooks where user_id = ? union select * from workbooks where group_id in (select group_id from user_group where user_id = ?)', [Auth::user()->id, Auth::user()->id]);
         }
 
         return Workbook::where($filters)->get();
