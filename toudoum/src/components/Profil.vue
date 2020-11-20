@@ -1,7 +1,6 @@
 <!-- TEMPLATE -->
 <template>
     <div>
-        <h3>Profil</h3>
         <v-form
             ref="form"
             v-model="valid"
