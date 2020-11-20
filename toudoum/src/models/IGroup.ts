@@ -10,4 +10,5 @@ export interface IGroup {
     id: number;
     name: string;
     updated_at: string;
+    users:number[];
 }

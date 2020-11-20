@@ -67,21 +67,21 @@ export default Vue.extend({
 
     methods: {
         save: function () {
-            // const usersIdSelected = []
-            // this.users.forEach((u) => {
-            //     this.usersSelected.forEach(uSelected => {
-            //         if(uSelected == u.name + " " + u.firstname){
-            //             usersIdSelected.push(u.id);
-            //         }
-            //     });
+            const usersIdSelected: number[] = []
+            this.users.forEach((u: IUser) => {
+                this.usersSelected.forEach(uSelected => {
+                    if(uSelected == u.name + " " + u.firstname){
+                        usersIdSelected.push(u.id);
+                    }
+                });
                 
-            // });
+            });
 
-            // console.table(usersIdSelected);
-            // Api.post("groups", {
-            //     name: this.groupname,
-            //     users: usersIdSelected
-            // });
+            console.table(usersIdSelected);
+            Api.post("groups", {
+                name: this.groupName,
+                users: usersIdSelected
+            });
 
             this.dialog = false;
         }

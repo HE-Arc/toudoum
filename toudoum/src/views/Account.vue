@@ -8,7 +8,7 @@
             </div>
         </v-card>
         <v-card elevation="4" class="pa-6 mt-12">
-            <!-- <Group/> -->
+            <Group/>
         </v-card>
     </v-container>
 </template>
@@ -24,7 +24,7 @@ import { IUser } from "@/models/IUser";
 
 export default Vue.extend({
     name: "Account",
-    components: { Profil },
+    components: { Profil,Group },
     async created() {
         this.user = (await Api.get<IUser[]>("users?by_token=true"))[0];
     },
