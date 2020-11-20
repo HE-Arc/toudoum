@@ -9,8 +9,6 @@
 import Vue from "vue";
 import Api from "@/api/ApiRequester";
 import { IWorkbook } from "@/models/IWorkbook";
-import { ToudoumError } from "@/api/ToudoumError";
-import { ToudoumError422 } from "@/api/ToudoumError422";
 import WorkbookList from "@/components/WorkbookList.vue";
 
 export default Vue.extend({

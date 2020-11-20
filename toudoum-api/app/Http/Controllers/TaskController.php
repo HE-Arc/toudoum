@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 //Requests
 use App\Http\Requests\Task\StoreTaskRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Group;
+use App\Models\Workbook;
 
 // Model
 use App\Models\Task;
@@ -18,34 +22,36 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = [];
-
-        // Name
-        if($request->has("name")) {
-            $filters[] = ["name", "like", "%" . $request->get("name") . "%"];
+        // Id
+        $idFilter = false;
+        if ($request->has("id")) {
+            $idFilter = true;
+        }
+        // Workbook
+        $workbookidFilter = false;
+        if ($request->has("workbook_id")) {
+            $workbookidFilter = true;
         }
 
-        // Description
-        if($request->has("description")) {
-            $filters[] = ["description", "like", "%" . $request->get("description") . "%"];
+        $tasks = Auth::user()->tasks;
+        $taskToKeep = [];
+        if ($workbookidFilter) {
+            foreach ($tasks as $task) {
+                if ($task['workbook_id'] == $request->get("workbook_id")) {
+                    array_push($taskToKeep, $task);
+                }
+            }
+        } elseif ($idFilter) {
+            foreach ($tasks as $task) {
+                if ($task['id'] == $request->get("id")) {
+                    array_push($taskToKeep, $task);
+                }
+            }
+        } else {
+            $taskToKeep = $tasks;
         }
 
-        // Priority
-        if($request->has("priority")) {
-            $filters[] = ["priority", "=", $request->get("priority")];
-        }
-
-        // End date
-        if($request->has("end_date")) {
-            $filters[] = ["end_date", "=", $request->get("end_date")];
-        }
-
-         // Workbook
-         if($request->has("workbook_id")) {
-            $filters[] = ["workbook_id", "=", $request->get("workbook_id")];
-        }
-
-        return Task::where($filters)->get();
+        return $taskToKeep;
     }
 
     /**
@@ -60,20 +66,37 @@ class TaskController extends Controller
         $task->name = $request->input(("name"));
 
         // Description
-        if($request->get("description")) {
+        if ($request->get("description")) {
             $task->description = $request->get("description");
         }
 
         // Priority
-        if($request->get("priority")) {
+        if ($request->get("priority")) {
             $task->priority = $request->input("priority");
         }
 
-        // Priority
-        if($request->get("end_date")) {
+        // Workbook ID
+        if ($request->get("workbook_id")) {
+            $task->workbook_id = $request->input("workbook_id");
+        }
+
+        // End_date
+        if ($request->get("end_date")) {
             $task->end_date = $request->input("end_date");
         }
+
         $task->save();
+
+        //best find
+        $group_id = Workbook::find($task->workbook_id)->group_id;
+
+        $usersInGroup = Group::with("users")->find($group_id)->users;
+
+        $userIDs = [];
+        foreach($usersInGroup as $user){
+            $userIDs[$user->id] = ['checked' => false];
+        }
+        $task->users()->attach($userIDs);
     }
 
     /**
@@ -96,25 +119,44 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $task = Task::findOrFail($id);
-
-        $task->name = $request->input(("name"));
-
-        // Description
-        if($request->get("description")) {
-            $task->description = $request->get("description");
+        // $task = Task::findOrFail($id);
+        $tasks = Auth::user()->tasks;
+        $task = null;
+        foreach ($tasks as $t) {
+            if ($t->id == $id) {
+                $task = $t;
+            }
         }
+        if ($task != null) {
+            print($task);
+            //name
+            if($request->get("name")){
+                $task->name = $request->input(("name"));
+            }            
 
-        // Priority
-        if($request->get("priority")) {
-            $task->priority = $request->input("priority");
-        }
+            // Description
+            if ($request->get("description")) {
+                $task->description = $request->get("description");
+            }
 
-        // Priority
-        if($request->get("end_date")) {
-            $task->end_date = $request->input("end_date");
+            // Priority
+            if ($request->get("priority")) {
+                $task->priority = $request->input("priority");
+            }
+
+            // End_date
+            if ($request->get("end_date")) {
+                $task->end_date = $request->input("end_date");
+            }
+
+            // Checked
+            if ($request->get("checked")) {
+                $task->pivot->checked = !$task->pivot->checked;
+            }
+
+            $task->save();
+            $task->pivot->save();
         }
-        $task->save();
     }
 
     /**
