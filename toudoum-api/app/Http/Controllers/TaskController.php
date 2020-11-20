@@ -87,7 +87,6 @@ class TaskController extends Controller
 
         $task->save();
 
-        //best find
         $group_id = Workbook::find($task->workbook_id)->group_id;
 
         $usersInGroup = Group::with("users")->find($group_id)->users;

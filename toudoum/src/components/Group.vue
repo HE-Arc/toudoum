@@ -8,7 +8,7 @@
                 </v-btn>
             </template>
             <v-card elevation="4" class="pa-md-4 mx-lg-auto">
-                <v-row> <v-text-field label="Group name" :value="groupName"></v-text-field></v-row>
+                <v-row> <v-text-field label="Group name" v-model="groupName"></v-text-field></v-row>
                 <v-row>
                     <v-autocomplete
                         chips
@@ -16,6 +16,7 @@
                         deletable-chips
                         multiple
                         :items="usersNames"
+                        v-model="usersSelected"
                     ></v-autocomplete
                 ></v-row>
                 <v-row> <v-btn color="primary" v-on:click="save">Save</v-btn> </v-row>
@@ -24,8 +25,8 @@
         <v-list flat subheader three-line>
             <v-subheader>Groups</v-subheader>
             <v-list-item-group>
-                <v-list-item v-for="group in this.groups" v-bind:key="group.id"> 
-                {{group.name}}
+                <v-list-item v-for="group in this.groups" v-bind:key="group.id">
+                    {{ group.name }}
                 </v-list-item>
             </v-list-item-group>
         </v-list>
@@ -36,7 +37,6 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
-import { ITask } from "@/models/ITask";
 import { IUser } from "@/models/IUser";
 import { IGroup } from "@/models/IGroup";
 import Api from "@/api/ApiRequester";
@@ -45,8 +45,8 @@ export default Vue.extend({
     async created() {
         this.groups = await Api.get<IGroup[]>("groups?by_token=true");
         this.users = await Api.get<IUser[]>("users");
-        this.users.forEach((u) => {
-            this.usersNames.push(u.name +" "+ u.firstname);
+        this.users.forEach((u: IUser) => {
+            this.usersNames.push(u.name + " " + u.firstname);
         });
     },
 
@@ -60,13 +60,30 @@ export default Vue.extend({
             groupName: "",
 
             users: {} as IUser[],
-            usersNames:[]
+            usersNames: [] as string[],
+            usersSelected: []
         };
     },
 
     methods: {
         save: function () {
-            console.log("TODO: REQUEST POST TO CREATE OR UPDATE A GROUP");
+            // const usersIdSelected = []
+            // this.users.forEach((u) => {
+            //     this.usersSelected.forEach(uSelected => {
+            //         if(uSelected == u.name + " " + u.firstname){
+            //             usersIdSelected.push(u.id);
+            //         }
+            //     });
+                
+            // });
+
+            // console.table(usersIdSelected);
+            // Api.post("groups", {
+            //     name: this.groupname,
+            //     users: usersIdSelected
+            // });
+
+            this.dialog = false;
         }
     }
 });

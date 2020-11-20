@@ -50,7 +50,7 @@ export default Vue.extend({
     },
     async created() {
         this.groups = await Api.get<IGroup[]>("groups?by_token=true");
-        this.groups.forEach((g) => {
+        this.groups.forEach((g: IGroup) => {
             this.itemGroups.push(g.name);
         });
         this.groupSelected = this.groups[0].name;
@@ -63,7 +63,7 @@ export default Vue.extend({
             dialog: false,
             workbookName: "",
             groups: {} as IGroup[],
-            itemGroups: [],
+            itemGroups: [] as string[],
             groupSelected: "",
             shared: true
         };
@@ -72,7 +72,7 @@ export default Vue.extend({
         save: function () {
             let tmpGroupId = null;
             if (this.shared) {
-                this.groups.forEach((g) => {
+                this.groups.forEach((g: IGroup) => {
                     if (g.name == this.groupSelected) {
                         tmpGroupId = g.id;
                     }

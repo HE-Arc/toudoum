@@ -68,6 +68,10 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->input("name");
         $group->save();
+
+        $group->users()->attach($request->input("users"));
+
+
     }
 
     /**
