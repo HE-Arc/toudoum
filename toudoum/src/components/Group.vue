@@ -56,7 +56,6 @@ export default Vue.extend({
             dialog: false,
             groups: {} as IGroup[],
 
-            //TODO REPLACE BY GROUP NAME IF IT S A MODIFICATION
             groupName: "",
 
             users: {} as IUser[],
