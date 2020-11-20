@@ -3,6 +3,7 @@ import VueRouter, { NavigationGuardNext, Route, RouteConfig, RouteRecord } from 
 import SignUp from '../views/SignUp.vue'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Account from '../views/Account.vue'
 import Logout from '../views/Logout.vue'
 import store from '@/store'
 import Workbooks from '@/views/Workbooks.vue'
@@ -36,7 +37,7 @@ const routes: Array<RouteConfig> = [
     {
         path: '/Account',
         name: 'Account',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/Account.vue'),
         meta: {
             onlyLogged: true
         }
@@ -87,7 +88,16 @@ const routes: Array<RouteConfig> = [
         props: true,
         component: Tasks,
         meta: {
-            onlyLogged: true
+            onlyLogged: false
+        },
+        
+    },
+    {
+        path: '/account',
+        name: 'Account',
+        component: Account,
+        meta: {
+            onlyLogged: false
         }
     },
     {

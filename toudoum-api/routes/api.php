@@ -47,7 +47,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     /**
      * User routes
      */
-    Route::apiResource('users', UserController::class);
+    Route::get('users', [UserController::class, 'index']);
+    Route::post('users', [UserController::class, 'store']);
+    Route::patch('users', [UserController::class, 'update']);
+    Route::delete('users', [UserController::class, 'destroy']);
     /**
      * Task routes
      */
