@@ -27,6 +27,9 @@ class GroupController extends Controller
             $filters[] = ["name", "like,", "%" . $request->get("name") . "%"];
         }
 
+        if ($request->has("by_token")) {
+            return Auth::user()->groups;
+        }
         return Group::where($filters)->get();
 
 
