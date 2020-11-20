@@ -78,16 +78,10 @@ export default Vue.extend({
                     }
                 });
             }
-            if (this.shared) {
-                Api.post("workbooks", {
-                    name: this.workbookName,
-                    group_id: tmpGroupId
-                });
-            }else{
-                Api.post("workbooks", {
-                    name: this.workbookName
-                });
-            }
+            Api.post("workbooks", {
+                name: this.workbookName,
+                group_id: tmpGroupId
+            });
 
             this.dialog = false;
             // router.go(0);
