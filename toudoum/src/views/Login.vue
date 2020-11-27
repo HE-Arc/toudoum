@@ -40,6 +40,18 @@
                     >
                     <v-spacer></v-spacer>
                     <v-btn to="/SignUp" text color="accent  mb-5 mt-0"> Create an account </v-btn>
+                    <v-spacer></v-spacer>
+
+                    <v-flex>
+                        <v-layout column align-center>
+                            <v-switch
+                                v-model="$vuetify.theme.dark"
+                                inset
+                                label="Dark Theme"
+                                persistent-hint
+                            ></v-switch>
+                        </v-layout>
+                    </v-flex>
                 </v-card>
             </v-col>
         </v-row>

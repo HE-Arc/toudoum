@@ -4,13 +4,6 @@
         <v-main>
             <Header />
             <router-view></router-view>
-            <v-switch
-        v-model="$vuetify.theme.dark"
-        hint="This toggles the global state of the Vuetify theme"
-        inset
-        label="Vuetify Theme Dark"
-        persistent-hint
-      ></v-switch>
         </v-main>
     </v-app>
 </template>
