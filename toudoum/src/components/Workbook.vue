@@ -13,7 +13,7 @@
           ></v-img>
         </v-list-item-avatar>
 
-        <v-list-item-content>
+        <v-list-item-content class="all-width">
           <v-list-item-title class="white--text">Author Workbook</v-list-item-title>
         </v-list-item-content>
 
@@ -64,4 +64,7 @@ export default Vue.extend({
 
 <!--CSS-->
 <style scoped>
+    .all-width {
+        flex: 2;
+    }
 </style>
