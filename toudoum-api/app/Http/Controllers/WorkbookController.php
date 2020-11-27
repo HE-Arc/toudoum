@@ -53,7 +53,7 @@ class WorkbookController extends Controller
         $workbook = new Workbook();
         $workbook->name = $request->input("name");
         $workbook->group_id = $request->input("group_id");
-        $workbook->user_id = $request->input("user_id");
+        $workbook->user_id = Auth::user()->id;
         $workbook->save();
     }
 

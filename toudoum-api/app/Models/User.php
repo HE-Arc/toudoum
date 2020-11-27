@@ -23,7 +23,7 @@ class User extends Authenticatable
      * Make the relationchip n to n between users and groups
      */
     public function groups(){
-        return $this->belongsToMany('App\Models\Group','user_group','user_id','group_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Group','user_group','user_id','group_id')->distinct()->withTimestamps();
     }
 
     /**

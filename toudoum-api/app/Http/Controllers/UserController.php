@@ -9,6 +9,7 @@ use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\Group;
 
 
 class UserController extends Controller
@@ -37,9 +38,14 @@ class UserController extends Controller
             $filters[] = ["email", "like", "%" . $request->get("email") . "%"];
         }
 
-        // Email
+        // Token
         if($request->has("by_token")) {
             $filters[] = ["id", "=",Auth::user()->id];
+        }
+
+        // Group ID
+        if($request->has("group_id")) {
+            return Group::with("users")->find($request->get("group_id"))->users;
         }
 
         return User::where($filters)->get();
