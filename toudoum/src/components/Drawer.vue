@@ -6,8 +6,7 @@
             <v-list-item class="px-2" two-line>
           <v-list-item-avatar>
                     <v-img
-                        src="https://avatars1.githubusercontent.com/u/19173830?s=460&u=08af2e129410fb95c81af06cfdbd2306288aa8cd&v=4"
-                    ></v-img>
+                        :src="url" />
                 </v-list-item-avatar>
 
           <v-list-item-content>
@@ -34,12 +33,19 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
-import { IListMenu } from "@/models/IListMenu"
+import { IListMenu } from "@/models/IListMenu"            
+import Api from "@/api/ApiRequester";
+import { ToudoumError422 } from '@/api/ToudoumError422';
+import { ToudoumError } from '@/api/ToudoumError';
 
 export default Vue.extend({
     name: "Drawer",
+    async created() {
+        this.getAvatar();
+    },
     data() {
         return {
+            url: "",
             links: [
                 {
                     name: "My account",
@@ -62,6 +68,13 @@ export default Vue.extend({
                     to: "/Logout"
                 }
             ] as Array<IListMenu>
+        }
+    },
+    methods: {
+        getAvatar: async function()
+        {
+            const reponse = await Api.get("avatar")
+            this.url = 'http://localhost:8000' + reponse
         }
     }
 });

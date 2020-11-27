@@ -7,6 +7,7 @@ use App\Http\Controllers\WorkbookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserAvatarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('users', [UserController::class, 'store']);
     Route::patch('users', [UserController::class, 'update']);
     Route::delete('users', [UserController::class, 'destroy']);
+    Route::post('avatar', [UserAvatarController::class, 'update']);
+    Route::get('avatar', [UserAvatarController::class, 'get']);
     /**
      * Task routes
      */

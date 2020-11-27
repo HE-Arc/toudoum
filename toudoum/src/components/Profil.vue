@@ -2,6 +2,8 @@
 <template>
     <div>
         <h3>Profil</h3>
+        <v-row>
+        <v-col>
         <v-form
             ref="form"
             v-model="valid"
@@ -51,6 +53,26 @@
                 Modifier et sauvegarder
             </v-btn>
         </v-form>
+        </v-col>
+        <v-col>
+        <div>
+            <v-img
+                v:if="url" :src="url"
+            ></v-img>
+            <v-file-input
+            accept="images/*"
+            label="Profile's picture"
+            @change="onFileChange"
+            >
+            </v-file-input>
+            <v-btn
+            @click="sendPicture"
+            >
+                Envoyer
+            </v-btn>
+        </div>
+        </v-col>
+        </v-row>
     </div>
 </template>
 
@@ -83,6 +105,8 @@ export default Vue.extend({
     },
     data() {
         return {
+            url : "",
+            file : File,
             valid : false,
             rules: {
                 required: (value: string) => !!value || "Required",
@@ -108,6 +132,30 @@ export default Vue.extend({
                     password_confirmation: this.user.password_confirmation
                 });
                 this.succes()
+            } catch (e) {
+                if (e instanceof ToudoumError422) {
+                    const errors: Error422 = e.data.errors;
+                } else if (e instanceof ToudoumError) {
+                    console.log(e.message); // Error (401, 404 or 500,...)
+                }
+            }
+        },
+        onFileChange: function(e : File)
+        {
+            this.file = e;
+            console.log(e)
+            this.url = URL.createObjectURL(e)
+        },
+        sendPicture: async function(){
+            try {
+
+                if(this.file != null)
+                {
+                let formData : FormData = new FormData()
+                formData.append('avatar', this.file)
+                await Api.formData("/avatar", formData);
+                this.succes()
+                }
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;
