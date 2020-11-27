@@ -2,7 +2,7 @@
 <template>
     <v-card elevation="4">
         <v-dialog v-model="dialog" max-width="400px">
-            <template v-slot:activator="{ on, attrs }">
+            <template v-slot:activator="{ on, attrs }" v-if="!readOnly">
                 <v-btn color="primary" dark absolute top right fab v-bind="attrs" v-on="on">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
@@ -52,6 +52,10 @@ import Api from "@/api/ApiRequester";
 export default Vue.extend({
     props: {
         tasks: {} as () => ITask[],
+        readOnly: {
+            type: Boolean,
+            default: false
+        },
         workbook_title: String,
         workbook_id: Number
     },

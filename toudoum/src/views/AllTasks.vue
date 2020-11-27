@@ -5,12 +5,14 @@
             <v-col sm="12" md="12" lg="6">
                 <h2 class="h5 mt-4 mb-2">Today tasks</h2>
                 <TasksList
+                    :readOnly="true"
                     :tasks="todayTasks"
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
                 />
                 <h2 class="h5 mt-4 mb-2">Rest of the tasks</h2>
                 <TasksList
+                    :readOnly="true"
                     :tasks="weekTasks"
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
@@ -19,6 +21,7 @@
             <v-col sm="12" md="12" lg="6">
                 <h2 class="h5 mt-4 mb-2">Week tasks</h2>
                 <TasksList
+                    :readOnly="true"
                     :tasks="restTasks"
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
