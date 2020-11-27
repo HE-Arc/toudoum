@@ -1,7 +1,7 @@
 <!-- TEMPLATE -->
 <template>
-    <v-card class="primary" elevation="4" v-on:click="goToTask(idprops)">
-        <v-card-title class="white--text">{{titleprops}}</v-card-title>
+    <v-card class="primary" elevation="4">
+        <v-card-title class="white--text">hello</v-card-title>
 
         <v-card-actions>
       <v-list-item class="grow">
@@ -46,12 +46,6 @@ export default Vue.extend({
         return {
             settings: [],
             };
-    },
-
-    methods: {
-        goToTask:function (id: string){
-            router.push({name: 'Tasks', params: { workbook_id:id }});
-        }
     }
 
 });
