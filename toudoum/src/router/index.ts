@@ -8,6 +8,7 @@ import Logout from '../views/Logout.vue'
 import store from '@/store'
 import Workbooks from '@/views/Workbooks.vue'
 import Tasks from '@/views/Tasks.vue'
+import AllTasks from '@/views/AllTasks.vue'
 import TaskDetails from '@/views/TaskDetails.vue'
 import Api from "@/api/ApiRequester";
 import { IUser } from '@/models/IUser'
@@ -87,6 +88,16 @@ const routes: Array<RouteConfig> = [
         name: 'Tasks',
         props: true,
         component: Tasks,
+        meta: {
+            onlyLogged: true
+        },
+        
+    },
+    {
+        path: '/Tasks',
+        name: 'AllTasks',
+        props: true,
+        component: AllTasks,
         meta: {
             onlyLogged: true
         },

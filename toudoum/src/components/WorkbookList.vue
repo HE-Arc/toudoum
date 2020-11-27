@@ -1,13 +1,6 @@
 <!-- TEMPLATE -->
 <template>
     <v-container>
-<<<<<<< HEAD
-        <v-row>
-            <v-col v-for="w in workbooks" :key="w.id" sm="12" md="6" lg="6" xl="4" >
-                <Workbook :titleprops="w.name" :idprops="w.id+''"/>
-            </v-col>
-        </v-row>
-=======
         <v-card elevation="4" class="pa-6">
             <v-dialog v-model="dialog" max-width="400px">
                 <template v-slot:activator="{ on, attrs }">
@@ -39,7 +32,6 @@
                 </v-col>
             </v-row>
         </v-card>
->>>>>>> develop
     </v-container>
 </template>
 
