@@ -25,9 +25,7 @@ class StoreWorkbookRequest extends ApiRequest
     public function messages()
     {
         return [
-            'name.required'     => 'A name for the workbook is required.',
-            'user_id.required'     => 'Foreignkey on user_id is missing.',
-            'group_id.required'     => 'Foreignkey on group_id is missing.'
+            'name.required'     => 'A name for the workbook is required.'
         ];
     }
 
@@ -39,9 +37,7 @@ class StoreWorkbookRequest extends ApiRequest
     public function rules()
     {
         return [
-            'name'    => 'required|max:255',
-            'user_id'    => 'required',
-            'group_id'    => 'required',
+            'name'    => 'required|max:255'
         ];
     }
 }

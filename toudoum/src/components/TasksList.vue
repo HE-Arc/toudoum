@@ -87,8 +87,10 @@ export default Vue.extend({
                 workbook_id: this.workbook_id
             });
             this.dialog = false;
-            router.go(0);
-        }
+            
+            //BUG NOW
+            // router.go(0);
+        },
     }
 });
 </script>
