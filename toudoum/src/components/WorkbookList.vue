@@ -4,7 +4,6 @@
         <v-row>
             <v-col v-for="w in workbooks" :key="w.id" :cols="6">
                 <Workbook :titleprops="w.name" :idprops="w.id+''"/>
-                
             </v-col>
         </v-row>
     </v-container>
