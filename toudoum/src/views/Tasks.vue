@@ -1,6 +1,6 @@
 <template>
     <v-container class="marginTop">
-        <h1>Tasks</h1>
+        <h1>Tasks in Workbook &laquo; {{ workbookName }} &raquo;</h1>
         <v-row>
             <v-col sm="12" md="12" lg="6">
                 <TasksList
@@ -10,8 +10,7 @@
                 />
             </v-col>
             <v-col sm="12" md="12" lg="6">
-                <WorkbookInfo
-                />
+                <WorkbookInfo :workbookId="workbookId" />
             </v-col>
         </v-row>
     </v-container>

@@ -1,33 +1,27 @@
 <!-- TEMPLATE -->
 <template>
     <v-card class="primary" elevation="4">
-        <v-card-title class="white--text">hello</v-card-title>
+        <v-card-title class="white--text">Workbook information</v-card-title>
 
-        <v-card-actions>
-      <v-list-item class="grow">
-        <v-list-item-avatar color="grey darken-3">
-          <v-img
-            class="elevation-6"
-            alt=""
-            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-          ></v-img>
-        </v-list-item-avatar>
-
-        <v-list-item-content class="all-width">
-          <v-list-item-title class="white--text">Author Workbook</v-list-item-title>
-        </v-list-item-content>
-
-        <v-row
-          align="center"
-          justify="end"
-        >
-          <v-icon class="mr-1">
-            mdi-file-tree
-          </v-icon>
-          <span class="subheading">45</span>
-        </v-row>
-      </v-list-item>
-    </v-card-actions>
+        <v-card-text>
+            <v-list subheader class="background-primary">
+                <v-subheader>Author</v-subheader>
+                <UserListItem
+                    username="Julien Dos Santos Ferreira"
+                    imgUrl="https://cdn.vuetifyjs.com/images/lists/1.jpg"
+                />
+            </v-list>
+            <v-divider></v-divider>
+            <v-list subheader class="background-primary">
+                <v-subheader>Members</v-subheader>
+                <UserListItem
+                    v-for="chat in recent"
+                    :key="chat.title"
+                    :username="chat.title"
+                    :imgUrl="chat.avatar"
+                />
+            </v-list>
+        </v-card-text>
     </v-card>
 </template>
 
@@ -35,25 +29,42 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
+import UserListItem from "@/components/UserListItem.vue";
 import router from "../router";
 
 export default Vue.extend({
+    components: { UserListItem },
     props: {
-        titleprops:String,
-        idprops:String
+        workbookId: Number
     },
-    data() {
-        return {
-            settings: [],
-            };
-    }
-
+    data: () => ({
+        recent: [
+            {
+                active: true,
+                avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+                title: "Jason Oner"
+            },
+            {
+                active: true,
+                avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+                title: "Mike Carlson"
+            },
+            {
+                avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+                title: "Cindy Baker"
+            },
+            {
+                avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
+                title: "Ali Connors"
+            }
+        ]
+    })
 });
 </script>
 
 <!--CSS-->
 <style scoped>
-    .all-width {
-        flex: 2;
-    }
+.all-width {
+    flex: 2;
+}
 </style>

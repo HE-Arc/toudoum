@@ -14,8 +14,6 @@
         </v-dialog>
 
         <v-list flat subheader three-line>
-            <v-subheader>{{ workbook_title }}</v-subheader>
-
             <v-list-item-group>
                 <v-list-item v-for="task in tasks" v-bind:key="task.id">
                     <!--CHECKBOX-->
@@ -29,7 +27,9 @@
                     <!--TITLE AND PRIORITY-->
                     <v-list-item-content v-on:click="clickOntask(task.id + '')">
                         <v-list-item-title>{{ task.name }}</v-list-item-title>
-                        <v-list-item-subtitle>{{ task.description }}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{
+                            task.description != undefined ? task.description : "-"
+                        }}</v-list-item-subtitle>
                     </v-list-item-content>
 
                     <!--DO DATE-->
@@ -53,13 +53,13 @@ export default Vue.extend({
     props: {
         tasks: {} as () => ITask[],
         workbook_title: String,
-        workbook_id: Number,
+        workbook_id: Number
     },
     data() {
         return {
             settings: [],
             dialog: false,
-            taskName: "",
+            taskName: ""
         };
     },
 
@@ -77,18 +77,18 @@ export default Vue.extend({
                 }
             }
         },
-        save: function(){
+        save: function () {
             const date = new Date();
-            const goodDate = date.toISOString().split('T')[0];
+            const goodDate = date.toISOString().split("T")[0];
             console.log(this.workbook_id);
             Api.post("tasks", {
-                name:this.taskName,
-                end_date:goodDate,
-                workbook_id:this.workbook_id
+                name: this.taskName,
+                end_date: goodDate,
+                workbook_id: this.workbook_id
             });
             this.dialog = false;
             router.go(0);
-        },
+        }
     }
 });
 </script>

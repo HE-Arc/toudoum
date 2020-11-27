@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height fluid class="pa-0 background">
+    <v-container fill-height fluid class="pa-0 background-gradient">
         <v-row align="center" justify="center">
             <v-col align="center">
                 <v-card class="mx-auto" max-width="450">
