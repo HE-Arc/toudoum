@@ -91,7 +91,6 @@ export default Vue.extend({
             this.dialog = true;
             this.groupName = name;
             this.groupId = id;
-            console.log(this.groupId);
             this.usersSelected = [];
             Api.get<IUser[]>("users?group_id=" + this.groupId).then((usersAlredySelected) => {
                 usersAlredySelected.forEach((u) => {
@@ -110,7 +109,6 @@ export default Vue.extend({
                 });
             });
             usersIdSelected.push(this.$typedStore.getters.userId);
-            console.log(this.groupId);
             if (this.groupId == "") {
                 Api.post("groups", {
                     name: this.groupName,
@@ -122,7 +120,6 @@ export default Vue.extend({
                     users: usersIdSelected
                 });
             }
-
             this.dialog = false;
         }
     }
