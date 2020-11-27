@@ -88,7 +88,7 @@ const routes: Array<RouteConfig> = [
         props: true,
         component: Tasks,
         meta: {
-            onlyLogged: false
+            onlyLogged: true
         },
         
     },

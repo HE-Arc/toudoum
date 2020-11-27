@@ -27,6 +27,9 @@ class GroupController extends Controller
             $filters[] = ["name", "like,", "%" . $request->get("name") . "%"];
         }
 
+        if ($request->has("by_token")) {
+            return Auth::user()->groups;
+        }
         return Group::where($filters)->get();
 
 
@@ -65,6 +68,10 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->input("name");
         $group->save();
+
+        $group->users()->attach($request->input("users"));
+
+
     }
 
     /**
@@ -91,6 +98,7 @@ class GroupController extends Controller
 
         $group->name = $request->input('name');
         $group->save();
+        $group->users()->sync($request->input('users'));
     }
 
     /**
