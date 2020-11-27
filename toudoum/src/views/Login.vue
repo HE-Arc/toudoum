@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height fluid>
+    <v-container fill-height fluid class="pa-0 background">
         <v-row align="center" justify="center">
             <v-col align="center">
                 <v-card class="mx-auto" max-width="450">
@@ -92,3 +92,9 @@ export default Vue.extend({
     }
 });
 </script>
+
+<style scoped lang="scss">
+//   .background {
+//     background: linear-gradient(60deg, var(--v-primary-lighten5), var(--v-primary-lighten1));
+//   }
+</style>
