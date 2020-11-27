@@ -3,8 +3,23 @@
         <h1>All your tasks</h1>
         <v-row>
             <v-col sm="12" md="12" lg="6">
+                <h2 class="h5 mt-4 mb-2">Today tasks</h2>
                 <TasksList
-                    :tasks="t"
+                    :tasks="todayTasks"
+                    :workbook_title="workbookName"
+                    :workbook_id="this.workbookId"
+                />
+                <h2 class="h5 mt-4 mb-2">Rest of the tasks</h2>
+                <TasksList
+                    :tasks="weekTasks"
+                    :workbook_title="workbookName"
+                    :workbook_id="this.workbookId"
+                />
+            </v-col>
+            <v-col sm="12" md="12" lg="6">
+                <h2 class="h5 mt-4 mb-2">Week tasks</h2>
+                <TasksList
+                    :tasks="restTasks"
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
                 />
@@ -28,11 +43,19 @@ export default Vue.extend({
         workbook_id: String
     },
     async beforeMount() {
-        this.t = await Api.get<ITask[]>("tasks");
+        this.allTasks = await Api.get<ITask[]>("tasks");
+
+        // TODO : sort tasks
+        this.todayTasks = this.allTasks;
+        this.weekTasks = this.allTasks;
+        this.restTasks = this.allTasks;
     },
     data: function () {
         return {
-            t: {} as ITask[],
+            allTasks: {} as ITask[],
+            todayTasks: {} as ITask[],
+            weekTasks: {} as ITask[],
+            restTasks: {} as ITask[],
             workbookName: "",
             workbookId: 0
         };
