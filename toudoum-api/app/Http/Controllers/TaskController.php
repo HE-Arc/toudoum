@@ -37,11 +37,11 @@ class TaskController extends Controller
         $taskToKeep = [];
         if ($workbookidFilter) {
             foreach ($tasks as $task) {
-                if ($task['workbook_id'] == $request->get("workbook_id")) {
+                if ($task->workbook_id == $request->get("workbook_id")) {
                     array_push($taskToKeep, $task);
                 }
             }
-        } elseif ($idFilter) {
+        } else if ($idFilter) {
             foreach ($tasks as $task) {
                 if ($task['id'] == $request->get("id")) {
                     array_push($taskToKeep, $task);
@@ -64,6 +64,7 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->name = $request->input(("name"));
+        $shared = false;
 
         // Description
         if ($request->get("description")) {
@@ -78,6 +79,7 @@ class TaskController extends Controller
         // Workbook ID
         if ($request->get("workbook_id")) {
             $task->workbook_id = $request->input("workbook_id");
+            $shared = true;
         }
 
         // End_date
@@ -88,14 +90,20 @@ class TaskController extends Controller
         $task->save();
 
         $group_id = Workbook::find($task->workbook_id)->group_id;
+        if($group_id != null){
+            $usersInGroup = Group::with("users")->find($group_id)->users;
 
-        $usersInGroup = Group::with("users")->find($group_id)->users;
-
-        $userIDs = [];
-        foreach($usersInGroup as $user){
-            $userIDs[$user->id] = ['checked' => false];
+            $userIDs = [];
+            foreach ($usersInGroup as $user) {
+                $userIDs[$user->id] = ['checked' => false];
+            }
+            $task->users()->attach($userIDs);
+        }else{
+            $task->users()->attach(Auth::user()->id,['checked' => false]);
         }
-        $task->users()->attach($userIDs);
+
+        
+        
     }
 
     /**
@@ -129,9 +137,9 @@ class TaskController extends Controller
         if ($task != null) {
             print($task);
             //name
-            if($request->get("name")){
+            if ($request->get("name")) {
                 $task->name = $request->input(("name"));
-            }            
+            }
 
             // Description
             if ($request->get("description")) {

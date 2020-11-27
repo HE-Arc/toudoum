@@ -3,7 +3,17 @@
     <v-container>
         <v-dialog v-model="dialog" max-width="400px">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark absolute top right fab v-bind="attrs" v-on="on">
+                <v-btn
+                    color="primary"
+                    dark
+                    absolute
+                    top
+                    right
+                    fab
+                    v-bind="attrs"
+                    v-on="on"
+                    v-on:click="add"
+                >
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </template>
@@ -25,7 +35,11 @@
         <v-list flat subheader three-line>
             <v-subheader>Groups</v-subheader>
             <v-list-item-group>
-                <v-list-item v-for="group in this.groups" v-bind:key="group.id">
+                <v-list-item
+                    v-for="group in this.groups"
+                    v-bind:key="group.id"
+                    v-on:click="clickOnGroup(group.id + '', group.name)"
+                >
                     {{ group.name }}
                 </v-list-item>
             </v-list-item-group>
@@ -46,7 +60,9 @@ export default Vue.extend({
         this.groups = await Api.get<IGroup[]>("groups?by_token=true");
         this.users = await Api.get<IUser[]>("users");
         this.users.forEach((u: IUser) => {
-            this.usersNames.push(u.name + " " + u.firstname);
+            if (u.id != this.$typedStore.getters.userId) {
+                this.usersNames.push(u.name + " " + u.firstname);
+            }
         });
     },
 
@@ -57,30 +73,55 @@ export default Vue.extend({
             groups: {} as IGroup[],
 
             groupName: "",
+            groupId: "",
 
             users: {} as IUser[],
             usersNames: [] as string[],
-            usersSelected: []
+            usersSelected: [] as string[]
         };
     },
 
     methods: {
+        add: function () {
+            this.groupName = "";
+            this.groupId = "";
+            this.usersSelected = [];
+        },
+        clickOnGroup: function (id: string, name: string) {
+            this.dialog = true;
+            this.groupName = name;
+            this.groupId = id;
+            console.log(this.groupId);
+            this.usersSelected = [];
+            Api.get<IUser[]>("users?group_id=" + this.groupId).then((usersAlredySelected) => {
+                usersAlredySelected.forEach((u) => {
+                    this.usersSelected.push(u.name + " " + u.firstname);
+                });
+            });
+        },
+
         save: function () {
-            const usersIdSelected: number[] = []
+            const usersIdSelected: number[] = [];
             this.users.forEach((u: IUser) => {
-                this.usersSelected.forEach(uSelected => {
-                    if(uSelected == u.name + " " + u.firstname){
+                this.usersSelected.forEach((uSelected) => {
+                    if (uSelected == u.name + " " + u.firstname) {
                         usersIdSelected.push(u.id);
                     }
                 });
-                
             });
-
-            console.table(usersIdSelected);
-            Api.post("groups", {
-                name: this.groupName,
-                users: usersIdSelected
-            });
+            usersIdSelected.push(this.$typedStore.getters.userId);
+            console.log(this.groupId);
+            if (this.groupId == "") {
+                Api.post("groups", {
+                    name: this.groupName,
+                    users: usersIdSelected
+                });
+            } else {
+                Api.patch("groups/" + this.groupId, {
+                    name: this.groupName,
+                    users: usersIdSelected
+                });
+            }
 
             this.dialog = false;
         }
