@@ -2,24 +2,11 @@
 <template>
     <v-container>
         <v-dialog v-model="dialog" max-width="400px">
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    color="primary"
-                    dark
-                    absolute
-                    top
-                    right
-                    fab
-                    v-bind="attrs"
-                    v-on="on"
-                    v-on:click="add"
-                >
-                    <v-icon>mdi-plus</v-icon>
-                </v-btn>
-            </template>
-            <v-card elevation="4" class="pa-md-4 mx-lg-auto">
-                <v-row> <v-text-field label="Group name" v-model="groupName"></v-text-field></v-row>
-                <v-row>
+            <v-card elevation="4" class="mx-lg-auto">
+                <v-card-title class="headline grey lighten-2">Group</v-card-title>
+                <v-card-text>
+                    <v-text-field label="Group name" v-model="groupName"></v-text-field>
+
                     <v-autocomplete
                         chips
                         clearable
@@ -27,9 +14,13 @@
                         multiple
                         :items="usersNames"
                         v-model="usersSelected"
-                    ></v-autocomplete
-                ></v-row>
-                <v-row> <v-btn color="primary" v-on:click="save">Save</v-btn> </v-row>
+                    ></v-autocomplete>
+                </v-card-text>
+                <v-divider />
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" v-on:click="save">Save</v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
         <v-list flat subheader three-line>
