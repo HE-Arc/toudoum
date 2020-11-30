@@ -1,8 +1,11 @@
 <template>
     <v-container class="marginTop">
         <h1>All your tasks</h1>
-        <v-row>
-            <v-col sm="12" md="12" lg="6">
+        <masonry
+            :cols="{ default: 2, 720: 1 }"
+            :gutter="{ default: '30px', 700: '15px' }"
+        >
+            <div>
                 <h2 class="h5 mt-4 mb-2">Today tasks</h2>
                 <TasksList
                     :readOnly="true"
@@ -10,15 +13,8 @@
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
                 />
-                <h2 class="h5 mt-4 mb-2">Rest of the tasks</h2>
-                <TasksList
-                    :readOnly="true"
-                    :tasks="weekTasks"
-                    :workbook_title="workbookName"
-                    :workbook_id="this.workbookId"
-                />
-            </v-col>
-            <v-col sm="12" md="12" lg="6">
+            </div>
+            <div>
                 <h2 class="h5 mt-4 mb-2">Week tasks</h2>
                 <TasksList
                     :readOnly="true"
@@ -26,8 +22,17 @@
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
                 />
-            </v-col>
-        </v-row>
+            </div>
+            <div>
+                <h2 class="h5 mt-4 mb-2">Rest of the tasks</h2>
+                <TasksList
+                    :readOnly="true"
+                    :tasks="weekTasks"
+                    :workbook_title="workbookName"
+                    :workbook_id="this.workbookId"
+                />
+            </div>
+        </masonry>
     </v-container>
 </template>
 

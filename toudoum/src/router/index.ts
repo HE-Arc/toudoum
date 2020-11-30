@@ -12,7 +12,9 @@ import AllTasks from '@/views/AllTasks.vue'
 import TaskDetails from '@/views/TaskDetails.vue'
 import Api from "@/api/ApiRequester";
 import { IUser } from '@/models/IUser'
+import VueMasonry from 'vue-masonry-css';
 
+Vue.use(VueMasonry);
 Vue.use(VueRouter)
 
 /**
