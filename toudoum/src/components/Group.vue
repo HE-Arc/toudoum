@@ -82,7 +82,7 @@ export default Vue.extend({
             });
         },
 
-        save: function () {
+        save: async function () {
             const usersIdSelected: number[] = [];
             this.users.forEach((u: IUser) => {
                 this.usersSelected.forEach((uSelected) => {
@@ -103,6 +103,7 @@ export default Vue.extend({
                     users: usersIdSelected
                 });
             }
+            this.groups = await Api.get<IGroup[]>("groups?by_token=true");
             this.isModalOpen = false;
         }
     }

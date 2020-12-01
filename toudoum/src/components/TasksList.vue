@@ -1,17 +1,12 @@
 <!-- TEMPLATE -->
 <template>
     <v-card elevation="4">
-        <v-dialog v-model="dialog" max-width="400px">
-            <template v-slot:activator="{ on, attrs }" v-if="!readOnly">
-                <v-btn color="primary" dark absolute top right fab v-bind="attrs" v-on="on">
-                    <v-icon>mdi-plus</v-icon>
-                </v-btn>
-            </template>
-            <v-card elevation="4" class="pa-md-4 mx-lg-auto">
-                <v-row> <v-text-field label="Title" v-model="taskName"></v-text-field></v-row>
-                <v-row> <v-btn color="primary" v-on:click="save">Save</v-btn> </v-row>
-            </v-card>
-        </v-dialog>
+        <Modal title="Create a task" :edit="false" :onButtonClick="save" :opened="isModalOpen">
+            <v-text-field label="Title" v-model="taskName"></v-text-field>
+        </Modal>
+        <v-btn color="primary" dark absolute top right fab @click="openModal">
+            <v-icon>mdi-plus</v-icon>
+        </v-btn>
 
         <v-list flat subheader three-line>
             <v-list-item-group>
@@ -47,9 +42,11 @@
 import Vue from "vue";
 import { ITask } from "@/models/ITask";
 import router from "../router";
+import Modal from "@/components/Modal.vue";
 import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
+    components: { Modal },
     props: {
         tasks: {} as () => ITask[],
         readOnly: {
@@ -62,12 +59,15 @@ export default Vue.extend({
     data() {
         return {
             settings: [],
-            dialog: false,
+            isModalOpen: false,
             taskName: ""
         };
     },
 
     methods: {
+        openModal() {
+            this.isModalOpen = true;
+        },
         clickOntask: function (id: string) {
             router.push({ name: "TaskDetail", params: { task_id: id } });
         },
@@ -81,20 +81,20 @@ export default Vue.extend({
                 }
             }
         },
-        save: function () {
+        save: async function () {
             const date = new Date();
             const goodDate = date.toISOString().split("T")[0];
             console.log(this.workbook_id);
-            Api.post("tasks", {
+            await Api.post("tasks", {
                 name: this.taskName,
                 end_date: goodDate,
                 workbook_id: this.workbook_id
             });
-            this.dialog = false;
-            
+            this.isModalOpen = false;
+
             //BUG NOW
             // router.go(0);
-        },
+        }
     }
 });
 </script>

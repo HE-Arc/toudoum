@@ -1,7 +1,7 @@
 <!-- TEMPLATE -->
 <template>
     <v-container>
-        <v-dialog v-model="opened" max-width="400px">
+        <v-dialog persistent v-model="opened" max-width="400px">
             <v-card elevation="4" class="mx-lg-auto">
                 <v-card-title class="headline primary">{{ title }}</v-card-title>
                 <v-card-text class="pa-5">
@@ -10,6 +10,9 @@
                 <v-divider />
                 <v-card-actions>
                     <v-spacer></v-spacer>
+                    <v-btn dark @click="onCloseClick">
+                        Dismiss
+                    </v-btn>
                     <v-btn color="primary" v-on:click="onButtonClick">{{
                         edit ? "Edit" : "Save"
                     }}</v-btn>
@@ -29,7 +32,8 @@ export default Vue.extend({
         opened: Boolean,
         title: String,
         edit: Boolean,
-        onButtonClick: Function
+        onButtonClick: Function,
+        onCloseClick: Function
     }
 });
 </script>
