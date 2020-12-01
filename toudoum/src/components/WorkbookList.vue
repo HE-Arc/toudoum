@@ -3,10 +3,10 @@
     <v-container>
         <Modal
             :opened="isModalOpen"
-            title="OK"
+            title="Workbook creation"
             :edit="false"
             :onButtonClick="save"
-            :onCloseClick="() => this.isModalOpen = false"
+            :onCloseClick="() => (this.isModalOpen = false)"
             max-width="400px"
         >
             <v-text-field label="Title" v-model="workbookName"></v-text-field>
@@ -26,7 +26,7 @@
                 <v-icon>mdi-plus</v-icon>
             </v-btn>
             <v-row>
-                <v-col v-for="w in workbooks" :key="w.id" :cols="6">
+                <v-col v-for="w in workbooks" :key="w.id" sm="12" md="6" lg="4" xl="3">
                     <Workbook :titleprops="w.name" :idprops="w.id + ''" />
                 </v-col>
             </v-row>

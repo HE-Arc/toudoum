@@ -30,9 +30,9 @@ export default Vue.extend({
     props: {
         workbook_id: String
     },
-    async beforeMount() {
+    async created() {
         this.t = await Api.get<ITask[]>("tasks?workbook_id=" + this.workbook_id);
-        Api.get<IWorkbook[]>("workbooks?id=" + this.workbook_id).then((w: IWorkbook[]) => {
+        await Api.get<IWorkbook[]>("workbooks?id=" + this.workbook_id).then((w: IWorkbook[]) => {
             this.workbookName = w[0].name;
             this.workbookId = w[0].id;
         });
