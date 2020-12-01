@@ -20,6 +20,9 @@
         </Modal>
 
         <v-list flat subheader three-line>
+            <v-btn color="primary" dark absolute top right fab @click="() => isModalOpen = true">
+            <v-icon>mdi-plus</v-icon>
+        </v-btn>
             <v-subheader>Groups</v-subheader>
             <v-list-item-group>
                 <v-list-item
