@@ -1,10 +1,16 @@
 <!-- TEMPLATE -->
 <template>
     <v-card elevation="4">
-        <Modal title="Create a task" :edit="false" :onButtonClick="save" :opened="isModalOpen">
+        <Modal
+            title="Create a task"
+            :edit="false"
+            :onButtonClick="save"
+            :onCloseClick="() => (this.isModalOpen = false)"
+            :opened="isModalOpen"
+        >
             <v-text-field label="Title" v-model="taskName"></v-text-field>
         </Modal>
-        <v-btn color="primary" dark absolute top right fab @click="openModal">
+        <v-btn color="primary" dark absolute top right fab @click="openModal" v-if="!readOnly">
             <v-icon>mdi-plus</v-icon>
         </v-btn>
 

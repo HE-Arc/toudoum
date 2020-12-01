@@ -1,7 +1,13 @@
 <!-- TEMPLATE -->
 <template>
     <v-container>
-        <Modal title="Group" :onButtonClick="save" :edit="false" :opened="isModalOpen">
+        <Modal
+            title="Group"
+            :onButtonClick="save"
+            :onCloseClick="() => (this.isModalOpen = false)"
+            :edit="false"
+            :opened="isModalOpen"
+        >
             <v-text-field label="Group name" v-model="groupName"></v-text-field>
             <v-autocomplete
                 chips

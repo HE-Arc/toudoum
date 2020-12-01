@@ -6,6 +6,7 @@
             title="OK"
             :edit="false"
             :onButtonClick="save"
+            :onCloseClick="() => this.isModalOpen = false"
             max-width="400px"
         >
             <v-text-field label="Title" v-model="workbookName"></v-text-field>
