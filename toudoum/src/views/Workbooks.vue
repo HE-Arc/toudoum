@@ -16,7 +16,6 @@ export default Vue.extend({
     components: { WorkbookList },
     async beforeMount() {
         this.w = await Api.get<IWorkbook[]>("workbooks?by_token=true");
-        console.table(this.w);
     },
     data: function () {
         return {
@@ -28,6 +27,6 @@ export default Vue.extend({
 
 <style>
 .marginTop {
-    margin-top:72px;
+    margin-top: 72px;
 }
 </style>

@@ -1,28 +1,18 @@
 <!-- TEMPLATE -->
 <template>
     <v-container>
-        <v-dialog v-model="dialog" max-width="400px">
-            <v-card elevation="4" class="mx-lg-auto">
-                <v-card-title class="headline grey lighten-2">Group</v-card-title>
-                <v-card-text>
-                    <v-text-field label="Group name" v-model="groupName"></v-text-field>
+        <Modal title="Group" :onButtonClick="save" :edit="false" :opened="isModalOpen">
+            <v-text-field label="Group name" v-model="groupName"></v-text-field>
+            <v-autocomplete
+                chips
+                clearable
+                deletable-chips
+                multiple
+                :items="usersNames"
+                v-model="usersSelected"
+            ></v-autocomplete>
+        </Modal>
 
-                    <v-autocomplete
-                        chips
-                        clearable
-                        deletable-chips
-                        multiple
-                        :items="usersNames"
-                        v-model="usersSelected"
-                    ></v-autocomplete>
-                </v-card-text>
-                <v-divider />
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" v-on:click="save">Save</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
         <v-list flat subheader three-line>
             <v-subheader>Groups</v-subheader>
             <v-list-item-group>
@@ -44,9 +34,11 @@
 import Vue from "vue";
 import { IUser } from "@/models/IUser";
 import { IGroup } from "@/models/IGroup";
+import Modal from "@/components/Modal.vue";
 import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
+    components: { Modal },
     async created() {
         this.groups = await Api.get<IGroup[]>("groups?by_token=true");
         this.users = await Api.get<IUser[]>("users");
@@ -60,7 +52,7 @@ export default Vue.extend({
     data() {
         return {
             settings: [],
-            dialog: false,
+            isModalOpen: false,
             groups: {} as IGroup[],
 
             groupName: "",
@@ -79,7 +71,7 @@ export default Vue.extend({
             this.usersSelected = [];
         },
         clickOnGroup: function (id: string, name: string) {
-            this.dialog = true;
+            this.isModalOpen = true;
             this.groupName = name;
             this.groupId = id;
             this.usersSelected = [];
@@ -111,7 +103,7 @@ export default Vue.extend({
                     users: usersIdSelected
                 });
             }
-            this.dialog = false;
+            this.isModalOpen = false;
         }
     }
 });
