@@ -7,7 +7,8 @@
                 <Profil :user="user" />
             </div>
         </v-card>
-        <v-card elevation="4" class="pa-6 mt-12">
+        <h2 class="h5 mt-4">My groups</h2>
+        <v-card elevation="4" class="pa-6 mt-4">
             <Group/>
         </v-card>
     </v-container>

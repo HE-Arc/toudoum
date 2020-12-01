@@ -20,18 +20,26 @@
         </Modal>
 
         <v-list flat subheader three-line>
-            <v-btn color="primary" dark absolute top right fab @click="() => isModalOpen = true">
-            <v-icon>mdi-plus</v-icon>
-        </v-btn>
-            <v-subheader>Groups</v-subheader>
+            <v-btn color="primary" dark absolute top right fab @click="() => (isModalOpen = true)">
+                <v-icon>mdi-plus</v-icon>
+            </v-btn>
             <v-list-item-group>
-                <v-list-item
-                    v-for="group in this.groups"
-                    v-bind:key="group.id"
-                    v-on:click="clickOnGroup(group.id + '', group.name)"
-                >
-                    {{ group.name }}
-                </v-list-item>
+                <v-row class="d-flex">
+                    <v-col
+                        sm="12"
+                        md="6"
+                        lg="4"
+                        xl="3"
+                        v-for="group in this.groups"
+                        v-bind:key="group.id"
+                    >
+                        <GroupItem
+                            :title="group.name"
+                            @click="clickOnGroup(group.id + '', group.name)"
+                            :numberUsers="14"
+                        ></GroupItem>
+                    </v-col>
+                </v-row>
             </v-list-item-group>
         </v-list>
     </v-container>
@@ -44,10 +52,11 @@ import Vue from "vue";
 import { IUser } from "@/models/IUser";
 import { IGroup } from "@/models/IGroup";
 import Modal from "@/components/Modal.vue";
+import GroupItem from "@/components/GroupItem.vue";
 import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
-    components: { Modal },
+    components: { Modal, GroupItem },
     async created() {
         this.groups = await Api.get<IGroup[]>("groups?by_token=true");
         this.users = await Api.get<IUser[]>("users");
