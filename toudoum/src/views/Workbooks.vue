@@ -1,7 +1,7 @@
 <template>
     <v-container class="marginTop">
         <h1>Workbooks</h1>
-        <WorkbookList :workbooks="w" />
+        <WorkbookList :workbooks="w" :nbTasks="nbTasks" />
     </v-container>
 </template>
 
@@ -14,12 +14,14 @@ import WorkbookList from "@/components/WorkbookList.vue";
 export default Vue.extend({
     name: "Home",
     components: { WorkbookList },
-    async beforeMount() {
+    async created() {
         this.w = await Api.get<IWorkbook[]>("workbooks?by_token=true");
+        this.nbTasks = await Api.get<{}>("tasks?count_workbook_id=true");
     },
     data: function () {
         return {
-            w: {} as IWorkbook[]
+            w: {} as IWorkbook[],
+            nbTasks:{}
         };
     }
 });

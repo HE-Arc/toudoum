@@ -24,7 +24,7 @@
           <v-icon class="mr-1">
             mdi-file-tree
           </v-icon>
-          <span class="subheading">45</span>
+          <span class="subheading">{{this.nbTasks}}</span>
         </v-row>
       </v-list-item>
     </v-card-actions>

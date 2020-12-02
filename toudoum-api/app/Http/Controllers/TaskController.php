@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Workbook;
+use Illuminate\Support\Facades\DB;
 
 // Model
 use App\Models\Task;
@@ -31,6 +32,17 @@ class TaskController extends Controller
         $workbookidFilter = false;
         if ($request->has("workbook_id")) {
             $workbookidFilter = true;
+        }
+
+        // count tasks in workbook
+        if ($request->has("count_workbook_id")) {
+
+            $results =  Task::select('workbook_id', DB::raw('COUNT(id) as nbTasks'))->groupBy('workbook_id')->get();
+            $goodTable = [];
+            foreach( $results as $result){
+                $goodTable[$result['workbook_id']] = $result['nbTasks'];
+            }
+            return $goodTable;
         }
 
         $tasks = Auth::user()->tasks;
