@@ -65,7 +65,7 @@ export default Vue.extend({
 
         Api.get<IUser[]>("users").then((authors: IUser[]) => {
             authors.forEach((u: IUser) => {
-                this.authorNames[u.id] = u.name + " " + u.firstname;
+                this.authorNames[u.id] = `${u.name} ${u.firstname}`;
             });
         });
         this.nbTasks = await Api.get("tasks?count_workbook_id=true");
