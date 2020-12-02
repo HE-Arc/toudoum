@@ -86,7 +86,7 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/tasks/:workbook_id',
+        path: '/Tasks/:workbook_id',
         name: 'Tasks',
         props: true,
         component: Tasks,
@@ -106,7 +106,7 @@ const routes: Array<RouteConfig> = [
         
     },
     {
-        path: '/account',
+        path: '/Account',
         name: 'Account',
         component: Account,
         meta: {
