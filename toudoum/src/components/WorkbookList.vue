@@ -1,33 +1,32 @@
 <!-- TEMPLATE -->
 <template>
     <v-container>
-        <v-card elevation="4" class="pa-6">
-            <v-dialog v-model="dialog" max-width="400px">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" dark absolute top right fab v-bind="attrs" v-on="on">
-                        <v-icon>mdi-plus</v-icon>
-                    </v-btn>
-                </template>
-                <v-card elevation="4" class="pa-md-4 mx-lg-auto">
-                    <v-row>
-                        <v-text-field label="Title" v-model="workbookName"></v-text-field>
-                    </v-row>
-                    <v-row>
-                        <v-checkbox v-model="shared" label="Shared workbook"></v-checkbox>
-                        <v-combobox
-                            v-if="shared"
-                            v-model="groupSelected"
-                            :items="itemGroups"
-                            label="Groups"
-                            outlined
-                            dense
-                        ></v-combobox>
-                    </v-row>
-                    <v-row> <v-btn color="primary" v-on:click="save">Save</v-btn> </v-row>
-                </v-card>
-            </v-dialog>
-            <v-row>
-                <v-col v-for="w in workbooks" :key="w.id" :cols="6">
+        <Modal
+            :opened="isModalOpen"
+            title="Workbook creation"
+            :edit="false"
+            :onButtonClick="save"
+            :onCloseClick="() => (this.isModalOpen = false)"
+            max-width="400px"
+        >
+            <v-text-field label="Title" v-model="workbookName"></v-text-field>
+
+            <v-checkbox v-model="shared" label="Shared workbook"></v-checkbox>
+            <v-combobox
+                v-if="shared"
+                v-model="groupSelected"
+                :items="itemGroups"
+                label="Groups"
+                outlined
+                dense
+            ></v-combobox>
+        </Modal>
+        <v-card elevation="4" class="pa-3">
+            <v-btn color="primary" dark absolute top right fab @click="openModal">
+                <v-icon>mdi-plus</v-icon>
+            </v-btn>
+            <v-row class="mt-4">
+                <v-col v-for="w in workbooks" :key="w.id" sm="12" md="6" lg="4" xl="3">
                     <Workbook :titleprops="w.name" :idprops="w.id + ''" />
                 </v-col>
             </v-row>
@@ -39,12 +38,14 @@
 <script lang="ts">
 import Vue from "vue";
 import Workbook from "@/components/Workbook.vue";
+import Modal from "@/components/Modal.vue";
 import Api from "@/api/ApiRequester";
 import { IWorkbook } from "@/models/IWorkbook";
 import router from "../router";
 import { IGroup } from "@/models/IGroup";
 
 export default Vue.extend({
+    components: { Workbook, Modal },
     props: {
         workbooks: {} as () => IWorkbook[]
     },
@@ -56,11 +57,10 @@ export default Vue.extend({
         this.groupSelected = this.groups[0].name;
     },
 
-    components: { Workbook },
     data() {
         return {
             settings: [],
-            dialog: false,
+            isModalOpen: false,
             workbookName: "",
             groups: {} as IGroup[],
             itemGroups: [] as string[],
@@ -69,7 +69,10 @@ export default Vue.extend({
         };
     },
     methods: {
-        save: function () {
+        openModal() {
+            this.isModalOpen = true;
+        },
+        save: async function () {
             let tmpGroupId = null;
             if (this.shared) {
                 this.groups.forEach((g: IGroup) => {
@@ -82,9 +85,7 @@ export default Vue.extend({
                 name: this.workbookName,
                 group_id: tmpGroupId
             });
-
-            this.dialog = false;
-            // router.go(0);
+            this.isModalOpen = false;
         }
     }
 });
