@@ -8,6 +8,9 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Parent class for any response from the API
+ */
 abstract class ApiRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)

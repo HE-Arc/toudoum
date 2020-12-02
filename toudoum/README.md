@@ -7,6 +7,16 @@
 Toudoum is a task manager. It allows users to manage their tasks by workbooks. It also contains group notions.
 Users can share their tasks with a group and all the users must check the task.
 
+## Dependencies
+
+Toudoum uses theses libraries :
+
+- VueJS 2
+- TypeScript
+- Vuetify
+- Axios
+- Masonry CSS
+
 ## Project setup
 
 Toudoum is developed over VueJS framework. So you need to install all npm dependencies :
