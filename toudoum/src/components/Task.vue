@@ -93,7 +93,3 @@ export default Vue.extend({
     }
 });
 </script>
-
-<!--CSS-->
-<style scoped>
-</style>

@@ -6,8 +6,7 @@
         :touchless="true"
         :mobile-breakpoint="0"
         :mini-variant="!$typedStore.getters.isDrawerExpanded"
-        
-    > 
+    >
         <v-layout align-center justify-space-between column fill-height>
             <div>
                 <v-list class="py-0">
@@ -99,7 +98,3 @@ export default Vue.extend({
     }
 });
 </script>
-
-<!--CSS-->
-<style scoped>
-</style>

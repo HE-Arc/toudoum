@@ -14,7 +14,7 @@ import WorkbookList from "@/components/WorkbookList.vue";
 export default Vue.extend({
     name: "Home",
     components: { WorkbookList },
-    async beforeMount() {
+    async created() {
         this.w = await Api.get<IWorkbook[]>("workbooks?by_token=true");
     },
     data: function () {

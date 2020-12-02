@@ -61,10 +61,3 @@ export default Vue.extend({
     })
 });
 </script>
-
-<!--CSS-->
-<style scoped>
-.all-width {
-    flex: 2;
-}
-</style>
