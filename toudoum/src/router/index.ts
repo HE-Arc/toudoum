@@ -43,22 +43,6 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/Dashboard',
-        name: 'Dashboard',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
-        path: '/Groups',
-        name: 'Groups',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
         path: '/Logout',
         name: 'Logout',
         component: Logout,
@@ -83,7 +67,7 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/tasks/:workbook_id',
+        path: '/Tasks/:workbook_id',
         name: 'Tasks',
         props: true,
         component: Tasks,
@@ -93,15 +77,7 @@ const routes: Array<RouteConfig> = [
         
     },
     {
-        path: '/account',
-        name: 'Account',
-        component: Account,
-        meta: {
-            onlyLogged: false
-        }
-    },
-    {
-        path: '/taskdetail/:task_id',
+        path: '/Taskdetail/:task_id',
         name: 'TaskDetail',
         props: true,
         component: TaskDetails,
