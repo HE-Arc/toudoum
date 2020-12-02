@@ -27,7 +27,7 @@
             </v-btn>
             <v-row class="mt-4">
                 <v-col v-for="w in workbooks" :key="w.id" sm="12" md="6" lg="4" xl="3">
-                    <Workbook :titleprops="w.name" :idprops="w.id + ''" />
+                    <Workbook :title="w.name" :id="w.id + ''" :authorName="authorNames[w.user_id]" />
                 </v-col>
             </v-row>
         </v-card>
@@ -43,6 +43,7 @@ import Api from "@/api/ApiRequester";
 import { IWorkbook } from "@/models/IWorkbook";
 import router from "../router";
 import { IGroup } from "@/models/IGroup";
+import { IUser } from "../models/IUser";
 
 export default Vue.extend({
     components: { Workbook, Modal },
@@ -55,6 +56,13 @@ export default Vue.extend({
             this.itemGroups.push(g.name);
         });
         this.groupSelected = this.groups[0].name;
+
+        this.authors = await Api.get<IUser[]>("users?id="+this.authorId);
+        this.authors.forEach((u: IUser) => {
+            this.authorNames[u.id] = u.name +" "+ u.firstname;    
+        });
+        
+
     },
 
     data() {
@@ -65,7 +73,9 @@ export default Vue.extend({
             groups: {} as IGroup[],
             itemGroups: [] as string[],
             groupSelected: "",
-            shared: true
+            shared: true,
+            authors:[] as IUser[],
+            authorNames:[]
         };
     },
     methods: {

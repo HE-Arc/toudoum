@@ -1,7 +1,7 @@
 <!-- TEMPLATE -->
 <template>
-    <v-card class="primary" elevation="4" v-on:click="goToTask(idprops)">
-        <v-card-title class="white--text">{{titleprops}}</v-card-title>
+    <v-card class="primary" elevation="4" v-on:click="goToTask(id)">
+        <v-card-title class="white--text">{{title}}</v-card-title>
 
         <v-card-actions>
       <v-list-item class="grow">
@@ -14,7 +14,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content class="all-width">
-          <v-list-item-title class="white--text">Author Workbook</v-list-item-title>
+          <v-list-item-title class="white--text">{{this.authorName}}</v-list-item-title>
         </v-list-item-content>
 
         <v-row
@@ -35,12 +35,15 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
+import { IUser } from "../models/IUser";
 import router from "../router";
 
 export default Vue.extend({
     props: {
-        titleprops:String,
-        idprops:String
+        title:String,
+        id:String,
+        authorName:String,
+        nbTasks: Number,    
     },
     data() {
         return {
