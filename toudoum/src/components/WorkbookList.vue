@@ -21,11 +21,11 @@
                 dense
             ></v-combobox>
         </Modal>
-        <v-card elevation="4" class="pa-6">
+        <v-card elevation="4" class="pa-3">
             <v-btn color="primary" dark absolute top right fab @click="openModal">
                 <v-icon>mdi-plus</v-icon>
             </v-btn>
-            <v-row>
+            <v-row class="mt-4">
                 <v-col v-for="w in workbooks" :key="w.id" sm="12" md="6" lg="4" xl="3">
                     <Workbook :titleprops="w.name" :idprops="w.id + ''" />
                 </v-col>
