@@ -26,6 +26,7 @@
             <v-list-item-group>
                 <v-row class="d-flex">
                     <v-col
+                        cols="12"
                         sm="12"
                         md="6"
                         lg="4"

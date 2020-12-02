@@ -8,3 +8,12 @@
         background: var(--v-primary-base);
     }
 }
+
+.marginTop {
+    margin-top: 72px;
+}
+
+.container.marginTop {
+    width: calc(100vw - 56px);
+    overflow-x: hidden;
+}

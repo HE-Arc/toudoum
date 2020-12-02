@@ -3,8 +3,11 @@
     <v-navigation-drawer
         app
         v-if="$typedStore.getters.isLoggedIn"
+        :touchless="true"
+        :mobile-breakpoint="0"
         :mini-variant="!$typedStore.getters.isDrawerExpanded"
-    >
+        
+    > 
         <v-layout align-center justify-space-between column fill-height>
             <div>
                 <v-list class="py-0">
@@ -57,6 +60,17 @@ import { IListMenu } from "@/models/IListMenu";
 
 export default Vue.extend({
     name: "Drawer",
+    props: {
+        open: Boolean
+    },
+    methods: {
+        toggleDrawer: function () {
+            this.$typedStore.commit("DRAWER_TOGGLE");
+        },
+        isMobile() {
+            return this.$vuetify.breakpoint.smAndDown;
+        }
+    },
     data() {
         return {
             links: [

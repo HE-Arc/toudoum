@@ -24,9 +24,3 @@ export default Vue.extend({
     }
 });
 </script>
-
-<style>
-.marginTop {
-    margin-top: 72px;
-}
-</style>
