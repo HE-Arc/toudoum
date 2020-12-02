@@ -31,7 +31,7 @@
             </v-col>
         </v-row>
         <v-row class="mx-1" justify="end">
-            <v-btn v-on:click="back" elevation="2" color="secondary" class="ma-1">Back</v-btn>
+            <v-btn v-on:click="back" elevation="2" class="ma-1">Back</v-btn>
             <v-btn v-on:click="save" elevation="2" color="primary" class="ma-1">Save</v-btn>
         </v-row>
     </v-card>
