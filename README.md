@@ -1,9 +1,16 @@
 # Toudoum
 
-Toudoum est un gestionnaire de tâches. Ce dernier est développé en :
+<p align="center">
+  <img width="128" src="https://toudoum.srvz-webapp.he-arc.ch/public/toudoum.png" />
+</p>
 
-- PHP Laravel pour l'API
-- (?) pour la Web Application
+Toudoum is a task manager. It allows users to manage their tasks by workbooks. It also contains group notions.
+Users can share their tasks with a group and all the users must check the task.
+
+This project id developed with :
+
+- PHP Laravel for the API
+- VueJS and TypeScript for the WebApp
 
 ## Auteurs
 
