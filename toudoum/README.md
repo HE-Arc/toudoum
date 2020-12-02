@@ -1,15 +1,26 @@
+# Toudoum
 
-<div style="text-align:center">
+<p align="center">
+  <img width="128" src="https://toudoum.srvz-webapp.he-arc.ch/public/toudoum.png" />
+</p>
 
-![public/logo.png](public/logo.png)
+Toudoum is a task manager. It allows users to manage their tasks by workbooks. It also contains group notions.
+Users can share their tasks with a group and all the users must check the task.
 
-</div>
+## Dependencies
 
-# Toudom
+Toudoum uses theses libraries :
 
-Toudoum is the Frontend of applicaiton Toudoum. It's create with Vue.js and Vuetifiy component librairie.
+- VueJS 2
+- TypeScript
+- Vuetify
+- Axios
+- Masonry CSS
 
 ## Project setup
+
+Toudoum is developed over VueJS framework. So you need to install all npm dependencies :
+
 ```
 npm install
 ```
@@ -29,23 +40,20 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-## Auteurs
+## Authors
 
 <table>
    <tr>
       <td>
-         <a href="https://github.com/julienFerreira"><img width=140px src="https://avatars0.githubusercontent.com/u/43986551?s=400&v=4"><br>
+         <a href="https://github.com/julienFerreira"><img width=160px src="https://avatars1.githubusercontent.com/u/43986551?s=460&v=4"><br>
          Dos Santos Ferreira Julien</a>
       </td>
       <td>
-         <a href="https://github.com/fridezlucas"><img width=140px src="https://secure.gravatar.com/avatar/72c1469bf815bd4e0a858341571d5111?s=800&d=identicon"><br>
+         <a href="https://github.com/fridezlucas"><img width=160px src="https://secure.gravatar.com/avatar/72c1469bf815bd4e0a858341571d5111?s=800&d=identicon"><br>
          Fridez Lucas</a>
       </td>
-      <td>
-         <a href="https://github.com/chichha"><img width=140px src="https://avatars3.githubusercontent.com/u/44049821?s=460&v=4"><br>
+     <td>
+         <a href="https://github.com/chichha"><img width=160px src="https://avatars3.githubusercontent.com/u/44049821?s=460&v=4"><br>
          Goffinet Edouard</a>
       </td>
    </tr>
