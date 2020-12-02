@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Task\StoreTaskRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\Group;
 use App\Models\Workbook;
 
@@ -64,7 +63,6 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->name = $request->input(("name"));
-        $shared = false;
 
         // Description
         if ($request->get("description")) {
@@ -79,7 +77,6 @@ class TaskController extends Controller
         // Workbook ID
         if ($request->get("workbook_id")) {
             $task->workbook_id = $request->input("workbook_id");
-            $shared = true;
         }
 
         // End_date
@@ -90,7 +87,7 @@ class TaskController extends Controller
         $task->save();
 
         $group_id = Workbook::find($task->workbook_id)->group_id;
-        if($group_id != null){
+        if ($group_id != null) {
             $usersInGroup = Group::with("users")->find($group_id)->users;
 
             $userIDs = [];
@@ -98,12 +95,9 @@ class TaskController extends Controller
                 $userIDs[$user->id] = ['checked' => false];
             }
             $task->users()->attach($userIDs);
-        }else{
-            $task->users()->attach(Auth::user()->id,['checked' => false]);
+        } else {
+            $task->users()->attach(Auth::user()->id, ['checked' => false]);
         }
-
-        
-        
     }
 
     /**
@@ -160,7 +154,6 @@ class TaskController extends Controller
             if ($request->get("checked")) {
                 $task->pivot->checked = !$task->pivot->checked;
             }
-
             $task->save();
             $task->pivot->save();
         }

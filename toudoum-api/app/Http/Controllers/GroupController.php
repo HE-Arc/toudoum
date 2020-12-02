@@ -31,30 +31,6 @@ class GroupController extends Controller
             return Auth::user()->groups;
         }
         return Group::where($filters)->get();
-
-
-        // TO KEEP FOR THE CREATION OF GROUPS
-        
-        // $groups = Auth::user()->groups;
-
-        // // Id
-        // $idFilter = false;
-        // if ($request->has("id")) {
-        //     $idFilter = true;
-        // }
-
-        // $groupToKeep = [];
-        // if ($idFilter) {
-        //     foreach ($groups as $group) {
-        //         if ($group['id'] == $request->get("id")) {
-        //             array_push($groupToKeep, $group);
-        //         }
-        //     }
-        // } else {
-        //     $groupToKeep = $groups;
-        // }
-
-        // return $groupToKeep;
     }
 
     /**
@@ -68,10 +44,7 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->input("name");
         $group->save();
-
         $group->users()->attach($request->input("users"));
-
-
     }
 
     /**
