@@ -10,7 +10,7 @@
                 />
             </v-col>
             <v-col sm="12" md="12" lg="6">
-                <WorkbookInfo :workbookId="workbookId" />
+                <WorkbookInfo :workbookId="workbookId" :groupId="workbook_group_id"/>
             </v-col>
         </v-row>
     </v-container>
@@ -35,13 +35,15 @@ export default Vue.extend({
         await Api.get<IWorkbook[]>("workbooks?id=" + this.workbook_id).then((w: IWorkbook[]) => {
             this.workbookName = w[0].name;
             this.workbookId = w[0].id;
+            this.workbook_group_id = w[0].group_id;
         });
     },
     data: function () {
         return {
             t: {} as ITask[],
             workbookName: "",
-            workbookId: 0
+            workbookId: Number,
+            workbook_group_id: Number,
         };
     }
 });

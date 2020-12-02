@@ -15,10 +15,10 @@
             <v-list subheader class="background-primary">
                 <v-subheader>Members</v-subheader>
                 <UserListItem
-                    v-for="chat in recent"
-                    :key="chat.title"
-                    :username="chat.title"
-                    :imgUrl="chat.avatar"
+                    v-for="member in members"
+                    :key="member.title"
+                    :username="member.title"
+                    :imgUrl="member.avatar"
                 />
             </v-list>
         </v-card-text>
@@ -31,33 +31,27 @@
 import Vue from "vue";
 import UserListItem from "@/components/UserListItem.vue";
 import router from "../router";
+import Api from "@/api/ApiRequester";
+import { IUser } from "../models/IUser";
+
 
 export default Vue.extend({
     components: { UserListItem },
     props: {
-        workbookId: Number
+        workbookId: Number,
+        groupId: Number,
+    },
+
+    async created() {
+        console.log(this.groupId);
+        await Api.get<IUser[]>("users?group_id=" + this.groupId.toString()).then((users: IUser[]) => {
+            users.forEach((u: IUser) => {
+                this.members.push({ title: u.name+" "+u.firstname, avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light" });
+            });
+        });
     },
     data: () => ({
-        recent: [
-            {
-                active: true,
-                avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-                title: "Jason Oner"
-            },
-            {
-                active: true,
-                avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-                title: "Mike Carlson"
-            },
-            {
-                avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-                title: "Cindy Baker"
-            },
-            {
-                avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-                title: "Ali Connors"
-            }
-        ]
+        members: []
     })
 });
 </script>
