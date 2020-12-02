@@ -1,8 +1,8 @@
 <!-- TEMPLATE -->
 <template>
     <v-card elevation="4" class="pa-md-6 mx-lg-auto">
-        <v-row>
-            <v-col sm="12" md="12" lg="6" xl="6">
+        <v-row class="px-1">
+            <v-col cols="12" sm="12" md="12" lg="6" xl="6">
                 <div class="d-flex">
                     <v-checkbox
                         v-on:change="clickOnCheckbox"
@@ -24,14 +24,13 @@
                     v-model="task.description"
                 ></v-textarea>
             </v-col>
-            <v-col sm="12" md="12" lg="6" xl="6">
-                <v-row justify="center">
-                <v-date-picker v-model="task.end_date"></v-date-picker>
-
+            <v-col cols="12" sm="12" md="12" lg="6" xl="6">
+                <v-row justify="center" sm="12">
+                    <v-date-picker v-model="task.end_date"></v-date-picker>
                 </v-row>
             </v-col>
         </v-row>
-        <v-row justify="end">
+        <v-row class="mx-1" justify="end">
             <v-btn v-on:click="back" elevation="2" color="secondary" class="ma-1">Back</v-btn>
             <v-btn v-on:click="save" elevation="2" color="primary" class="ma-1">Save</v-btn>
         </v-row>
