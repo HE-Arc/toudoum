@@ -3,6 +3,10 @@ import Vuetify from 'vuetify/lib';
 
 Vue.use(Vuetify);
 
+/**
+ * Export Vuetify themes
+ * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+ */
 export default new Vuetify({
     theme: {
         options: {
