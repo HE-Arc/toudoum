@@ -1,17 +1,44 @@
+# Toudoum API
 
-<div style="text-align:center">
-
-![resources/img/logo.png](resources/img/logo.png)
-
-</div>
+<p align="center">
+  <img width="128" src="https://toudoum.srvz-webapp.he-arc.ch/public/toudoum.png" />
+</p>
 
 # Toudom API
 
-Toudoum API is the backend of application Toudoum. It's a webservice API who responses in JSON.
+Toudoum API is the backend of application Toudoum. It's a Web Service built with RESTful pattern.
+The responses are written in JSON.
+
+## Features
+
+Toudoum API is built with Laravel 8. Some dependencies are installed :
+
+- Laravel Passport (OAuth 2.0)
 
 ## Project setup
 
-TODO...
+Here appears all commands that help developer to improve Toudoum with app installation ! :fire:
+
+### Laravel Passport installation
+
+todo...
+
+### Run server
+```sh
+php artisan serve
+```
+
+### Run migrations
+```sh
+php artisan migrate
+
+# Remove and create a completely new database
+php artisan migrate:fresh
+```
+
+### Deployment
+
+Things to be done to deploy : todo...
 
 ## Auteurs
 
