@@ -16,7 +16,6 @@ export default Vue.extend({
     components: { WorkbookList },
     async created() {
         this.w = await Api.get<IWorkbook[]>("workbooks?by_token=true");
-        this.nbTasks = await Api.get<{}>("tasks?count_workbook_id=true");
     },
     data: function () {
         return {

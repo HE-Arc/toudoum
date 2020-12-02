@@ -27,7 +27,12 @@
             </v-btn>
             <v-row class="mt-4">
                 <v-col v-for="w in workbooks" :key="w.id" sm="12" md="6" lg="4" xl="3">
-                    <Workbook :title="w.name" :id="w.id + ''" :authorName="authorNames[w.user_id]" :nbTasks="nbTasks[w.id]"/>
+                    <Workbook
+                        :title="w.name"
+                        :id="w.id + ''"
+                        :authorName="authorNames[w.user_id]"
+                        :nbTasks="nbTasks[w.id] || 0"
+                    />
                 </v-col>
             </v-row>
         </v-card>
@@ -48,21 +53,22 @@ import { IUser } from "../models/IUser";
 export default Vue.extend({
     components: { Workbook, Modal },
     props: {
-        workbooks: {} as () => IWorkbook[],
-        nbTasks:{},
+        workbooks: {} as () => IWorkbook[]
     },
     async created() {
-        this.groups = await Api.get<IGroup[]>("groups?by_token=true");
-        this.groups.forEach((g: IGroup) => {
-            this.itemGroups.push(g.name);
+        Api.get<IGroup[]>("groups?by_token=true").then((groups: IGroup[]) => {
+            groups.forEach((g: IGroup) => {
+                this.itemGroups.push(g.name);
+            });
+            this.groupSelected = groups[0].name;
         });
-        this.groupSelected = this.groups[0].name;
 
-        this.authors = await Api.get<IUser[]>("users?id="+this.authorId);
-        this.authors.forEach((u: IUser) => {
-            this.authorNames[u.id] = u.name +" "+ u.firstname;    
+        Api.get<IUser[]>("users").then((authors: IUser[]) => {
+            authors.forEach((u: IUser) => {
+                this.authorNames[u.id] = u.name + " " + u.firstname;
+            });
         });
-        console.log(this.authorNames);
+        this.nbTasks = await Api.get("tasks?count_workbook_id=true");
     },
 
     data() {
@@ -70,12 +76,11 @@ export default Vue.extend({
             settings: [],
             isModalOpen: false,
             workbookName: "",
-            groups: {} as IGroup[],
             itemGroups: [] as string[],
             groupSelected: "",
             shared: true,
-            authors:[] as IUser[],
-            authorNames:[]
+            nbTasks: {} as any,
+            authorNames: {} as any
         };
     },
     methods: {
