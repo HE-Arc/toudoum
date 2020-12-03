@@ -7,8 +7,8 @@
             <v-list subheader class="background-primary">
                 <v-subheader>Author</v-subheader>
                 <UserListItem
-                    username="Julien Dos Santos Ferreira"
-                    imgUrl="https://cdn.vuetifyjs.com/images/lists/1.jpg"
+                    :username="author.name"
+                    :imgUrl="author.avatar"
                 />
             </v-list>
             <v-divider></v-divider>
@@ -17,7 +17,7 @@
                 <UserListItem
                     v-for="(member, index) in members"
                     :key="index"
-                    :username="member.title"
+                    :username="member.name"
                     :imgUrl="member.avatar"
                 />
             </v-list>
@@ -40,18 +40,24 @@ export default Vue.extend({
     props: {
         workbookId: Number,
         groupId: Number,
+        userId: Number,
     },
 
     async created() {
         console.log(this.groupId);
         Api.get<IUser[]>("users?group_id=" + this.groupId.toString()).then((users: IUser[]) => {
             users.forEach((u: IUser) => {
-                this.members.push({ title: u.name+" "+u.firstname, avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light" });
+                this.members.push({ name: u.name+" "+u.firstname, avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light" });
+
+                if(u.id == this.userId){
+                    this.author = {name: u.name+" "+u.firstname, avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light" }
+                }
             });
         });
     },
     data: () => ({
-        members: []
+        members: [],
+        author: {}
     })
 });
 </script>

@@ -10,5 +10,6 @@ export interface IWorkbook {
     id: number;
     name: string;
     group_id: number;
+    user_id: number;
     updated_at: string;
 }

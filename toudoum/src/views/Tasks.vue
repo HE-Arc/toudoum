@@ -10,7 +10,7 @@
                 />
             </v-col>
             <v-col sm="12" md="12" lg="6">
-                <WorkbookInfo :workbookId="workbookId" v-if="workbook_group_id" :groupId="workbook_group_id"/>
+                <WorkbookInfo :workbookId="workbookId" v-if="workbook_group_id && workbook_user_id" :groupId="workbook_group_id" :userId="workbook_user_id"/>
             </v-col>
         </v-row>
     </v-container>
@@ -37,7 +37,7 @@ export default Vue.extend({
             this.workbookName = w[0].name;
             this.workbookId = w[0].id;
             this.workbook_group_id = w[0].group_id;
-            console.log(w);//
+            this.workbook_user_id = w[0].user_id;
         });
     },
     
@@ -47,6 +47,7 @@ export default Vue.extend({
             workbookName: "",
             workbookId: 0,
             workbook_group_id: null,
+            workbook_user_id: null,
         };
     }
 });
