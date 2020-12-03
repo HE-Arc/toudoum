@@ -44,7 +44,7 @@ export default Vue.extend({
 
     async created() {
         console.log(this.groupId);
-        await Api.get<IUser[]>("users?group_id=" + this.groupId.toString()).then((users: IUser[]) => {
+        Api.get<IUser[]>("users?group_id=" + this.groupId.toString()).then((users: IUser[]) => {
             users.forEach((u: IUser) => {
                 this.members.push({ title: u.name+" "+u.firstname, avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light" });
             });

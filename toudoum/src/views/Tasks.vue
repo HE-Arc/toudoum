@@ -30,20 +30,23 @@ export default Vue.extend({
     props: {
         workbook_id: String
     },
+    
     async created() {
         this.t = await Api.get<ITask[]>("tasks?workbook_id=" + this.workbook_id);
-        await Api.get<IWorkbook[]>("workbooks?id=" + this.workbook_id).then((w: IWorkbook[]) => {
+        Api.get<IWorkbook[]>("workbooks?id=" + this.workbook_id).then((w: IWorkbook[]) => {
             this.workbookName = w[0].name;
             this.workbookId = w[0].id;
             this.workbook_group_id = w[0].group_id;
+            console.log(w);
         });
     },
+    
     data: function () {
         return {
             t: {} as ITask[],
             workbookName: "",
-            workbookId: Number,
-            workbook_group_id: Number,
+            workbookId: 0,
+            workbook_group_id: 0,
         };
     }
 });
