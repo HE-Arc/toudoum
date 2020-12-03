@@ -15,8 +15,8 @@
             <v-list subheader class="background-primary">
                 <v-subheader>Members</v-subheader>
                 <UserListItem
-                    v-for="member in members"
-                    :key="member.title"
+                    v-for="(member, index) in members"
+                    :key="index"
                     :username="member.title"
                     :imgUrl="member.avatar"
                 />

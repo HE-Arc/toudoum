@@ -10,7 +10,7 @@
                 />
             </v-col>
             <v-col sm="12" md="12" lg="6">
-                <WorkbookInfo :workbookId="workbookId" :groupId="workbook_group_id"/>
+                <WorkbookInfo :workbookId="workbookId" v-if="workbook_group_id" :groupId="workbook_group_id"/>
             </v-col>
         </v-row>
     </v-container>
@@ -37,7 +37,7 @@ export default Vue.extend({
             this.workbookName = w[0].name;
             this.workbookId = w[0].id;
             this.workbook_group_id = w[0].group_id;
-            console.log(w);
+            console.log(w);//
         });
     },
     
@@ -46,7 +46,7 @@ export default Vue.extend({
             t: {} as ITask[],
             workbookName: "",
             workbookId: 0,
-            workbook_group_id: 0,
+            workbook_group_id: null,
         };
     }
 });
