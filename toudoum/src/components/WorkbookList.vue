@@ -56,12 +56,11 @@ export default Vue.extend({
         workbooks: {} as () => IWorkbook[]
     },
     async created() {
-        Api.get<IGroup[]>("groups?by_token=true").then((groups: IGroup[]) => {
-            groups.forEach((g: IGroup) => {
-                this.itemGroups.push(g.name);
-            });
-            this.groupSelected = groups[0].name;
+        this.groups = await Api.get<IGroup[]>("groups?by_token=true");
+        this.groups.forEach((g: IGroup) => {
+            this.itemGroups.push(g.name);
         });
+        this.groupSelected = this.groups[0].name;
 
         Api.get<IUser[]>("users").then((authors: IUser[]) => {
             authors.forEach((u: IUser) => {
@@ -77,6 +76,7 @@ export default Vue.extend({
             isModalOpen: false,
             workbookName: "",
             itemGroups: [] as string[],
+            groups: [] as IGroup[],
             groupSelected: "",
             shared: true,
             nbTasks: {} as any,
