@@ -104,9 +104,3 @@ export default Vue.extend({
     }
 });
 </script>
-
-<style scoped lang="scss">
-//   .background {
-//     background: linear-gradient(60deg, var(--v-primary-lighten5), var(--v-primary-lighten1));
-//   }
-</style>

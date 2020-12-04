@@ -16,9 +16,6 @@ import "@/assets/styles/main.scss";
 
 export default Vue.extend({
     name: "App",
-    components: { Header, Drawer },
-    beforeMount() {
-        console.log("OK");
-    }
+    components: { Header, Drawer }
 });
 </script>

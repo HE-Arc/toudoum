@@ -26,7 +26,7 @@
                     </v-list-item-action>
 
                     <!--TITLE AND PRIORITY-->
-                    <v-list-item-content v-on:click="clickOntask(task.id + '')">
+                    <v-list-item-content v-on:click="clickOnTask(task.id + '')">
                         <v-list-item-title>{{ task.name }}</v-list-item-title>
                         <v-list-item-subtitle>{{
                             task.description != undefined ? task.description : "-"
@@ -34,7 +34,7 @@
                     </v-list-item-content>
 
                     <!--DO DATE-->
-                    <v-list-item-content v-on:click="clickOntask" class="text-right">
+                    <v-list-item-content v-on:click="clickOnTask" class="text-right">
                         <v-list-item-title>{{ task.end_date }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
@@ -74,7 +74,7 @@ export default Vue.extend({
         openModal() {
             this.isModalOpen = true;
         },
-        clickOntask: function (id: string) {
+        clickOnTask: function (id: string) {
             router.push({ name: "TaskDetail", params: { task_id: id } });
         },
         clickOnCheckbox: function (taskId: number) {
@@ -96,9 +96,6 @@ export default Vue.extend({
                 workbook_id: this.workbook_id
             });
             this.isModalOpen = false;
-
-            //BUG NOW
-            // router.go(0);
         }
     }
 });
