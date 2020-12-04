@@ -18,7 +18,7 @@
                 <h2 class="h5 mt-4 mb-2">Week tasks</h2>
                 <TasksList
                     :readOnly="true"
-                    :tasks="restTasks"
+                    :tasks="weekTasks"
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
                 />
@@ -27,7 +27,7 @@
                 <h2 class="h5 mt-4 mb-2">Rest of the tasks</h2>
                 <TasksList
                     :readOnly="true"
-                    :tasks="weekTasks"
+                    :tasks="restTasks"
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
                 />
@@ -51,16 +51,16 @@ export default Vue.extend({
         workbook_id: String
     },
     async beforeMount() {
-        this.allTasks = await Api.get<ITask[]>("tasks");
+        this.allTasks = await Api.get<{}>("tasks");
 
         // TODO : sort tasks
-        this.todayTasks = this.allTasks;
-        this.weekTasks = this.allTasks;
-        this.restTasks = this.allTasks;
+        this.todayTasks = this.allTasks.today;
+        this.weekTasks = this.allTasks.week;
+        this.restTasks = this.allTasks.rest;
     },
     data: function () {
         return {
-            allTasks: {} as ITask[],
+            allTasks: {},
             todayTasks: {} as ITask[],
             weekTasks: {} as ITask[],
             restTasks: {} as ITask[],

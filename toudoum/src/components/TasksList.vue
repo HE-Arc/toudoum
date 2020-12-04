@@ -90,7 +90,6 @@ export default Vue.extend({
         save: async function () {
             const date = new Date();
             const goodDate = date.toISOString().split("T")[0];
-            console.log(this.workbook_id);
             await Api.post("tasks", {
                 name: this.taskName,
                 end_date: goodDate,
