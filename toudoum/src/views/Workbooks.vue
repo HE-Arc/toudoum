@@ -1,7 +1,7 @@
 <template>
     <v-container class="marginTop">
         <h1>Workbooks</h1>
-        <WorkbookList :workbooks="w" :nbTasks="nbTasks" />
+        <WorkbookList :workbooks="w" :nbTasks="nbTasks" @reload="getAllWorkbooks" />
     </v-container>
 </template>
 
@@ -15,13 +15,18 @@ export default Vue.extend({
     name: "Home",
     components: { WorkbookList },
     async created() {
-        this.w = await Api.get<IWorkbook[]>("workbooks?by_token=true");
+        await this.getAllWorkbooks();
     },
     data: function () {
         return {
             w: {} as IWorkbook[],
             nbTasks:{}
         };
+    },
+    methods: {
+        async getAllWorkbooks() {
+            this.w = await Api.get<IWorkbook[]>("workbooks?by_token=true");
+        }
     }
 });
 </script>
