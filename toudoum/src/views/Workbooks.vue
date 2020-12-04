@@ -1,7 +1,7 @@
 <template>
     <v-container class="marginTop">
         <h1>Workbooks</h1>
-        <WorkbookList :workbooks="w" />
+        <WorkbookList :workbooks="w" :nbTasks="nbTasks" />
     </v-container>
 </template>
 
@@ -19,7 +19,8 @@ export default Vue.extend({
     },
     data: function () {
         return {
-            w: {} as IWorkbook[]
+            w: {} as IWorkbook[],
+            nbTasks:{}
         };
     }
 });
