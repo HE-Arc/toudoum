@@ -12,7 +12,7 @@ export interface IUser extends ObjectConstructor {
     firstname: string;
     email: string;
     password?: string;
-    password_confirmation?: string
+    password_confirmation?: string;
     token?: string;
 
 }

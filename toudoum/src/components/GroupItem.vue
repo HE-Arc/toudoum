@@ -13,10 +13,6 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
-import { IUser } from "@/models/IUser";
-import { IGroup } from "@/models/IGroup";
-import Modal from "@/components/Modal.vue";
-import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
     props: {
