@@ -1,7 +1,5 @@
 <!-- TEMPLATE -->
 <template>
-    <v-card class="primary" elevation="4" v-on:click="goToTask(idprops)">
-        <v-card-title class="white--text">{{ titleprops }}</v-card-title>
     <v-card class="primary" elevation="4" v-on:click="goToTask(id)">
         <v-card-title class="white--text">{{ title }}</v-card-title>
 
