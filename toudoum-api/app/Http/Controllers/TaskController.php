@@ -39,7 +39,7 @@ class TaskController extends Controller
 
             $results =  Task::select('workbook_id', DB::raw('COUNT(id) as nbTasks'))->groupBy('workbook_id')->get();
             $goodTable = [];
-            foreach( $results as $result){
+            foreach ($results as $result) {
                 $goodTable[$result['workbook_id']] = $result['nbTasks'];
             }
             return $goodTable;
@@ -60,21 +60,16 @@ class TaskController extends Controller
                 }
             }
         } else {
-            //TODO
-            // {
-            //     "today" : [tasks...]
-            //     "Week"  : [tasks...]
-            //     "Rest"  : [tasks...]
-            // }
-
             foreach ($tasks as $task) {
-                $diffDay = ((strtotime($task['end_date'])-strtotime(date("Y-m-d")))/ (60 * 60 * 24));
-                if($task['end_date'] == date("Y-m-d")){
-                    $taskToKeep['today'][] = $task;
-                }else if( $diffDay <= 7 && $diffDay > 1 ){
-                    $taskToKeep['week'][] = $task;
-                }else{
-                    $taskToKeep['rest'][] = $task;
+                $diffDay = ((strtotime($task['end_date']) - strtotime(date("Y-m-d"))) / (60 * 60 * 24));
+                if($task->pivot->checked != "1") {
+                    if ($task['end_date'] == date("Y-m-d")) {
+                        $taskToKeep['today'][] = $task;
+                    } else if ($diffDay <= 7 && $diffDay > 1) {
+                        $taskToKeep['week'][] = $task;
+                    } else {
+                        $taskToKeep['rest'][] = $task;
+                    }
                 }
             }
         }
@@ -118,7 +113,7 @@ class TaskController extends Controller
         $task->save();
 
         $group_id = Workbook::find($task->workbook_id)->group_id;
-        if($group_id != null){
+        if ($group_id != null) {
             $usersInGroup = Group::with("users")->find($group_id)->users;
 
             $userIDs = [];
@@ -126,12 +121,9 @@ class TaskController extends Controller
                 $userIDs[$user->id] = ['checked' => false];
             }
             $task->users()->attach($userIDs);
-        }else{
-            $task->users()->attach(Auth::user()->id,['checked' => false]);
+        } else {
+            $task->users()->attach(Auth::user()->id, ['checked' => false]);
         }
-
-        
-        
     }
 
     /**
