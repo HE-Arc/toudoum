@@ -1,4 +1,3 @@
-import { GetterTree } from 'vuex';
 import { State } from './State';
 
 export interface Getters {

@@ -30,7 +30,6 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
-import { IUser } from "../models/IUser";
 import router from "../router";
 
 export default Vue.extend({

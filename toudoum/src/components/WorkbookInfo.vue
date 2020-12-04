@@ -30,7 +30,6 @@
 <script lang="ts">
 import Vue from "vue";
 import UserListItem from "@/components/UserListItem.vue";
-import router from "../router";
 import Api from "@/api/ApiRequester";
 import { IUser } from "../models/IUser";
 
