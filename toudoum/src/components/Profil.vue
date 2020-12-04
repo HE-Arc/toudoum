@@ -35,6 +35,7 @@
                 label="Password"
                 type="password"
                 :rules="[rules.required, rules.min, rules.password]"
+                            @click:append="showPassord = !showPassord"
                 required
             >
             </v-text-field>
@@ -46,6 +47,7 @@
                 required
             >
             </v-text-field>
+
             <v-btn 
                 @click="validate"
                 :disabled="!valid"
@@ -56,20 +58,17 @@
         </v-col>
         <v-col>
         <div>
-            <v-img
-                v:if="url" :src="url"
-            ></v-img>
             <v-file-input
+            id="pick-image"
             accept="images/*"
             label="Profile's picture"
-            @change="onFileChange"
-            >
-            </v-file-input>
-            <v-btn
-            @click="sendPicture"
-            >
-                Envoyer
-            </v-btn>
+            @change="onChange"
+            />
+
+            <clipper-fixed ref="clipper" :src="url"/>
+            <button @click="clip" class="btn">clip image</button>
+            
+            <v-btn @click="sendPicture">Envoyer</v-btn>
         </div>
         </v-col>
         </v-row>
@@ -80,10 +79,15 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
+import VueRx from 'vue-rx'
+Vue.use(VueRx)
 import Api from "@/api/ApiRequester";
 import { IUser } from '@/models/IUser';
 import { ToudoumError422 } from '@/api/ToudoumError422';
 import { ToudoumError } from '@/api/ToudoumError';
+import { FunctionalComponentOptions } from "vue/types/umd";
+import VuejsClipper from 'vuejs-clipper'
+import { clipperFixed, clipperPreview } from 'vuejs-clipper'
 
 interface Error422 {
     email?: Array<string>;
@@ -99,7 +103,12 @@ interface ErrorState422 {
     firstname: string;
     password: string;
 }
+
+
 export default Vue.extend({
+    components: {
+        clipperFixed 
+        },
     props: {
         user: {} as () =>  IUser
     },
@@ -107,14 +116,16 @@ export default Vue.extend({
         return {
             url : "",
             file : File,
+            labels: {submit: "Valider", cancel: "Annuler"},
             valid : false,
             rules: {
                 required: (value: string) => !!value || "Required",
-                min: (v: string) => v.length >= 6 || "Minimum 6 characters",
                 email: (value: string) => {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return pattern.test(value) || "Invalid e-mail.";
                 },
+
+                min: (value: string) => !!value || value.length >= 6 || "Minimum 6 characters",
                 password: (value: string) => {value == this.user.password_confirmation || "Password and password confirmation must be identics"},
                 password_conf: (value: string) => value == this.user.password || "Password and password confirmation must be identics"
 
@@ -140,22 +151,29 @@ export default Vue.extend({
                 }
             }
         },
-        onFileChange: function(e : File)
+        clip: function(e)
         {
-            this.file = e;
             console.log(e)
-            this.url = URL.createObjectURL(e)
+        },
+        onChange: function(e: File)
+        {
+            this.file = e
+            this.url = URL.createObjectURL(this.file)
         },
         sendPicture: async function(){
-            try {
+            const camelCase = "lol.png"
 
-                if(this.file != null)
-                {
-                let formData : FormData = new FormData()
-                formData.append('avatar', this.file)
+            try {
+                const canvas = this.$refs.clipper.clip()
+                canvas.toBlob((blob) => {
+                this.file = new File([blob], "fileName.jpg", { type: "image/jpeg" })
+                }, 'image/jpeg');
+                console.log(canvas)
+                const formData: FormData = new FormData()
+                formData.append('avatar', canvas(), "lol.png")
                 await Api.formData("/avatar", formData);
                 this.succes()
-                }
+                
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;

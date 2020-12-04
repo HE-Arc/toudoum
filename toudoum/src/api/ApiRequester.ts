@@ -232,7 +232,7 @@ class ApiRequester {
         return this.request("PATCH", url, body);
     }
 
-    public async formData(url: string, body:any): Promise<IToudoumResponse> {
+    public async formData(url: string, body: any): Promise<IToudoumResponse> {
         const requestConfig: AxiosRequestConfig = {
             method: "POST",
             url: url,

@@ -2,7 +2,7 @@
 <template>
     <v-container class="marginTop">
         <div class="account">
-            <Profil :user="user" />
+            <Profil :v-if="loaded" :user="user" />
         </div>
     </v-container>
 </template>
@@ -19,10 +19,14 @@ export default Vue.extend({
     name: "Account",
     components: { Profil },
     async created() {
-        this.user = (await Api.get<IUser[]>("users?by_token=true"))[0];
+        (Api.get<IUser[]>("users?by_token=true")).then((u: IUser[]) => {
+            this.user = u[0];
+            this.loaded = true;
+        });
     },
     data() {
         return {
+            loaded: false,
             user: {} as IUser
         };
     }

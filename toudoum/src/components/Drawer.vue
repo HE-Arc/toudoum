@@ -41,7 +41,10 @@ import { ToudoumError } from '@/api/ToudoumError';
 export default Vue.extend({
     name: "Drawer",
     async created() {
-        this.getAvatar();
+        if (this.$typedStore.getters.isLoggedIn)
+        {
+            this.getAvatar();
+        }
     },
     data() {
         return {
