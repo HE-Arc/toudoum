@@ -7,10 +7,16 @@
                     :tasks="t"
                     :workbook_title="workbookName"
                     :workbook_id="this.workbookId"
+                    @reload="getAllTasks"
                 />
             </v-col>
             <v-col sm="12" md="12" lg="6">
-                <WorkbookInfo :workbookId="workbookId" v-if="workbook_group_id && workbook_user_id" :groupId="workbook_group_id" :userId="workbook_user_id"/>
+                <WorkbookInfo
+                    :workbookId="workbookId"
+                    v-if="workbook_group_id && workbook_user_id"
+                    :groupId="workbook_group_id"
+                    :userId="workbook_user_id"
+                />
             </v-col>
         </v-row>
     </v-container>
@@ -30,9 +36,9 @@ export default Vue.extend({
     props: {
         workbook_id: String
     },
-    
+
     async created() {
-        this.t = await Api.get<ITask[]>("tasks?workbook_id=" + this.workbook_id);
+        await this.getAllTasks();
         Api.get<IWorkbook[]>("workbooks?id=" + this.workbook_id).then((w: IWorkbook[]) => {
             this.workbookName = w[0].name;
             this.workbookId = w[0].id;
@@ -40,15 +46,20 @@ export default Vue.extend({
             this.workbook_user_id = w[0].user_id;
         });
     },
-    
+
     data: function () {
         return {
             t: {} as ITask[],
             workbookName: "",
             workbookId: 0,
             workbook_group_id: null,
-            workbook_user_id: null,
+            workbook_user_id: null
         };
+    },
+    methods: {
+        async getAllTasks() {
+            this.t = await Api.get<ITask[]>("tasks?workbook_id=" + this.workbook_id);
+        }
     }
 });
 </script>

@@ -101,6 +101,7 @@ export default Vue.extend({
                 group_id: tmpGroupId
             });
             this.isModalOpen = false;
+            this.$emit("reload");
         }
     }
 });
