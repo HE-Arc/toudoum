@@ -50,13 +50,13 @@ class TaskController extends Controller
         if ($workbookidFilter) {
             foreach ($tasks as $task) {
                 if ($task->workbook_id == $request->get("workbook_id")) {
-                    array_push($taskToKeep, $task);
+                    $taskToKeep[] = $task;
                 }
             }
         } else if ($idFilter) {
             foreach ($tasks as $task) {
                 if ($task['id'] == $request->get("id")) {
-                    array_push($taskToKeep, $task);
+                    $taskToKeep[] = $task;
                 }
             }
         } else {
