@@ -108,7 +108,7 @@ export default Vue.extend({
         clipperFixed 
         },
     props: {
-        user: {} as IUser
+        user: {} as () =>  IUser
     },
     data() {
         return {
@@ -122,7 +122,7 @@ export default Vue.extend({
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return pattern.test(value) || "Invalid e-mail.";
                 },
-                min: (value: string) => value.length >= 6 || "Minimum 6 characters",
+                min: (v: string) => v.length >= 6 || "Minimum 6 characters",
                 password: (value: string) => {value == this.user.password_confirmation || "Password and password confirmation must be identics"},
                 password_conf: (value: string) => value == this.user.password || "Password and password confirmation must be identics"
 
