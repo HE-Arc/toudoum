@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import VueRouter, { NavigationGuardNext, Route, RouteConfig, RouteRecord } from 'vue-router'
 import SignUp from '../views/SignUp.vue'
-import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Account from '../views/Account.vue'
 import Logout from '../views/Logout.vue'
 import store from '@/store'
 import Workbooks from '@/views/Workbooks.vue'
 import Tasks from '@/views/Tasks.vue'
+import AllTasks from '@/views/AllTasks.vue'
 import TaskDetails from '@/views/TaskDetails.vue'
 import Api from "@/api/ApiRequester";
 import { IUser } from '@/models/IUser'
+import VueMasonry from 'vue-masonry-css';
 
+// Use Vue plugins
+Vue.use(VueMasonry);
 Vue.use(VueRouter)
 
 /**
@@ -38,14 +41,6 @@ const routes: Array<RouteConfig> = [
         path: '/Account',
         name: 'Account',
         component: () => import(/* webpackChunkName: "about" */ '../views/Account.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
-        path: '/Dashboard',
-        name: 'Dashboard',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
         meta: {
             onlyLogged: true
         }
@@ -83,17 +78,27 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/tasks/:workbook_id',
+        path: '/Tasks/:workbook_id',
         name: 'Tasks',
         props: true,
         component: Tasks,
         meta: {
-            onlyLogged: false
+            onlyLogged: true
         },
         
     },
     {
-        path: '/account',
+        path: '/Tasks',
+        name: 'AllTasks',
+        props: true,
+        component: AllTasks,
+        meta: {
+            onlyLogged: true
+        },
+        
+    },
+    {
+        path: '/Account',
         name: 'Account',
         component: Account,
         meta: {
@@ -101,7 +106,7 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/taskdetail/:task_id',
+        path: '/Taskdetail/:task_id',
         name: 'TaskDetail',
         props: true,
         component: TaskDetails,

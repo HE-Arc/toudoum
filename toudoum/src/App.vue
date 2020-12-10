@@ -12,12 +12,10 @@
 import Vue from "vue";
 import Header from "@/components/Header.vue";
 import Drawer from "@/components/Drawer.vue";
+import "@/assets/styles/main.scss";
 
 export default Vue.extend({
     name: "App",
-    components: { Header, Drawer },
-    beforeMount() {
-        console.log("OK");
-    }
+    components: { Header, Drawer }
 });
 </script>

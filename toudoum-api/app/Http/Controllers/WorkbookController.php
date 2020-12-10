@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Workbook;
+use App\Models\Task;
 
 class WorkbookController extends Controller
 {
@@ -38,7 +39,7 @@ class WorkbookController extends Controller
         if ($request->has("by_token")) {
             return DB::select('select * from workbooks where user_id = ? union select * from workbooks where group_id in (select group_id from user_group where user_id = ?)', [Auth::user()->id, Auth::user()->id]);
         }
-
+        
         return Workbook::where($filters)->get();
     }
 
@@ -53,7 +54,7 @@ class WorkbookController extends Controller
         $workbook = new Workbook();
         $workbook->name = $request->input("name");
         $workbook->group_id = $request->input("group_id");
-        $workbook->user_id = $request->input("user_id");
+        $workbook->user_id = Auth::user()->id;
         $workbook->save();
     }
 

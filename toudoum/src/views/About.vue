@@ -1,7 +1,7 @@
 <template>
     <div class="about">
         <h1>This is an about page</h1>
-        <WorkbookList/>
+        <WorkbookList />
     </div>
 </template>
 
@@ -18,7 +18,7 @@ import WorkbookList from "@/components/WorkbookList.vue";
 
 export default Vue.extend({
     name: "Home",
-    components: {WorkbookList},
+    components: { WorkbookList },
     data: function () {
         return {
             names: [] as ITask[]

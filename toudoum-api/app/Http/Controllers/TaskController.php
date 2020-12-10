@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Workbook;
+use Illuminate\Support\Facades\DB;
 
 // Model
 use App\Models\Task;
@@ -33,22 +34,44 @@ class TaskController extends Controller
             $workbookidFilter = true;
         }
 
+        // count tasks in workbook
+        if ($request->has("count_workbook_id")) {
+
+            $results =  Task::select('workbook_id', DB::raw('COUNT(id) as nbTasks'))->groupBy('workbook_id')->get();
+            $goodTable = [];
+            foreach ($results as $result) {
+                $goodTable[$result['workbook_id']] = $result['nbTasks'];
+            }
+            return $goodTable;
+        }
+
         $tasks = Auth::user()->tasks;
         $taskToKeep = [];
         if ($workbookidFilter) {
             foreach ($tasks as $task) {
-                if ($task['workbook_id'] == $request->get("workbook_id")) {
-                    array_push($taskToKeep, $task);
+                if ($task->workbook_id == $request->get("workbook_id")) {
+                    $taskToKeep[] = $task;
                 }
             }
-        } elseif ($idFilter) {
+        } else if ($idFilter) {
             foreach ($tasks as $task) {
                 if ($task['id'] == $request->get("id")) {
-                    array_push($taskToKeep, $task);
+                    $taskToKeep[] = $task;
                 }
             }
         } else {
-            $taskToKeep = $tasks;
+            foreach ($tasks as $task) {
+                $diffDay = ((strtotime($task['end_date']) - strtotime(date("Y-m-d"))) / (60 * 60 * 24));
+                if($task->pivot->checked != "1") {
+                    if ($task['end_date'] == date("Y-m-d")) {
+                        $taskToKeep['today'][] = $task;
+                    } else if ($diffDay <= 7 && $diffDay > 1) {
+                        $taskToKeep['week'][] = $task;
+                    } else {
+                        $taskToKeep['rest'][] = $task;
+                    }
+                }
+            }
         }
 
         return $taskToKeep;
@@ -64,6 +87,7 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->name = $request->input(("name"));
+        $shared = false;
 
         // Description
         if ($request->get("description")) {
@@ -78,6 +102,7 @@ class TaskController extends Controller
         // Workbook ID
         if ($request->get("workbook_id")) {
             $task->workbook_id = $request->input("workbook_id");
+            $shared = true;
         }
 
         // End_date
@@ -87,16 +112,18 @@ class TaskController extends Controller
 
         $task->save();
 
-        //best find
         $group_id = Workbook::find($task->workbook_id)->group_id;
+        if ($group_id != null) {
+            $usersInGroup = Group::with("users")->find($group_id)->users;
 
-        $usersInGroup = Group::with("users")->find($group_id)->users;
-
-        $userIDs = [];
-        foreach($usersInGroup as $user){
-            $userIDs[$user->id] = ['checked' => false];
+            $userIDs = [];
+            foreach ($usersInGroup as $user) {
+                $userIDs[$user->id] = ['checked' => false];
+            }
+            $task->users()->attach($userIDs);
+        } else {
+            $task->users()->attach(Auth::user()->id, ['checked' => false]);
         }
-        $task->users()->attach($userIDs);
     }
 
     /**
@@ -130,9 +157,9 @@ class TaskController extends Controller
         if ($task != null) {
             print($task);
             //name
-            if($request->get("name")){
+            if ($request->get("name")) {
                 $task->name = $request->input(("name"));
-            }            
+            }
 
             // Description
             if ($request->get("description")) {

@@ -1,15 +1,14 @@
 /**
- * Workbook Interface that represent workbooks table in Back-End
+ * Group Interface that represent groups table in Back-End
  *
  * @author Julien Dos Santos Ferreira <julien.dossantosferreira@he-arc.ch>
  * @export
- * @interface IWorkbook
+ * @interface IGroup
  */
-export interface IWorkbook {
+export interface IGroup {
     created_at: string;
     id: number;
     name: string;
-    group_id: number;
-    user_id: number;
     updated_at: string;
+    users:number[];
 }

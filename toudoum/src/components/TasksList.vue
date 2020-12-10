@@ -1,21 +1,20 @@
 <!-- TEMPLATE -->
 <template>
     <v-card elevation="4">
-        <v-dialog v-model="dialog" max-width="400px">
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark absolute top right fab v-bind="attrs" v-on="on">
-                    <v-icon>mdi-plus</v-icon>
-                </v-btn>
-            </template>
-            <v-card elevation="4" class="pa-md-4 mx-lg-auto">
-                <v-row> <v-text-field label="Title" v-model="taskName"></v-text-field></v-row>
-                <v-row> <v-btn color="primary" v-on:click="save">Save</v-btn> </v-row>
-            </v-card>
-        </v-dialog>
+        <Modal
+            title="Create a task"
+            :edit="false"
+            :onButtonClick="save"
+            :onCloseClick="() => (this.isModalOpen = false)"
+            :opened="isModalOpen"
+        >
+            <v-text-field label="Title" v-model="taskName"></v-text-field>
+        </Modal>
+        <v-btn color="primary" dark absolute top right fab @click="openModal" v-if="!readOnly">
+            <v-icon>mdi-plus</v-icon>
+        </v-btn>
 
         <v-list flat subheader three-line>
-            <v-subheader>{{ workbook_title }}</v-subheader>
-
             <v-list-item-group>
                 <v-list-item v-for="task in tasks" v-bind:key="task.id">
                     <!--CHECKBOX-->
@@ -27,13 +26,15 @@
                     </v-list-item-action>
 
                     <!--TITLE AND PRIORITY-->
-                    <v-list-item-content v-on:click="clickOntask(task.id + '')">
+                    <v-list-item-content v-on:click="clickOnTask(task.id + '')">
                         <v-list-item-title>{{ task.name }}</v-list-item-title>
-                        <v-list-item-subtitle>{{ task.description }}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{
+                            task.description != undefined ? task.description : "-"
+                        }}</v-list-item-subtitle>
                     </v-list-item-content>
 
                     <!--DO DATE-->
-                    <v-list-item-content v-on:click="clickOntask" class="text-right">
+                    <v-list-item-content v-on:click="clickOnTask" class="text-right">
                         <v-list-item-title>{{ task.end_date }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
@@ -47,24 +48,33 @@
 import Vue from "vue";
 import { ITask } from "@/models/ITask";
 import router from "../router";
+import Modal from "@/components/Modal.vue";
 import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
+    components: { Modal },
     props: {
         tasks: {} as () => ITask[],
+        readOnly: {
+            type: Boolean,
+            default: false
+        },
         workbook_title: String,
-        workbook_id: Number,
+        workbook_id: Number
     },
     data() {
         return {
             settings: [],
-            dialog: false,
-            taskName: "",
+            isModalOpen: false,
+            taskName: ""
         };
     },
 
     methods: {
-        clickOntask: function (id: string) {
+        openModal() {
+            this.isModalOpen = true;
+        },
+        clickOnTask: function (id: string) {
             router.push({ name: "TaskDetail", params: { task_id: id } });
         },
         clickOnCheckbox: function (taskId: number) {
@@ -77,18 +87,17 @@ export default Vue.extend({
                 }
             }
         },
-        save: function(){
+        save: async function () {
             const date = new Date();
-            const goodDate = date.toISOString().split('T')[0];
-            console.log(this.workbook_id);
-            Api.post("tasks", {
-                name:this.taskName,
-                end_date:goodDate,
-                workbook_id:this.workbook_id
+            const goodDate = date.toISOString().split("T")[0];
+            await Api.post("tasks", {
+                name: this.taskName,
+                end_date: goodDate,
+                workbook_id: this.workbook_id
             });
-            this.dialog = false;
-            router.go(0);
-        },
+            this.isModalOpen = false;
+            this.$emit("reload");
+        }
     }
 });
 </script>

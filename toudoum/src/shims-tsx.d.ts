@@ -13,3 +13,4 @@ declare global {
   }
   const clipperFixed: typeof _clipperFixed;
 }
+

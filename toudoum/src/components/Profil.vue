@@ -57,6 +57,7 @@
                 </div>
             </v-col>
         </v-row>
+
     </div>
 </template>
 
@@ -195,7 +196,3 @@ export default (Vue as VueConstructor<
     }
 });
 </script>
-
-<!--CSS-->
-<style scoped>
-</style>
