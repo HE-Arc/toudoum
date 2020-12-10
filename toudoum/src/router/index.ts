@@ -38,33 +38,9 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/Account',
-        name: 'Account',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Account.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
-        path: '/Groups',
-        name: 'Groups',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
         path: '/Logout',
         name: 'Logout',
         component: Logout,
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
-        path: '/About',
-        name: 'About',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
         meta: {
             onlyLogged: true
         }

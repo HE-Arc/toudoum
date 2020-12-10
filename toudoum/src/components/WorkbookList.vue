@@ -46,7 +46,6 @@ import Workbook from "@/components/Workbook.vue";
 import Modal from "@/components/Modal.vue";
 import Api from "@/api/ApiRequester";
 import { IWorkbook } from "@/models/IWorkbook";
-import router from "../router";
 import { IGroup } from "@/models/IGroup";
 import { IUser } from "../models/IUser";
 
