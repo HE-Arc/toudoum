@@ -24,6 +24,7 @@
                         required
                     />
                     <v-text-field
+                        id="pass"
                         v-model="user.password"
                         label="Password"
                         type="password"
@@ -63,6 +64,7 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
+import {VueConstructor} from "vue";
 import VueRx from "vue-rx";
 Vue.use(VueRx);
 import Api from "@/api/ApiRequester";
@@ -70,7 +72,8 @@ import { IUser } from "@/models/IUser";
 import { ToudoumError422 } from "@/api/ToudoumError422";
 import { ToudoumError } from "@/api/ToudoumError";
 import { FunctionalComponentOptions } from "vue/types/umd";
-import VuejsClipper, { clipperFixed, clipperPreview } from "vuejs-clipper";
+import { clipperFixed } from "vuejs-clipper";
+
 
 interface Error422 {
     email?: Array<string>;
@@ -87,10 +90,19 @@ interface ErrorState422 {
     password: string;
 }
 
-export default Vue.extend({
-    components: {
-        clipperFixed
-    },
+export default (Vue as VueConstructor<
+  Vue & {
+    $refs: {
+        clipper: {
+            clip: Function;
+        };
+    };
+  }
+>).extend({
+  components: {
+    clipperFixed,
+  },
+
     async created() {
         Api.get<IUser[]>("users?by_token=true").then((u: IUser[]) => {
             const userReceived: IUser = u[0];
@@ -109,7 +121,6 @@ export default Vue.extend({
                 password: "",
                 password_confirmation: "",
             } as IUser,
-            file: File,
             labels: { submit: "Validate", cancel: "Dismiss" },
             valid: false,
             rules: {
@@ -120,8 +131,16 @@ export default Vue.extend({
                 },
                 min: (v: string) => v.length >= 6 || "Minimum 6 characters",
                 password_conf: (value: string) =>
-                    value == this.user.password ||
-                    "Password and password confirmation must be identics"
+                {
+                    const pass = (document.getElementById("pass") as HTMLInputElement)
+                    if(pass != null)
+                        {
+                        return value == pass.value || "Password and password confirmation must be identics"
+                        }
+                    else{
+                        return false;
+                    }
+                }
             }
         };
     },
@@ -144,26 +163,24 @@ export default Vue.extend({
                 }
             }
         },
-        clip: function (e: any) {
-            console.log(e);
+        onChange: function (e: any) {
+            this.url = URL.createObjectURL(e);
         },
-        onChange: function (e: File) {
-            this.file = e;
-            this.url = URL.createObjectURL(this.file);
-        },
-        sendPicture: async function () {
+        async sendPicture()  {
             const camelCase = "lol.png";
 
             try {
                 const canvas = this.$refs.clipper.clip();
-                canvas.toBlob((blob: any) => {
-                    this.file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
+                 canvas.toBlob(async (blob: any) => {
+                    const image: File = new File([blob], "fileName.jpg", { type: "image/jpeg" });
+                     const formData: FormData = new FormData();
+                    formData.append("avatar", image, "lol.png");
+                    await Api.formData("/avatar", formData);
+                    this.succes();
+                    window.location.reload()
                 }, "image/jpeg");
-                console.log(canvas);
-                const formData: FormData = new FormData();
-                formData.append("avatar", canvas(), "lol.png");
-                await Api.formData("/avatar", formData);
-                this.succes();
+
+               
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;

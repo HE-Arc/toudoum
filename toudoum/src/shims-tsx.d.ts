@@ -1,4 +1,5 @@
 import Vue, { VNode } from 'vue'
+import {clipperFixed} from ('vuejs-clipper');
 
 declare global {
   namespace JSX {
@@ -10,4 +11,5 @@ declare global {
       [elem: string]: any;
     }
   }
+  const clipperFixed: typeof _clipperFixed;
 }
