@@ -3,15 +3,50 @@ import { ActionContext, Store } from 'vuex';
 import { State } from './State';
 import { TypedStore } from "./TypedStore"
 
+/**
+ * Define all possible actions
+ *
+ * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+ * @export
+ * @class ActionFacade
+ */
 export class ActionFacade {
+
+    /**
+     * Creates an instance of ActionFacade.
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {TypedStore} store
+     */
     constructor(private readonly store: TypedStore) {
     }
+
+    /**
+     * logUser action
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {IUser} user
+     * @return {*} new value
+     */
     logUser(user: IUser) {
         return this.store.dispatch("logUser", user);
     }
+
+    /**
+     * toggle drawer state
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @return {*} new value
+     */
     toggleDrawer() {
         return this.store.dispatch("toggleDrawer");
     }
+
+    /**
+     * Log out action
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @return {*} 
+     */
     logout() {
         return this.store.dispatch("logout");
     }

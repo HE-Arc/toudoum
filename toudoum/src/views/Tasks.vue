@@ -13,7 +13,7 @@
             <v-col sm="12" md="12" lg="6">
                 <WorkbookInfo
                     :workbookId="workbookId"
-                    v-if="workbook_group_id && workbook_user_id"
+                    v-if="workbook_group_id > -1 && workbook_user_id > -1"
                     :groupId="workbook_group_id"
                     :userId="workbook_user_id"
                 />
@@ -52,8 +52,8 @@ export default Vue.extend({
             t: {} as ITask[],
             workbookName: "",
             workbookId: 0,
-            workbook_group_id: null,
-            workbook_user_id: null
+            workbook_group_id: -1,
+            workbook_user_id: -1,
         };
     },
     methods: {

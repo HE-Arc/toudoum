@@ -40,9 +40,8 @@
 import Vue from "vue";
 import Api from "@/api/ApiRequester";
 import { ITask } from "@/models/ITask";
+import { IAllTasks } from "@/models/IAllTasks";
 import TasksList from "@/components/TasksList.vue";
-import WorkbookInfo from "@/components/WorkbookInfo.vue";
-import { IWorkbook } from "../models/IWorkbook";
 
 export default Vue.extend({
     name: "Tasks",
@@ -51,7 +50,7 @@ export default Vue.extend({
         workbook_id: String
     },
     async beforeMount() {
-        this.allTasks = await Api.get<{}>("tasks");
+        this.allTasks = await Api.get<IAllTasks>("tasks");
 
         // TODO : sort tasks
         this.todayTasks = this.allTasks.today;
@@ -60,7 +59,7 @@ export default Vue.extend({
     },
     data: function () {
         return {
-            allTasks: {},
+            allTasks: {} as IAllTasks,
             todayTasks: {} as ITask[],
             weekTasks: {} as ITask[],
             restTasks: {} as ITask[],
