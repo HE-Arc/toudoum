@@ -32,6 +32,7 @@ import Vue from "vue";
 import UserListItem from "@/components/UserListItem.vue";
 import Api from "@/api/ApiRequester";
 import { IUser } from "../models/IUser";
+import { IMember } from "../models/IMember";
 
 
 export default Vue.extend({
@@ -55,8 +56,8 @@ export default Vue.extend({
         });
     },
     data: () => ({
-        members: [],
-        author: {}
+        members: [] as IMember[],
+        author: {} as IMember
     })
 });
 </script>
