@@ -162,8 +162,9 @@ class ApiRequester {
         const requestConfig: AxiosRequestConfig = {
             method: method,
             url: url,
-            headers: { Authorization: `Bearer ${this.token}` }
+            headers: { Authorization: `Bearer ${this.token}`, }
         };
+
 
         if (body) {
             requestConfig.data = body;
@@ -181,6 +182,8 @@ class ApiRequester {
             }
         }
     }
+
+    
 
     /**
      * POST data to API
@@ -229,6 +232,33 @@ class ApiRequester {
         return this.request("PATCH", url, body);
     }
 
+    public async formData(url: string, body: any): Promise<IToudoumResponse> {
+        const requestConfig: AxiosRequestConfig = {
+            method: "POST",
+            url: url,
+            headers: { 
+                Authorization: `Bearer ${this.token}`, 
+                "Content-Type" : "multipart/form-data"
+            }
+        };
+
+
+        if (body) {
+            requestConfig.data = body;
+        }
+
+        try {
+            const response: AxiosResponse = await this.instanceAxios(requestConfig);
+            return response.data as IToudoumResponse;
+        } catch (error) {
+            const data = error.response.data;
+            if (data.data == undefined) {
+                throw new ToudoumError(data.code, data.message, data.status);
+            } else {
+                throw new ToudoumError422(data.code, data.message, data.status, data.data);
+            }
+        }
+    }
 
 }
 
