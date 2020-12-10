@@ -2,7 +2,7 @@
 <template>
     <v-container class="marginTop">
         <div class="account">
-            <Profil :v-if="loaded" :user="user" />
+            <Profil/>
         </div>
     </v-container>
 </template>
@@ -18,21 +18,6 @@ import { IUser } from "@/models/IUser";
 export default Vue.extend({
     name: "Account",
     components: { Profil },
-    created() {
-        (Api.get<IUser[]>("users?by_token=true")).then((u: IUser[]) => {
-            this.user = u[0];
-            this.user.password = ""
-            this.user.password_confirmation = ""
-            console.log(this.user)
-            this.loaded = true;
-        });
-    },
-    data() {
-        return {
-            loaded: null,
-            user: {} as IUser
-        };
-    }
 });
 </script>
 
