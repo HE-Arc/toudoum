@@ -9,14 +9,7 @@
     >
         <v-layout align-center justify-space-between column fill-height>
             <div>
-                <v-list class="py-0">
-                    <v-list-item class="px-2" two-line>
-                        <v-list-item-avatar>
-                            <v-img
-                                src="https://avatars1.githubusercontent.com/u/19173830?s=460&u=08af2e129410fb95c81af06cfdbd2306288aa8cd&v=4"
-                            ></v-img>
-                        </v-list-item-avatar>
-
+            <v-list>
             <v-list-item class="px-2" two-line>
           <v-list-item-avatar>
                     <v-img
@@ -62,6 +55,7 @@
 import Vue from "vue";
 
 import { IListMenu } from "@/models/IListMenu";
+import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
     name: "Drawer",
@@ -80,6 +74,11 @@ export default Vue.extend({
         },
         isMobile() {
             return this.$vuetify.breakpoint.smAndDown;
+        },
+        getAvatar: async function()
+        {
+            const reponse = await Api.get("avatar")
+            this.url = 'http://localhost:8000' + reponse
         }
     },
     data() {
@@ -109,12 +108,5 @@ export default Vue.extend({
             ] as Array<IListMenu>
         }
     },
-    methods: {
-        getAvatar: async function()
-        {
-            const reponse = await Api.get("avatar")
-            this.url = 'http://localhost:8000' + reponse
-        }
-    }
 });
 </script>
