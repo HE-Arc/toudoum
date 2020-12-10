@@ -1,5 +1,12 @@
 import { State } from './State';
 
+/**
+ * All getter to type
+ *
+ * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+ * @export
+ * @interface Getters
+ */
 export interface Getters {
     userFullname: string;
     userEmail: string;

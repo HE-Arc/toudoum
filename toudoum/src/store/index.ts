@@ -6,12 +6,15 @@ import { mutations } from './Mutations';
 import { State } from './State';
 import { TypedStore } from './TypedStore';
 
+// Add typed store to Vue type
 declare module "vue/types/vue" {
     interface Vue {
         $typedStore: TypedStore;
     }
 }
-
+/**
+ * Add typedStore plugin
+ */
 const typedStorePlugin: PluginObject<void> = {
     install(VueInstance: typeof Vue) {
         Object.defineProperty(VueInstance.prototype, '$typedStore', {
@@ -25,6 +28,7 @@ const typedStorePlugin: PluginObject<void> = {
 Vue.use(Vuex);
 Vue.use(typedStorePlugin);
 
+// Instanciate the typed store
 const store = new Store<State>({
     state: {
         user: null,
