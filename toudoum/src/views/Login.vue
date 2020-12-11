@@ -25,6 +25,7 @@
                             label="Password"
                             v-model="password"
                             class="my-5"
+                            @keydown.enter="login"
                             @click:append="showPassord = !showPassord"
                         ></v-text-field>
                     </v-card-text>
