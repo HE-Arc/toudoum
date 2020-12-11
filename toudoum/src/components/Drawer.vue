@@ -13,7 +13,7 @@
             <v-list-item class="px-2" two-line>
           <v-list-item-avatar>
                     <v-img
-                        :src="url + `?time=${this.$typedStore.getters.avatarTimestamp}`" />
+                        :src="this.$typedStore.getters.avatar" />
                 </v-list-item-avatar>
                         <v-list-item-content>
                             <v-list-item-title class="title">

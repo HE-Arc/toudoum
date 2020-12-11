@@ -1,6 +1,7 @@
 import { IUser } from '@/models/IUser';
 import { ActionContext, Store } from 'vuex';
 import { State } from './State';
+import Api from "@/api/ApiRequester";
 import { TypedStore } from "./TypedStore"
 
 /**
@@ -65,6 +66,10 @@ type ActionsDefinition = {
 export const actions: ActionsDefinition = {
     logUser: (injectee: ActionContext<State, State>, user: IUser) => injectee.commit("LOGIN", user),
     toggleDrawer: (injectee: ActionContext<State, State>) => injectee.commit("DRAWER_TOGGLE"),
-    updateUserAvatar: (injectee: ActionContext<State, State>) => injectee.commit("UPDATE_AVATAR"),
+    updateUserAvatar: (injectee: ActionContext<State, State>) => {
+        Api.get<string>("avatar").then((response: string) => {
+            injectee.commit("UPDATE_AVATAR", `${Api.getUrl()}/${response}?time=${Date.now()}`);
+        });
+    },
     logout: (injectee: ActionContext<State, State>) => injectee.commit("LOGOUT")
 };

@@ -8,6 +8,7 @@ import { State } from './State';
  * @interface Getters
  */
 export interface Getters {
+    avatar: string;
     userFullname: string;
     userEmail: string;
     userId: number;
@@ -41,6 +42,17 @@ export const getters: GettersDefinition = {
      */
     avatarTimestamp(state: State): number {
         return state.avatarTimestamp;
+    },
+
+    /**
+     * Get avatar url
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {State} state
+     * @return {*}  {string} avatar url
+     */
+    avatar(state: State): string {
+        return state.avatar;
     },
 
     /**

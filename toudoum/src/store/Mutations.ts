@@ -29,6 +29,6 @@ export interface MyCommit {
 export const mutations: MutationsDefinition = {
     "LOGIN": (state: State, user: IUser) => state.user = user,
     "LOGOUT": (state: State) => state.user = null,
-    "UPDATE_AVATAR": (state: State) => state.avatarTimestamp = Date.now(),
+    "UPDATE_AVATAR": async (state: State, avatarUrl: string) => state.avatar = avatarUrl,
     "DRAWER_TOGGLE": (state: State) => state.isDrawerExpanded = !state.isDrawerExpanded,
 };
