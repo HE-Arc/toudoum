@@ -36,9 +36,15 @@ php artisan migrate
 php artisan migrate:fresh
 ```
 
+### Add lik to public folder
+
+```.sh
+php artisan storage:link
+```
+
 ### Deployment
 
-Things to be done to deploy : todo...
+Things to be done to deploy are described in the [GitHub Wiki](https://github.com/HE-Arc/toudoum/wiki/D%C3%A9ploiement).
 
 ## Auteurs
 

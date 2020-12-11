@@ -31,6 +31,9 @@ npm run serve
 ```
 
 ### Compiles and minifies for production
+
+Don't forget to change `API URL` in `src/api/ApiRequester.ts` to match production API URL.
+
 ```
 npm run build
 ```
