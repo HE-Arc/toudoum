@@ -9,12 +9,14 @@
     >
         <v-layout align-center justify-space-between column fill-height>
             <div>
-            <v-list>
-            <v-list-item class="px-2" two-line>
-          <v-list-item-avatar>
-                    <v-img
-                        :src="this.$typedStore.getters.avatar" />
-                </v-list-item-avatar>
+                <v-list>
+                    <v-list-item class="px-2" two-line>
+                        <v-list-item-avatar>
+                            <Avatar
+                                :imgUrl="this.$typedStore.getters.avatar"
+                                :fullname="$typedStore.getters.userFullname"
+                            />
+                        </v-list-item-avatar>
                         <v-list-item-content>
                             <v-list-item-title class="title">
                                 {{ $typedStore.getters.userFullname }}
@@ -55,13 +57,14 @@
 import Vue from "vue";
 
 import { IListMenu } from "@/models/IListMenu";
+import Avatar from "@/components/Avatar.vue";
 import Api from "@/api/ApiRequester";
 
 export default Vue.extend({
     name: "Drawer",
+    components: { Avatar },
     async created() {
-        if (this.$typedStore.getters.isLoggedIn)
-        {
+        if (this.$typedStore.getters.isLoggedIn) {
             this.getAvatar();
         }
     },
@@ -75,10 +78,9 @@ export default Vue.extend({
         isMobile() {
             return this.$vuetify.breakpoint.smAndDown;
         },
-        getAvatar: async function()
-        {
-            const response = await Api.get("avatar")
-            this.url = `${Api.getUrl()}/${response}`
+        getAvatar: async function () {
+            const response = await Api.get("avatar");
+            this.url = `${Api.getUrl()}/${response}`;
         }
     },
     data() {
@@ -106,7 +108,7 @@ export default Vue.extend({
                     to: "/Logout"
                 }
             ] as Array<IListMenu>
-        }
-    },
+        };
+    }
 });
 </script>
