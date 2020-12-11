@@ -2034,16 +2034,16 @@
         },
         {
             "name": "league/oauth2-server",
-            "version": "8.2.3",
+            "version": "8.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-server.git",
-                "reference": "70bb329bc79b7965a56f46e293da946c5a976ef1"
+                "reference": "622eaa1f28eb4a2dea0cfc7e4f5280fac794e83c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/70bb329bc79b7965a56f46e293da946c5a976ef1",
-                "reference": "70bb329bc79b7965a56f46e293da946c5a976ef1",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/622eaa1f28eb4a2dea0cfc7e4f5280fac794e83c",
+                "reference": "622eaa1f28eb4a2dea0cfc7e4f5280fac794e83c",
                 "shasum": ""
             },
             "require": {
@@ -2113,7 +2113,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-12-03T21:32:29+00:00"
+            "time": "2020-12-10T11:35:44+00:00"
         },
         {
             "name": "monolog/monolog",
