@@ -36,7 +36,7 @@ php artisan migrate
 php artisan migrate:fresh
 ```
 
-### Add lik to public folder
+### Add link to public folder
 
 ```.sh
 php artisan storage:link
