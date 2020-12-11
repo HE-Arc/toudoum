@@ -4,10 +4,15 @@
   <img width="128" src="https://toudoum.srvz-webapp.he-arc.ch/public/toudoum.png" />
 </p>
 
-# Toudom API
-
 Toudoum API is the backend of application Toudoum. It's a Web Service built with RESTful pattern.
 The responses are written in JSON.
+
+## Dependencies
+
+Toudoum API uses theses libraries :
+
+- Laravel
+- Laravel Passport
 
 ## Features
 
