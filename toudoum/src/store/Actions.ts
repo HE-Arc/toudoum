@@ -41,6 +41,10 @@ export class ActionFacade {
         return this.store.dispatch("toggleDrawer");
     }
 
+    updateUserAvatar() {
+        return this.store.dispatch("updateUserAvatar");
+    }
+
     /**
      * Log out action
      *
@@ -61,5 +65,6 @@ type ActionsDefinition = {
 export const actions: ActionsDefinition = {
     logUser: (injectee: ActionContext<State, State>, user: IUser) => injectee.commit("LOGIN", user),
     toggleDrawer: (injectee: ActionContext<State, State>) => injectee.commit("DRAWER_TOGGLE"),
+    updateUserAvatar: (injectee: ActionContext<State, State>) => injectee.commit("UPDATE_AVATAR"),
     logout: (injectee: ActionContext<State, State>) => injectee.commit("LOGOUT")
 };

@@ -2,7 +2,7 @@ import { IUser } from '@/models/IUser';
 import { Mutation, CommitOptions } from 'vuex';
 import { State } from './State';
 
-export type Mutations = "LOGIN" | "LOGOUT" | "DRAWER_TOGGLE";
+export type Mutations = "LOGIN" | "LOGOUT" | "DRAWER_TOGGLE" | "UPDATE_AVATAR";
 
 // Contains all definitions
 type MutationsDefinition = {
@@ -29,5 +29,6 @@ export interface MyCommit {
 export const mutations: MutationsDefinition = {
     "LOGIN": (state: State, user: IUser) => state.user = user,
     "LOGOUT": (state: State) => state.user = null,
+    "UPDATE_AVATAR": (state: State) => state.avatarTimestamp = Date.now(),
     "DRAWER_TOGGLE": (state: State) => state.isDrawerExpanded = !state.isDrawerExpanded,
 };

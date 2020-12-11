@@ -11,4 +11,5 @@ export interface State {
     isUserLogged: boolean;
     user: IUser | null;
     isDrawerExpanded: boolean;
+    avatarTimestamp: number;
 }

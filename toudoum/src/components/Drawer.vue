@@ -13,7 +13,7 @@
             <v-list-item class="px-2" two-line>
           <v-list-item-avatar>
                     <v-img
-                        :src="url" />
+                        :src="url + `?time=${this.$typedStore.getters.avatarTimestamp}`" />
                 </v-list-item-avatar>
                         <v-list-item-content>
                             <v-list-item-title class="title">
@@ -77,8 +77,8 @@ export default Vue.extend({
         },
         getAvatar: async function()
         {
-            const reponse = await Api.get("avatar")
-            this.url = 'http://localhost:8000' + reponse
+            const response = await Api.get("avatar")
+            this.url = `${Api.getUrl()}/${response}`
         }
     },
     data() {
