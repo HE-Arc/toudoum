@@ -12,6 +12,7 @@ export interface Getters {
     userEmail: string;
     userId: number;
     isLoggedIn: boolean;
+    avatarTimestamp: number;
     isDrawerExpanded: boolean;
 }
 
@@ -29,6 +30,17 @@ export const getters: GettersDefinition = {
      */
     userFullname(state: State): string {
         return `${state.user?.name} ${state.user?.firstname}`;
+    },
+
+    /**
+     * Get last timestamp for image (actualize directly)
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {State} state
+     * @return {*}  {number}
+     */
+    avatarTimestamp(state: State): number {
+        return state.avatarTimestamp;
     },
 
     /**

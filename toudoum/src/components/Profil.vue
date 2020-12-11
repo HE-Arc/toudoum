@@ -57,7 +57,6 @@
                 </div>
             </v-col>
         </v-row>
-
     </div>
 </template>
 
@@ -65,7 +64,7 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
-import {VueConstructor} from "vue";
+import { VueConstructor } from "vue";
 import VueRx from "vue-rx";
 Vue.use(VueRx);
 import Api from "@/api/ApiRequester";
@@ -74,7 +73,6 @@ import { ToudoumError422 } from "@/api/ToudoumError422";
 import { ToudoumError } from "@/api/ToudoumError";
 import { FunctionalComponentOptions } from "vue/types/umd";
 import { clipperFixed } from "vuejs-clipper";
-
 
 interface Error422 {
     email?: Array<string>;
@@ -92,17 +90,17 @@ interface ErrorState422 {
 }
 
 export default (Vue as VueConstructor<
-  Vue & {
-    $refs: {
-        clipper: {
-            clip: Function;
+    Vue & {
+        $refs: {
+            clipper: {
+                clip: Function;
+            };
         };
-    };
-  }
+    }
 >).extend({
-  components: {
-    clipperFixed,
-  },
+    components: {
+        clipperFixed
+    },
 
     async created() {
         Api.get<IUser[]>("users?by_token=true").then((u: IUser[]) => {
@@ -121,7 +119,7 @@ export default (Vue as VueConstructor<
                 name: "",
                 email: "",
                 password: "",
-                password_confirmation: "",
+                password_confirmation: ""
             } as IUser,
             labels: { submit: "Validate", cancel: "Dismiss" },
             valid: false,
@@ -132,14 +130,14 @@ export default (Vue as VueConstructor<
                     return pattern.test(value) || "Invalid e-mail.";
                 },
                 min: (v: string) => v.length >= 6 || "Minimum 6 characters",
-                password_conf: (value: string) =>
-                {
-                    const pass = (document.getElementById("pass") as HTMLInputElement)
-                    if(pass != null)
-                        {
-                        return value == pass.value || "Password and password confirmation must be identics"
-                        }
-                    else{
+                password_conf: (value: string) => {
+                    const pass = document.getElementById("pass") as HTMLInputElement;
+                    if (pass != null) {
+                        return (
+                            value == pass.value ||
+                            "Password and password confirmation must be identics"
+                        );
+                    } else {
                         return false;
                     }
                 }
@@ -156,7 +154,6 @@ export default (Vue as VueConstructor<
                     password: this.user.password,
                     password_confirmation: this.user.password_confirmation
                 });
-                this.succes();
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;
@@ -178,7 +175,7 @@ export default (Vue as VueConstructor<
                      const formData: FormData = new FormData();
                     formData.append("avatar", image, "avatar."+this.img_type);
                     await Api.formData("/avatar", formData);
-                    this.succes();
+                    this.success();
                 }, "image/"+this.img_type);
 
                
@@ -190,8 +187,8 @@ export default (Vue as VueConstructor<
                 }
             }
         },
-        succes: function () {
-            alert("Modification sauvegardé");
+        success: function() {
+            this.$typedStore.actions.updateUserAvatar();
         }
     }
 });

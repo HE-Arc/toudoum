@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <Drawer />
+        <Drawer :avatarTimestamp="this.$typedStore.state.avatarTimestamp"/>
         <v-main>
             <Header />
             <router-view></router-view>

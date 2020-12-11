@@ -33,6 +33,7 @@ const store = new Store<State>({
     state: {
         user: null,
         isUserLogged: false,
+        avatarTimestamp: Date.now(),
         isDrawerExpanded: true
     },
     getters: getters,

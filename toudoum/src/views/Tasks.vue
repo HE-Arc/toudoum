@@ -42,7 +42,7 @@ export default Vue.extend({
         Api.get<IWorkbook[]>("workbooks?id=" + this.workbook_id).then((w: IWorkbook[]) => {
             this.workbookName = w[0].name;
             this.workbookId = w[0].id;
-            this.workbook_group_id = w[0].group_id;
+            this.workbook_group_id = w[0].group_id || -1;
             this.workbook_user_id = w[0].user_id;
         });
     },
