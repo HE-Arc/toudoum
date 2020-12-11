@@ -78,7 +78,7 @@ const routes: Array<RouteConfig> = [
         name: 'Account',
         component: Account,
         meta: {
-            onlyLogged: false
+            onlyLogged: true
         }
     },
     {
