@@ -114,6 +114,7 @@ export default (Vue as VueConstructor<
     },
     data() {
         return {
+            img_type: "",
             url: "",
             user: {
                 firstname: "",
@@ -166,20 +167,19 @@ export default (Vue as VueConstructor<
         },
         onChange: function (e: any) {
             this.url = URL.createObjectURL(e);
+            this.img_type = e.name.split('.').pop();
         },
         async sendPicture()  {
-            const camelCase = "lol.png";
 
             try {
                 const canvas = this.$refs.clipper.clip();
                  canvas.toBlob(async (blob: any) => {
-                    const image: File = new File([blob], "fileName.jpg", { type: "image/jpeg" });
+                    const image: File = new File([blob], "fileName."+this.img_type, { type: "image/"+this.img_type });
                      const formData: FormData = new FormData();
-                    formData.append("avatar", image, "lol.png");
+                    formData.append("avatar", image, "avatar."+this.img_type);
                     await Api.formData("/avatar", formData);
                     this.succes();
-                    window.location.reload()
-                }, "image/jpeg");
+                }, "image/"+this.img_type);
 
                
             } catch (e) {
