@@ -81,6 +81,7 @@ class ApiRequester {
             store.actions.logUser(response.data.data.user);
             window.sessionStorage.setItem("user", JSON.stringify(response.data.data.user));
             window.sessionStorage.setItem("token", response.data.data.access_token);
+            store.actions.updateUserAvatar();
             return response.data as IToudoumResponse;
         } catch (error) {
             const data = error.response.data;
