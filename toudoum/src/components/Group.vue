@@ -25,6 +25,7 @@
             </v-btn>
             <v-list-item-group>
                 <v-row class="d-flex">
+                    <p v-if="groups.length == 0" class="px-3">You are not part of any group.</p>
                     <v-col
                         cols="12"
                         sm="12"

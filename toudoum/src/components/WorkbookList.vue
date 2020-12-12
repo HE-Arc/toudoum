@@ -26,6 +26,7 @@
                 <v-icon>mdi-plus</v-icon>
             </v-btn>
             <v-row class="mt-4">
+                <p v-if="workbooks.length == 0" class="px-3">You haven't got any workbook yet</p>
                 <v-col v-for="w in workbooks" :key="w.id" sm="12" md="6" lg="4" xl="3">
                     <Workbook
                         :title="w.name"
