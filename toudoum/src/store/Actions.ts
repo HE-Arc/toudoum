@@ -71,7 +71,7 @@ export const actions: ActionsDefinition = {
             if(response == "") {
                 injectee.commit("UPDATE_AVATAR", null);
             } else {
-                injectee.commit("UPDATE_AVATAR", `${Api.getUrl()}/${response}?time=${Date.now()}`);
+                injectee.commit("UPDATE_AVATAR", `${response}?time=${Date.now()}`);
             }
         });
     },
