@@ -2,7 +2,7 @@
     <v-container class="marginTop">
         <h1>Tasks in Workbook &laquo; {{ workbookName }} &raquo;</h1>
         <v-row>
-            <v-col sm="12" md="12" lg="6">
+            <v-col cols="12" sm="12" md="12" lg="6">
                 <TasksList
                     :tasks="t"
                     :workbook_title="workbookName"
@@ -10,7 +10,7 @@
                     @reload="getAllTasks"
                 />
             </v-col>
-            <v-col sm="12" md="12" lg="6">
+            <v-col cols="12" sm="12" md="12" lg="6">
                 <WorkbookInfo
                     :workbookId="workbookId"
                     v-if="workbook_group_id > -1 && workbook_user_id > -1"
