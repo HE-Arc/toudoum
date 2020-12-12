@@ -1,6 +1,6 @@
 <!-- TEMPLATE -->
 <template>
-    <v-img v-if="imgUrl" :src="imgUrl" />
+    <v-img v-if="imgUrl && imgUrl != 'user.jpg'" :src="imgUrl" />
     <v-avatar v-else color="primary" size="40">
         <span class="white--text headline text-center">{{ getInitials() }}</span>
     </v-avatar>
@@ -21,10 +21,14 @@ export default Vue.extend({
     },
     methods: {
         getInitials: function () {
-            return this.fullname
-                .match(/\b(\w)/g)
-                ?.join("")
-                .toUpperCase();
+            if (this.fullname){
+                return this.fullname
+                    .match(/\b(\w)/g)
+                    ?.join("")
+                    .toUpperCase();
+            }else{
+                return "??";
+            }
         }
     }
 });

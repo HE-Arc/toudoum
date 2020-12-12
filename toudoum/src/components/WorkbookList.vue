@@ -32,6 +32,7 @@
                         :title="w.name"
                         :id="w.id + ''"
                         :authorName="authorNames[w.user_id]"
+                        :authorAvatar="authorAvatars[w.user_id]"
                         :nbTasks="nbTasks[w.id] || 0"
                     />
                 </v-col>
@@ -70,6 +71,7 @@ export default Vue.extend({
         Api.get<IUser[]>("users").then((authors: IUser[]) => {
             authors.forEach((u: IUser) => {
                 this.authorNames[u.id] = `${u.name} ${u.firstname}`;
+                this.authorAvatars[u.id] = u.avatar;
             });
         });
         this.nbTasks = await Api.get("tasks?count_workbook_id=true");
@@ -85,7 +87,8 @@ export default Vue.extend({
             groupSelected: "",
             shared: false,
             nbTasks: {} as any,
-            authorNames: {} as any
+            authorNames: {} as any,
+            authorAvatars: {} as any
         };
     },
     methods: {

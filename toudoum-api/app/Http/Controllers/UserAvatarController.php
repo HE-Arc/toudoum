@@ -12,7 +12,8 @@ class UserAvatarController extends Controller
 
     public function get(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find($request->get("id"));
+
         if(file_exists("../storage/app/public/avatars/" . $user->avatar))
         {
             return "/storage/avatars/" .$user->avatar;

@@ -14,5 +14,6 @@ export interface IUser extends ObjectConstructor {
     password?: string;
     password_confirmation?: string;
     token?: string;
+    avatar: string;
 
 }
