@@ -68,7 +68,11 @@ export const actions: ActionsDefinition = {
     toggleDrawer: (injectee: ActionContext<State, State>) => injectee.commit("DRAWER_TOGGLE"),
     updateUserAvatar: (injectee: ActionContext<State, State>) => {
         Api.get<string>("avatar").then((response: string) => {
-            injectee.commit("UPDATE_AVATAR", `${Api.getUrl()}/${response}?time=${Date.now()}`);
+            if(response == "") {
+                injectee.commit("UPDATE_AVATAR", null);
+            } else {
+                injectee.commit("UPDATE_AVATAR", `${Api.getUrl()}/${response}?time=${Date.now()}`);
+            }
         });
     },
     logout: (injectee: ActionContext<State, State>) => injectee.commit("LOGOUT")

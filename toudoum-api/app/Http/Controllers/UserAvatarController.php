@@ -17,7 +17,7 @@ class UserAvatarController extends Controller
         {
             return "/storage/avatars/" .$user->avatar;
         }
-        return "/storage/avatars/user.jpeg";
+        return "";
     }
 
     /**
