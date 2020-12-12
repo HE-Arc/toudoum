@@ -38,7 +38,7 @@
                         <GroupItem
                             :title="group.name"
                             @click="clickOnGroup(group.id + '', group.name)"
-                            :numberUsers="14"
+                            :groupId="group.id"
                         ></GroupItem>
                     </v-col>
                 </v-row>
