@@ -22,7 +22,7 @@ Vue.use(VueRouter)
  */
 const routes: Array<RouteConfig> = [
     {
-        path: '/Login', 
+        path: '/Login',
         name: 'Login',
         component: Login,
         meta: {
@@ -61,7 +61,7 @@ const routes: Array<RouteConfig> = [
         meta: {
             onlyLogged: true
         },
-        
+
     },
     {
         path: '/Tasks',
@@ -71,7 +71,7 @@ const routes: Array<RouteConfig> = [
         meta: {
             onlyLogged: true
         },
-        
+
     },
     {
         path: '/Account',
@@ -99,7 +99,7 @@ const routes: Array<RouteConfig> = [
  * @return {*}  {boolean} true if session stored in sessionStorage; false otherwise
  */
 function loadSessionFromStorage(): boolean {
-    if(window.sessionStorage.getItem("user") != null) {
+    if (window.sessionStorage.getItem("user") != null) {
         const user: IUser = JSON.parse(window.sessionStorage.getItem("user") ?? "") as IUser;
         store.actions.logUser(user);
         Api.setToken(window.sessionStorage.getItem("token") ?? "");
@@ -117,7 +117,9 @@ function loadSessionFromStorage(): boolean {
  */
 function isLogged(): boolean {
     const isConnected = store.getters.isLoggedIn || loadSessionFromStorage();
-    store.actions.updateUserAvatar();
+    if (isConnected) {
+        store.actions.updateUserAvatar();
+    }
     return isConnected;
 }
 
