@@ -28,6 +28,7 @@ Here appears all commands that help developer to improve Toudoum with app instal
 
 ```sh
 composer require laravel/passport
+php artisan passport:install
 php artisan generate:key
 ```
 
