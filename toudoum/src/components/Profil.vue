@@ -1,9 +1,8 @@
 <!-- TEMPLATE -->
 <template>
     <div>
-        <h3>Profil</h3>
         <v-row>
-            <v-col>
+            <v-col cols="12" md="6">
                 <v-form ref="form" v-model="valid" lazy-validation>
                     <v-text-field
                         v-model="user.firstname"
@@ -39,10 +38,10 @@
                         required
                     />
 
-                    <v-btn @click="validate" :disabled="!valid">Sauvegarder</v-btn>
+                    <v-btn @click="validate" :disabled="!valid">Save</v-btn>
                 </v-form>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="6">
                 <div>
                     <v-file-input
                         id="pick-image"
@@ -51,9 +50,9 @@
                         @change="onChange"
                     />
 
-                    <clipper-fixed ref="clipper" :src="url" />
+                    <clipper-fixed class="avatar-crop" ref="clipper" :src="url" />
 
-                    <v-btn @click="sendPicture">Envoyer</v-btn>
+                    <v-btn class="mt-3" @click="sendPicture">Send</v-btn>
                 </div>
             </v-col>
         </v-row>
@@ -164,21 +163,20 @@ export default (Vue as VueConstructor<
         },
         onChange: function (e: any) {
             this.url = URL.createObjectURL(e);
-            this.img_type = e.name.split('.').pop();
+            this.img_type = e.name.split(".").pop();
         },
-        async sendPicture()  {
-
+        async sendPicture() {
             try {
                 const canvas = this.$refs.clipper.clip();
-                 canvas.toBlob(async (blob: any) => {
-                    const image: File = new File([blob], "fileName."+this.img_type, { type: "image/"+this.img_type });
-                     const formData: FormData = new FormData();
-                    formData.append("avatar", image, "avatar."+this.img_type);
+                canvas.toBlob(async (blob: any) => {
+                    const image: File = new File([blob], "fileName." + this.img_type, {
+                        type: "image/" + this.img_type
+                    });
+                    const formData: FormData = new FormData();
+                    formData.append("avatar", image, "avatar." + this.img_type);
                     await Api.formData("/avatar", formData);
                     this.success();
-                }, "image/"+this.img_type);
-
-               
+                }, "image/" + this.img_type);
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;
@@ -187,9 +185,16 @@ export default (Vue as VueConstructor<
                 }
             }
         },
-        success: function() {
+        success: function () {
             this.$typedStore.actions.updateUserAvatar();
         }
     }
 });
 </script>
+
+<style scoped>
+.avatar-crop {
+    max-width: 400px;
+    margin: 0 auto;
+}
+</style>
