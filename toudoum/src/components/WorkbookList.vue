@@ -108,7 +108,7 @@ export default Vue.extend({
                     }
                 });
             }
-            Api.post("workbooks", {
+            await Api.post("workbooks", {
                 name: this.workbookName,
                 group_id: tmpGroupId
             });
