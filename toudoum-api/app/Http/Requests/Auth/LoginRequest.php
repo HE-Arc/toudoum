@@ -23,10 +23,9 @@ class LoginRequest extends ApiRequest
      */
     public function messages()
     {
-        return [
-            'email.required'     => 'A email for the auth is required.',
-            'password.required'     => 'A password for the auth is required.',
-        ];
+        $msg = __('error_message.email');
+        $msg[] = __('error_message.password');
+        return $msg;
     }
 
     /**

@@ -22,13 +22,11 @@ class SignUpRequest extends ApiRequest
      * @return array
      */
     public function messages()
-    {
-        return [
-            'name.required'     => 'A name for the auth is required.',
-            'firstname.required'     => 'A firstname for the auth is required.',
-            'email.required'     => 'A email for the auth is required.',
-            'password.required'     => 'A password for the auth is required.',
-        ];
+{       $msg = __('error_message.name');
+        $msg[] = __('error_message.firstname');
+        $msg[] = __('error_message.email');
+        $msg[] = __('error_message.password');
+        return $msg;
     }
 
     /**

@@ -28,7 +28,12 @@ class UpdateUserRequest extends ApiRequest
      */
     public function messages()
     {
-        return __('error_message.updateUserError');
+        $msg = __('error_message.name');
+        $msg[] = __('error_message.firstname');
+        $msg[] = __('error_message.email');
+        $msg[] = __('error_message.password');
+        $msg[] = __('error_message.password_confirmation');
+        return $msg;
     }
 
     /**

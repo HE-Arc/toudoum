@@ -23,9 +23,8 @@ class StoreTaskRequest extends ApiRequest
      */
     public function messages()
     {
-        return [
-            'name.required'         => 'A name for the task is required.',
-        ];
+        $msg = __('error_message.workbook_name');
+        return $msg;
     }
 
     /**

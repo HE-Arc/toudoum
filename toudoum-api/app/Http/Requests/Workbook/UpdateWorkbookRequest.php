@@ -23,10 +23,9 @@ class UpdateWorkbookRequest extends ApiRequest
      */
     public function messages()
     {
-        return [
-            'name.required'     => 'A name for the workbook is required.',
-            'group_id.required'     => 'Foreignkey on group_id is missing.'
-        ];
+        $msg = __('error_message.workbook_name');
+        $msg = __('error_message.group_id');
+        return $msg;
     }
 
     /**

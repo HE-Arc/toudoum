@@ -24,9 +24,8 @@ class StoreWorkbookRequest extends ApiRequest
      */
     public function messages()
     {
-        return [
-            'name.required'     => 'A name for the workbook is required.'
-        ];
+        $msg = __('error_message.workbook_name');
+        return $msg;
     }
 
     /**
