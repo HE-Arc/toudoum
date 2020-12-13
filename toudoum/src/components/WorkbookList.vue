@@ -11,7 +11,11 @@
         >
             <v-text-field label="Title" v-model="workbookName"></v-text-field>
 
-            <v-checkbox v-if="groups.length > 0" v-model="shared" label="Shared workbook"></v-checkbox>
+            <v-checkbox
+                v-if="groups.length > 0"
+                v-model="shared"
+                label="Shared workbook"
+            ></v-checkbox>
             <v-combobox
                 v-if="shared"
                 v-model="groupSelected"
@@ -57,23 +61,23 @@ export default Vue.extend({
         workbooks: {} as () => IWorkbook[]
     },
     async created() {
-        this.groups = await Api.get<IGroup[]>("groups?by_token=true");
-        this.groups.forEach((g: IGroup) => {
-            this.itemGroups.push(g.name);
-        });
-
-        if(this.groups.length > 0) {
-            this.groupSelected = this.groups[0].name;
-        } else {
-            this.groupSelected = "";
-        }
-
         Api.get<IUser[]>("users").then((authors: IUser[]) => {
             authors.forEach((u: IUser) => {
                 this.authorNames[u.id] = `${u.name} ${u.firstname}`;
                 this.authorAvatars[u.id] = u.avatar;
             });
         });
+        this.groups = await Api.get<IGroup[]>("groups?by_token=true");
+        this.groups.forEach((g: IGroup) => {
+            this.itemGroups.push(g.name);
+        });
+
+        if (this.groups.length > 0) {
+            this.groupSelected = this.groups[0].name;
+        } else {
+            this.groupSelected = "";
+        }
+
         this.nbTasks = await Api.get("tasks?count_workbook_id=true");
     },
 

@@ -116,11 +116,15 @@ function loadSessionFromStorage(): boolean {
  * @return {*}  {boolean} treue if user is logged in; false otherwise
  */
 function isLogged(): boolean {
-    const isConnected = store.getters.isLoggedIn || loadSessionFromStorage();
-    if (isConnected) {
-        store.actions.updateUserAvatar();
+    // Not connected by login action
+    if (!store.getters.isLoggedIn) {
+        if (loadSessionFromStorage()) {
+            store.actions.updateUserAvatar();
+            return true;
+        }
+        return false;
     }
-    return isConnected;
+    return true;
 }
 
 
