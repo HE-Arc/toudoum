@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 
 class UpdateUserRequest extends ApiRequest
 {
@@ -27,12 +28,14 @@ class UpdateUserRequest extends ApiRequest
      */
     public function messages()
     {
+        // TODO :
+        // return error_message.updateUserError;
         return [
             'name.required'     => 'A name for the user is required.',
             'firstname.required'     => 'A firstname for the user is required.',
             'email.required'     => 'A email for the user is required.',
             'password.required'     => 'A password for the user is required.',
-            'password_confirmation.required'     => 'A password_confirmation for the user is required.',
+            'password_confirmation.required'     => 'A password_confirmation for the user is required.'
         ];
     }
 

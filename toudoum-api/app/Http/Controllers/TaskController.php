@@ -37,13 +37,13 @@ class TaskController extends Controller
         if ($workbookidFilter) {
             foreach ($tasks as $task) {
                 if ($task->workbook_id == $request->get("workbook_id")) {
-                    array_push($taskToKeep, $task);
+                    $taskToKeep[] = $task;
                 }
             }
         } else if ($idFilter) {
             foreach ($tasks as $task) {
-                if ($task['id'] == $request->get("id")) {
-                    array_push($taskToKeep, $task);
+                if ($task['id'] === $request->get("id")) {
+                    $taskToKeep[] = $task;
                 }
             }
         } else {
@@ -86,14 +86,17 @@ class TaskController extends Controller
 
         $task->save();
 
-        $group_id = Workbook::find($task->workbook_id)->group_id;
-        if ($group_id != null) {
+        $group_id = $task->workbook->group_id;
+        if ($group_id !== null) {
             $usersInGroup = Group::with("users")->find($group_id)->users;
 
             $userIDs = [];
-            foreach ($usersInGroup as $user) {
-                $userIDs[$user->id] = ['checked' => false];
-            }
+
+            collect($usersInGroup)->map(function ($item, $key)
+            {
+                $userIDs[$item] = ['checked' => false];
+            });
+
             $task->users()->attach($userIDs);
         } else {
             $task->users()->attach(Auth::user()->id, ['checked' => false]);
@@ -124,7 +127,7 @@ class TaskController extends Controller
         $tasks = Auth::user()->tasks;
         $task = null;
         foreach ($tasks as $t) {
-            if ($t->id == $id) {
+            if ($t->id === $id) {
                 $task = $t;
             }
         }
@@ -154,6 +157,9 @@ class TaskController extends Controller
             if ($request->get("checked")) {
                 $task->pivot->checked = !$task->pivot->checked;
             }
+
+            // ToDo : à tester
+            //$task->update->all(); 
             $task->save();
             $task->pivot->save();
         }
