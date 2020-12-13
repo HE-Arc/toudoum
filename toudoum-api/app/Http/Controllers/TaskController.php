@@ -54,7 +54,7 @@ class TaskController extends Controller
             }
         } else if ($idFilter) {
             foreach ($tasks as $task) {
-                if ($task['id'] === $request->get("id")) {
+                if ($task['id'] == $request->get("id")) {
                     $taskToKeep[] = $task;
                 }
             }
