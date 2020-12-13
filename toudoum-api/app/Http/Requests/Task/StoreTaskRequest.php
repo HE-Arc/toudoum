@@ -23,7 +23,7 @@ class StoreTaskRequest extends ApiRequest
      */
     public function messages()
     {
-        $msg = __('error_message.workbook_name');
+        $msg = __('error_message.task_name');
         return $msg;
     }
 
