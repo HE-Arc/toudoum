@@ -150,7 +150,7 @@ class TaskController extends Controller
         $tasks = Auth::user()->tasks;
         $task = null;
         foreach ($tasks as $t) {
-            if ($t->id === $id) {
+            if ($t->id == $id) {
                 $task = $t;
             }
         }
