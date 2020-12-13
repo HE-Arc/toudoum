@@ -1,7 +1,7 @@
 # Toudoum
 
 <p align="center">
-  <img width="128" src="https://toudoum.srvz-webapp.he-arc.ch/public/toudoum.png" />
+  <img width="128" src="https://raw.githubusercontent.com/wiki/HE-Arc/toudoum/img/toudoum.png" />
 </p>
 
 Toudoum is a task manager. It allows users to manage their tasks by workbooks. It also contains group notions.

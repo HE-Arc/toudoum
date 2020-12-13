@@ -1,7 +1,7 @@
 # Toudoum API
 
 <p align="center">
-  <img width="128" src="https://toudoum.srvz-webapp.he-arc.ch/public/toudoum.png" />
+  <img width="128" src="https://raw.githubusercontent.com/wiki/HE-Arc/toudoum/img/toudoum.png" />
 </p>
 
 Toudoum API is the backend of application Toudoum. It's a Web Service built with RESTful pattern.
