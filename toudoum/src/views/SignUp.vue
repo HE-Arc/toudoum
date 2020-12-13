@@ -56,6 +56,7 @@
                             label="Password confirmation"
                             v-model="passwordConfirmation"
                             class="my-5"
+                            @keydown.enter="signup"
                             @click:append="showPassord = !showPassord"
                         ></v-text-field>
                     </v-card-text>

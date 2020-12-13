@@ -8,10 +8,12 @@ import { State } from './State';
  * @interface Getters
  */
 export interface Getters {
+    avatar: string;
     userFullname: string;
     userEmail: string;
     userId: number;
     isLoggedIn: boolean;
+    avatarTimestamp: number;
     isDrawerExpanded: boolean;
 }
 
@@ -29,6 +31,28 @@ export const getters: GettersDefinition = {
      */
     userFullname(state: State): string {
         return `${state.user?.name} ${state.user?.firstname}`;
+    },
+
+    /**
+     * Get last timestamp for image (actualize directly)
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {State} state
+     * @return {*}  {number}
+     */
+    avatarTimestamp(state: State): number {
+        return state.avatarTimestamp;
+    },
+
+    /**
+     * Get avatar url
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {State} state
+     * @return {*}  {string} avatar url
+     */
+    avatar(state: State): string {
+        return state.avatar;
     },
 
     /**

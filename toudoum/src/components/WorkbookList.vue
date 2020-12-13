@@ -11,7 +11,7 @@
         >
             <v-text-field label="Title" v-model="workbookName"></v-text-field>
 
-            <v-checkbox v-model="shared" label="Shared workbook"></v-checkbox>
+            <v-checkbox v-if="groups.length > 0" v-model="shared" label="Shared workbook"></v-checkbox>
             <v-combobox
                 v-if="shared"
                 v-model="groupSelected"
@@ -26,11 +26,13 @@
                 <v-icon>mdi-plus</v-icon>
             </v-btn>
             <v-row class="mt-4">
+                <p v-if="workbooks.length == 0" class="px-3">You haven't got any workbook yet</p>
                 <v-col v-for="w in workbooks" :key="w.id" sm="12" md="6" lg="4" xl="3">
                     <Workbook
                         :title="w.name"
                         :id="w.id + ''"
                         :authorName="authorNames[w.user_id]"
+                        :authorAvatar="authorAvatars[w.user_id]"
                         :nbTasks="nbTasks[w.id] || 0"
                     />
                 </v-col>
@@ -59,11 +61,17 @@ export default Vue.extend({
         this.groups.forEach((g: IGroup) => {
             this.itemGroups.push(g.name);
         });
-        this.groupSelected = this.groups[0].name;
+
+        if(this.groups.length > 0) {
+            this.groupSelected = this.groups[0].name;
+        } else {
+            this.groupSelected = "";
+        }
 
         Api.get<IUser[]>("users").then((authors: IUser[]) => {
             authors.forEach((u: IUser) => {
                 this.authorNames[u.id] = `${u.name} ${u.firstname}`;
+                this.authorAvatars[u.id] = u.avatar;
             });
         });
         this.nbTasks = await Api.get("tasks?count_workbook_id=true");
@@ -77,9 +85,10 @@ export default Vue.extend({
             itemGroups: [] as string[],
             groups: [] as IGroup[],
             groupSelected: "",
-            shared: true,
+            shared: false,
             nbTasks: {} as any,
-            authorNames: {} as any
+            authorNames: {} as any,
+            authorAvatars: {} as any
         };
     },
     methods: {

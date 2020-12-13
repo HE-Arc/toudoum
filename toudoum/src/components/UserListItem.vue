@@ -2,7 +2,10 @@
 <template>
     <v-list-item>
         <v-list-item-avatar>
-            <v-img :alt="`${username} avatar`" :src="imgUrl"></v-img>
+            <Avatar
+                :imgUrl="imgUrl"
+                :fullname="username"
+            />
         </v-list-item-avatar>
 
         <v-list-item-content>
@@ -15,8 +18,13 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
+import Avatar from "./Avatar.vue";
 
 export default Vue.extend({
+    components: {
+        Avatar,
+    },
+
     props: {
         username: String,
         imgUrl: String

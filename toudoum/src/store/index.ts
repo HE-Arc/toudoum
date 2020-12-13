@@ -31,8 +31,10 @@ Vue.use(typedStorePlugin);
 // Instanciate the typed store
 const store = new Store<State>({
     state: {
+        avatar: "",
         user: null,
         isUserLogged: false,
+        avatarTimestamp: Date.now(),
         isDrawerExpanded: true
     },
     getters: getters,

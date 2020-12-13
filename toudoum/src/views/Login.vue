@@ -25,8 +25,10 @@
                             label="Password"
                             v-model="password"
                             class="my-5"
+                            @keydown.enter="login"
                             @click:append="showPassord = !showPassord"
                         ></v-text-field>
+                        <p v-if="errorPost.length > 0" class="red--text">{{ errorPost }}</p>
                     </v-card-text>
                     <v-btn
                         elevation="4"
@@ -74,12 +76,13 @@ export default Vue.extend({
                     email: this.email,
                     password: this.password
                 });
+                this.errorPost = "";
                 this.$router.push({ name: "Workbooks" });
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     console.log(e.data); // Errors with sent data
                 } else if (e instanceof ToudoumError) {
-                    console.log(e.message); // Error (401, 404 or 500,...)
+                    this.errorPost = e.message; // Error (401, 404 or 500,...)
                 }
             } finally {
                 this.loading = false;
@@ -89,6 +92,7 @@ export default Vue.extend({
     data() {
         return {
             loading: false,
+            errorPost: "",
             password: "",
             email: "",
             showPassord: false,

@@ -6,10 +6,7 @@
         <v-card-text>
             <v-list subheader class="background-primary">
                 <v-subheader>Author</v-subheader>
-                <UserListItem
-                    :username="author.name"
-                    :imgUrl="author.avatar"
-                />
+                <UserListItem :username="author.name" :imgUrl="author.avatar" />
             </v-list>
             <v-divider></v-divider>
             <v-list subheader class="background-primary">
@@ -34,23 +31,28 @@ import Api from "@/api/ApiRequester";
 import { IUser } from "../models/IUser";
 import { IMember } from "../models/IMember";
 
-
 export default Vue.extend({
     components: { UserListItem },
     props: {
         workbookId: Number,
         groupId: Number,
-        userId: Number,
+        userId: Number
     },
 
     async created() {
-        console.log(this.groupId);
         Api.get<IUser[]>("users?group_id=" + this.groupId.toString()).then((users: IUser[]) => {
             users.forEach((u: IUser) => {
-                this.members.push({ name: u.name+" "+u.firstname, avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light" });
 
-                if(u.id == this.userId){
-                    this.author = {name: u.name+" "+u.firstname, avatar: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light" }
+                this.members.push({
+                    name: u.name + " " + u.firstname,
+                    avatar:u.avatar
+                });
+
+                if (u.id == this.userId) {
+                    this.author = {
+                        name: u.name + " " + u.firstname,
+                        avatar:u.avatar
+                    };
                 }
             });
         });

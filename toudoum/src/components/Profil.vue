@@ -1,9 +1,8 @@
 <!-- TEMPLATE -->
 <template>
     <div>
-        <h3>Profil</h3>
         <v-row>
-            <v-col>
+            <v-col cols="12" md="6">
                 <v-form ref="form" v-model="valid" lazy-validation>
                     <v-text-field
                         v-model="user.firstname"
@@ -39,10 +38,10 @@
                         required
                     />
 
-                    <v-btn @click="validate" :disabled="!valid">Sauvegarder</v-btn>
+                    <v-btn @click="validate" :disabled="!valid">Save</v-btn>
                 </v-form>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="6">
                 <div>
                     <v-file-input
                         id="pick-image"
@@ -51,13 +50,12 @@
                         @change="onChange"
                     />
 
-                    <clipper-fixed ref="clipper" :src="url" />
+                    <clipper-fixed class="avatar-crop" ref="clipper" :src="url" />
 
-                    <v-btn @click="sendPicture">Envoyer</v-btn>
+                    <v-btn class="mt-3" @click="sendPicture">Send</v-btn>
                 </div>
             </v-col>
         </v-row>
-
     </div>
 </template>
 
@@ -65,7 +63,7 @@
 <!-- SCRIPT -->
 <script lang="ts">
 import Vue from "vue";
-import {VueConstructor} from "vue";
+import { VueConstructor } from "vue";
 import VueRx from "vue-rx";
 Vue.use(VueRx);
 import Api from "@/api/ApiRequester";
@@ -74,7 +72,6 @@ import { ToudoumError422 } from "@/api/ToudoumError422";
 import { ToudoumError } from "@/api/ToudoumError";
 import { FunctionalComponentOptions } from "vue/types/umd";
 import { clipperFixed } from "vuejs-clipper";
-
 
 interface Error422 {
     email?: Array<string>;
@@ -92,17 +89,17 @@ interface ErrorState422 {
 }
 
 export default (Vue as VueConstructor<
-  Vue & {
-    $refs: {
-        clipper: {
-            clip: Function;
+    Vue & {
+        $refs: {
+            clipper: {
+                clip: Function;
+            };
         };
-    };
-  }
+    }
 >).extend({
-  components: {
-    clipperFixed,
-  },
+    components: {
+        clipperFixed
+    },
 
     async created() {
         Api.get<IUser[]>("users?by_token=true").then((u: IUser[]) => {
@@ -114,13 +111,14 @@ export default (Vue as VueConstructor<
     },
     data() {
         return {
+            img_type: "",
             url: "",
             user: {
                 firstname: "",
                 name: "",
                 email: "",
                 password: "",
-                password_confirmation: "",
+                password_confirmation: ""
             } as IUser,
             labels: { submit: "Validate", cancel: "Dismiss" },
             valid: false,
@@ -131,14 +129,14 @@ export default (Vue as VueConstructor<
                     return pattern.test(value) || "Invalid e-mail.";
                 },
                 min: (v: string) => v.length >= 6 || "Minimum 6 characters",
-                password_conf: (value: string) =>
-                {
-                    const pass = (document.getElementById("pass") as HTMLInputElement)
-                    if(pass != null)
-                        {
-                        return value == pass.value || "Password and password confirmation must be identics"
-                        }
-                    else{
+                password_conf: (value: string) => {
+                    const pass = document.getElementById("pass") as HTMLInputElement;
+                    if (pass != null) {
+                        return (
+                            value == pass.value ||
+                            "Password and password confirmation must be identics"
+                        );
+                    } else {
                         return false;
                     }
                 }
@@ -155,7 +153,6 @@ export default (Vue as VueConstructor<
                     password: this.user.password,
                     password_confirmation: this.user.password_confirmation
                 });
-                this.succes();
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;
@@ -166,22 +163,20 @@ export default (Vue as VueConstructor<
         },
         onChange: function (e: any) {
             this.url = URL.createObjectURL(e);
+            this.img_type = e.name.split(".").pop();
         },
-        async sendPicture()  {
-            const camelCase = "lol.png";
-
+        async sendPicture() {
             try {
                 const canvas = this.$refs.clipper.clip();
-                 canvas.toBlob(async (blob: any) => {
-                    const image: File = new File([blob], "fileName.jpg", { type: "image/jpeg" });
-                     const formData: FormData = new FormData();
-                    formData.append("avatar", image, "lol.png");
+                canvas.toBlob(async (blob: any) => {
+                    const image: File = new File([blob], "fileName." + this.img_type, {
+                        type: "image/" + this.img_type
+                    });
+                    const formData: FormData = new FormData();
+                    formData.append("avatar", image, "avatar." + this.img_type);
                     await Api.formData("/avatar", formData);
-                    this.succes();
-                    window.location.reload()
-                }, "image/jpeg");
-
-               
+                    this.success();
+                }, "image/" + this.img_type);
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     const errors: Error422 = e.data.errors;
@@ -190,9 +185,16 @@ export default (Vue as VueConstructor<
                 }
             }
         },
-        succes: function () {
-            alert("Modification sauvegardé");
+        success: function () {
+            this.$typedStore.actions.updateUserAvatar();
         }
     }
 });
 </script>
+
+<style scoped>
+.avatar-crop {
+    max-width: 400px;
+    margin: 0 auto;
+}
+</style>

@@ -25,6 +25,7 @@
             </v-btn>
             <v-list-item-group>
                 <v-row class="d-flex">
+                    <p v-if="groups.length == 0" class="px-3">You are not part of any group.</p>
                     <v-col
                         cols="12"
                         sm="12"
@@ -37,7 +38,7 @@
                         <GroupItem
                             :title="group.name"
                             @click="clickOnGroup(group.id + '', group.name)"
-                            :numberUsers="14"
+                            :groupId="group.id"
                         ></GroupItem>
                     </v-col>
                 </v-row>

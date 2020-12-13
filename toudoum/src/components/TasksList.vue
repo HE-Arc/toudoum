@@ -16,6 +16,7 @@
 
         <v-list flat subheader three-line>
             <v-list-item-group>
+                <p v-if="!tasks || tasks.length == 0" class="px-3">{{emptyMessage}}</p>
                 <v-list-item v-for="task in tasks" v-bind:key="task.id">
                     <!--CHECKBOX-->
                     <v-list-item-action>
@@ -58,6 +59,10 @@ export default Vue.extend({
         readOnly: {
             type: Boolean,
             default: false
+        },
+        emptyMessage: {
+            type: String,
+            default: "You haven't got any task yet"
         },
         workbook_title: String,
         workbook_id: Number

@@ -6,11 +6,10 @@
         <v-card-actions>
             <v-list-item class="grow">
                 <v-list-item-avatar color="grey darken-3">
-                    <v-img
-                        class="elevation-6"
-                        alt=""
-                        src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                    ></v-img>
+                    <Avatar
+                    :imgUrl="authorAvatar"
+                    :fullname="authorName"
+                    />
                 </v-list-item-avatar>
 
                 <v-list-item-content class="all-width">
@@ -31,12 +30,18 @@
 <script lang="ts">
 import Vue from "vue";
 import router from "../router";
+import Avatar from "./Avatar.vue";
 
 export default Vue.extend({
+    components: {
+        Avatar,
+    },
+
     props: {
         title: String,
         id: String,
         authorName: String,
+        authorAvatar: String,
         nbTasks: Number
     },
     data() {
