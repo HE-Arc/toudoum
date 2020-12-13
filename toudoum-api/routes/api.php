@@ -66,9 +66,6 @@ Route::group(['middleware' => 'auth:api'], function () {
      * Group routes
      */
     Route::apiResource('groups', GroupController::class);
-
-
-    
 });
 
 

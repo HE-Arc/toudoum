@@ -23,9 +23,8 @@ class StoreGroupRequest extends ApiRequest
      */
     public function messages()
     {
-        return [
-            'name.required'     => 'A name for the group is required.'
-        ];
+        $msg = __('error_message.group_name');
+        return $msg;
     }
 
     /**

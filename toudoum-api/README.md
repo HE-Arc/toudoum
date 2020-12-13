@@ -1,61 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Toudoum API
 
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img width="128" src="https://toudoum.srvz-webapp.he-arc.ch/public/toudoum.png" />
 </p>
 
-## About Laravel
+Toudoum API is the backend of application Toudoum. It's a Web Service built with RESTful pattern.
+The responses are written in JSON.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Dependencies
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Toudoum API uses theses libraries :
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Laravel
+- Laravel Passport
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Toudoum API is built with Laravel 8. Some dependencies are installed :
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Laravel Passport (OAuth 2.0)
 
-## Laravel Sponsors
+## Project setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Here appears all commands that help developer to improve Toudoum with app installation ! :fire:
 
-### Premium Partners
+### Laravel Passport installation
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+```sh
+composer require laravel/passport
+php artisan passport:install
+php artisan generate:key
+```
 
-## Contributing
+### Run server
+```sh
+php artisan serve
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Run migrations
+```sh
+php artisan migrate
 
-## Code of Conduct
+# Remove and create a completely new database
+php artisan migrate:fresh
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Add link to public folder
 
-## Security Vulnerabilities
+```.sh
+php artisan storage:link
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Deployment
 
-## License
+Things to be done to deploy are described in the [GitHub Wiki](https://github.com/HE-Arc/toudoum/wiki/D%C3%A9ploiement).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Auteurs
+
+<table>
+   <tr>
+      <td>
+         <a href="https://github.com/julienFerreira"><img width=140px src="https://avatars0.githubusercontent.com/u/43986551?s=400&v=4"><br>
+         Dos Santos Ferreira Julien</a>
+      </td>
+      <td>
+         <a href="https://github.com/fridezlucas"><img width=140px src="https://secure.gravatar.com/avatar/72c1469bf815bd4e0a858341571d5111?s=800&d=identicon"><br>
+         Fridez Lucas</a>
+      </td>
+      <td>
+         <a href="https://github.com/chichha"><img width=140px src="https://avatars3.githubusercontent.com/u/44049821?s=460&v=4"><br>
+         Goffinet Edouard</a>
+      </td>
+   </tr>
+</table>

@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Task\StoreTaskRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\Group;
 use App\Models\Workbook;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +54,7 @@ class TaskController extends Controller
             }
         } else if ($idFilter) {
             foreach ($tasks as $task) {
-                if ($task['id'] == $request->get("id")) {
+                if ($task['id'] === $request->get("id")) {
                     $taskToKeep[] = $task;
                 }
             }
@@ -87,7 +86,6 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->name = $request->input(("name"));
-        $shared = false;
 
         // Description
         if ($request->get("description")) {
@@ -102,7 +100,6 @@ class TaskController extends Controller
         // Workbook ID
         if ($request->get("workbook_id")) {
             $task->workbook_id = $request->input("workbook_id");
-            $shared = true;
         }
 
         // End_date
@@ -112,14 +109,17 @@ class TaskController extends Controller
 
         $task->save();
 
-        $group_id = Workbook::find($task->workbook_id)->group_id;
-        if ($group_id != null) {
+        $group_id = $task->workbook->group_id;
+        if ($group_id !== null) {
             $usersInGroup = Group::with("users")->find($group_id)->users;
 
             $userIDs = [];
-            foreach ($usersInGroup as $user) {
+
+            foreach($usersInGroup as $user)
+            {
                 $userIDs[$user->id] = ['checked' => false];
-            }
+            };
+
             $task->users()->attach($userIDs);
         } else {
             $task->users()->attach(Auth::user()->id, ['checked' => false]);
@@ -150,10 +150,11 @@ class TaskController extends Controller
         $tasks = Auth::user()->tasks;
         $task = null;
         foreach ($tasks as $t) {
-            if ($t->id == $id) {
+            if ($t->id === $id) {
                 $task = $t;
             }
         }
+        
         if ($task != null) {
             print($task);
             //name

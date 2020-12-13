@@ -24,27 +24,27 @@ class UserController extends Controller
         $filters = [];
 
         // Name
-        if($request->has("name")) {
+        if ($request->has("name")) {
             $filters[] = ["name", "like", "%" . $request->get("name") . "%"];
         }
 
         // Firstname
-        if($request->has("firstname")) {
+        if ($request->has("firstname")) {
             $filters[] = ["firstname", "like", "%" . $request->get("firstname") . "%"];
         }
 
         // Email
-        if($request->has("email")) {
+        if ($request->has("email")) {
             $filters[] = ["email", "like", "%" . $request->get("email") . "%"];
         }
 
         // Token
-        if($request->has("by_token")) {
-            $filters[] = ["id", "=",Auth::user()->id];
+        if ($request->has("by_token")) {
+            $filters[] = ["id", "=", Auth::user()->id];
         }
 
         // Group ID
-        if($request->has("group_id")) {
+        if ($request->has("group_id")) {
             return Group::with("users")->find($request->get("group_id"))->users;
         }
 
@@ -66,7 +66,7 @@ class UserController extends Controller
             'email_verified_at' => now(),
             'password' => Hash::make($request['password']),
             'remember_token' => Str::random(10),
-            ]);
+        ]);
     }
 
     /**
