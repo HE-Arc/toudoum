@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Group;
 use App\Models\Workbook;
+use Illuminate\Support\Facades\DB;
 
 // Model
 use App\Models\Task;
@@ -32,6 +33,17 @@ class TaskController extends Controller
             $workbookidFilter = true;
         }
 
+        // count tasks in workbook
+        if ($request->has("count_workbook_id")) {
+
+            $results =  Task::select('workbook_id', DB::raw('COUNT(id) as nbTasks'))->groupBy('workbook_id')->get();
+            $goodTable = [];
+            foreach ($results as $result) {
+                $goodTable[$result['workbook_id']] = $result['nbTasks'];
+            }
+            return $goodTable;
+        }
+
         $tasks = Auth::user()->tasks;
         $taskToKeep = [];
         if ($workbookidFilter) {
@@ -47,7 +59,18 @@ class TaskController extends Controller
                 }
             }
         } else {
-            $taskToKeep = $tasks;
+            foreach ($tasks as $task) {
+                $diffDay = ((strtotime($task['end_date']) - strtotime(date("Y-m-d"))) / (60 * 60 * 24));
+                if($task->pivot->checked != "1") {
+                    if ($task['end_date'] == date("Y-m-d")) {
+                        $taskToKeep['today'][] = $task;
+                    } else if ($diffDay <= 7 && $diffDay > 1) {
+                        $taskToKeep['week'][] = $task;
+                    } else {
+                        $taskToKeep['rest'][] = $task;
+                    }
+                }
+            }
         }
 
         return $taskToKeep;

@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height fluid>
+    <v-container fill-height fluid class="pa-0 background-gradient">
         <v-row align="center" justify="center">
             <v-col align="center">
                 <v-card class="mx-auto" max-width="450">
@@ -56,6 +56,7 @@
                             label="Password confirmation"
                             v-model="passwordConfirmation"
                             class="my-5"
+                            @keydown.enter="signup"
                             @click:append="showPassord = !showPassord"
                         ></v-text-field>
                     </v-card-text>
@@ -70,6 +71,16 @@
                         >Sign Up</v-btn
                     >
                     <v-spacer></v-spacer>
+                    <v-flex>
+                        <v-layout column align-center>
+                            <v-switch
+                                v-model="$vuetify.theme.dark"
+                                inset
+                                label="Dark Theme"
+                                persistent-hint
+                            ></v-switch>
+                        </v-layout>
+                    </v-flex>
                 </v-card>
             </v-col>
         </v-row>

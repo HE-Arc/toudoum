@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import VueRouter, { NavigationGuardNext, Route, RouteConfig, RouteRecord } from 'vue-router'
 import SignUp from '../views/SignUp.vue'
-import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Account from '../views/Account.vue'
 import Logout from '../views/Logout.vue'
 import store from '@/store'
 import Workbooks from '@/views/Workbooks.vue'
 import Tasks from '@/views/Tasks.vue'
+import AllTasks from '@/views/AllTasks.vue'
 import TaskDetails from '@/views/TaskDetails.vue'
 import Api from "@/api/ApiRequester";
 import { IUser } from '@/models/IUser'
+import VueMasonry from 'vue-masonry-css';
 
+// Use Vue plugins
+Vue.use(VueMasonry);
 Vue.use(VueRouter)
 
 /**
@@ -19,7 +22,7 @@ Vue.use(VueRouter)
  */
 const routes: Array<RouteConfig> = [
     {
-        path: '/Login', 
+        path: '/Login',
         name: 'Login',
         component: Login,
         meta: {
@@ -35,25 +38,9 @@ const routes: Array<RouteConfig> = [
         }
     },
     {
-        path: '/Account',
-        name: 'Account',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Account.vue'),
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
         path: '/Logout',
         name: 'Logout',
         component: Logout,
-        meta: {
-            onlyLogged: true
-        }
-    },
-    {
-        path: '/About',
-        name: 'About',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
         meta: {
             onlyLogged: true
         }
@@ -74,7 +61,25 @@ const routes: Array<RouteConfig> = [
         meta: {
             onlyLogged: true
         },
-        
+
+    },
+    {
+        path: '/Tasks',
+        name: 'AllTasks',
+        props: true,
+        component: AllTasks,
+        meta: {
+            onlyLogged: true
+        },
+
+    },
+    {
+        path: '/Account',
+        name: 'Account',
+        component: Account,
+        meta: {
+            onlyLogged: true
+        }
     },
     {
         path: '/Taskdetail/:task_id',
@@ -94,7 +99,7 @@ const routes: Array<RouteConfig> = [
  * @return {*}  {boolean} true if session stored in sessionStorage; false otherwise
  */
 function loadSessionFromStorage(): boolean {
-    if(window.sessionStorage.getItem("user") != null) {
+    if (window.sessionStorage.getItem("user") != null) {
         const user: IUser = JSON.parse(window.sessionStorage.getItem("user") ?? "") as IUser;
         store.actions.logUser(user);
         Api.setToken(window.sessionStorage.getItem("token") ?? "");
@@ -111,7 +116,11 @@ function loadSessionFromStorage(): boolean {
  * @return {*}  {boolean} treue if user is logged in; false otherwise
  */
 function isLogged(): boolean {
-    return store.getters.isLoggedIn || loadSessionFromStorage();
+    const isConnected = store.getters.isLoggedIn || loadSessionFromStorage();
+    if (isConnected) {
+        store.actions.updateUserAvatar();
+    }
+    return isConnected;
 }
 
 

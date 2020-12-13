@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height fluid>
+    <v-container fill-height fluid class="pa-0 background-gradient">
         <v-row align="center" justify="center">
             <v-col align="center">
                 <v-card class="mx-auto" max-width="450">
@@ -25,8 +25,10 @@
                             label="Password"
                             v-model="password"
                             class="my-5"
+                            @keydown.enter="login"
                             @click:append="showPassord = !showPassord"
                         ></v-text-field>
+                        <p v-if="errorPost.length > 0" class="red--text">{{ errorPost }}</p>
                     </v-card-text>
                     <v-btn
                         elevation="4"
@@ -40,6 +42,18 @@
                     >
                     <v-spacer></v-spacer>
                     <v-btn to="/SignUp" text color="accent  mb-5 mt-0"> Create an account </v-btn>
+                    <v-spacer></v-spacer>
+
+                    <v-flex>
+                        <v-layout column align-center>
+                            <v-switch
+                                v-model="$vuetify.theme.dark"
+                                inset
+                                label="Dark Theme"
+                                persistent-hint
+                            ></v-switch>
+                        </v-layout>
+                    </v-flex>
                 </v-card>
             </v-col>
         </v-row>
@@ -62,12 +76,13 @@ export default Vue.extend({
                     email: this.email,
                     password: this.password
                 });
+                this.errorPost = "";
                 this.$router.push({ name: "Workbooks" });
             } catch (e) {
                 if (e instanceof ToudoumError422) {
                     console.log(e.data); // Errors with sent data
                 } else if (e instanceof ToudoumError) {
-                    console.log(e.message); // Error (401, 404 or 500,...)
+                    this.errorPost = e.message; // Error (401, 404 or 500,...)
                 }
             } finally {
                 this.loading = false;
@@ -77,6 +92,7 @@ export default Vue.extend({
     data() {
         return {
             loading: false,
+            errorPost: "",
             password: "",
             email: "",
             showPassord: false,

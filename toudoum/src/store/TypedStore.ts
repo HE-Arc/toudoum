@@ -4,7 +4,14 @@ import { Getters } from "./Getter";
 import { MyCommit } from "./Mutations";
 import { State } from "./State";
 
-// Define typed Store
+/**
+ * Awesome Typed Store  
+ *
+ * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+ * @export
+ * @interface TypedStore
+ * @extends {Store<State>}
+ */
 export interface TypedStore extends Store<State> {
     getters: Getters;
     commit: MyCommit;

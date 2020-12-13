@@ -1,13 +1,15 @@
 
 <template>
     <v-container class="marginTop">
+
         <h1>Profile</h1>
-        <v-card elevation="4" class="pa-6">
+        <v-card elevation="4" class="pa-3">
             <div class="account">
-                <Profil :user="user" />
+                <Profil/>
             </div>
         </v-card>
-        <v-card elevation="4" class="pa-6 mt-12">
+        <h2 class="h5 mt-4">My groups</h2>
+        <v-card elevation="4" class="pa-3 mt-4">
             <Group/>
         </v-card>
     </v-container>
@@ -35,9 +37,3 @@ export default Vue.extend({
     }
 });
 </script>
-
-<style>
-.marginTop {
-    margin-top: 72px;
-}
-</style>

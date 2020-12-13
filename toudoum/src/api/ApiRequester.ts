@@ -18,6 +18,7 @@ class ApiRequester {
     private static singleton: ApiRequester;
     private instanceAxios: AxiosInstance;
     private token: string | null;
+    private URL: string = "http://localhost:8000/";
 
     /**
      * Creates an instance of ApiRequester.
@@ -26,12 +27,22 @@ class ApiRequester {
     private constructor() {
         this.token = null;
         this.instanceAxios = Axios.create({
-            baseURL: "http://localhost:8000/api/",
+            baseURL: `${this.URL}api/`,
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
             },
         });
+    }
+
+    /**
+     * Get Url
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @return {*} 
+     */
+    public getUrl() {
+        return this.URL;
     }
 
     /**
@@ -70,6 +81,7 @@ class ApiRequester {
             store.actions.logUser(response.data.data.user);
             window.sessionStorage.setItem("user", JSON.stringify(response.data.data.user));
             window.sessionStorage.setItem("token", response.data.data.access_token);
+            store.actions.updateUserAvatar();
             return response.data as IToudoumResponse;
         } catch (error) {
             const data = error.response.data;
@@ -162,8 +174,9 @@ class ApiRequester {
         const requestConfig: AxiosRequestConfig = {
             method: method,
             url: url,
-            headers: { Authorization: `Bearer ${this.token}` }
+            headers: { Authorization: `Bearer ${this.token}`, }
         };
+
 
         if (body) {
             requestConfig.data = body;
@@ -181,6 +194,8 @@ class ApiRequester {
             }
         }
     }
+
+    
 
     /**
      * POST data to API
@@ -229,6 +244,33 @@ class ApiRequester {
         return this.request("PATCH", url, body);
     }
 
+    public async formData(url: string, body: any): Promise<IToudoumResponse> {
+        const requestConfig: AxiosRequestConfig = {
+            method: "POST",
+            url: url,
+            headers: { 
+                Authorization: `Bearer ${this.token}`, 
+                "Content-Type" : "multipart/form-data"
+            }
+        };
+
+
+        if (body) {
+            requestConfig.data = body;
+        }
+
+        try {
+            const response: AxiosResponse = await this.instanceAxios(requestConfig);
+            return response.data as IToudoumResponse;
+        } catch (error) {
+            const data = error.response.data;
+            if (data.data == undefined) {
+                throw new ToudoumError(data.code, data.message, data.status);
+            } else {
+                throw new ToudoumError422(data.code, data.message, data.status, data.data);
+            }
+        }
+    }
 
 }
 

@@ -1,17 +1,57 @@
 import { IUser } from '@/models/IUser';
 import { ActionContext, Store } from 'vuex';
 import { State } from './State';
+import Api from "@/api/ApiRequester";
 import { TypedStore } from "./TypedStore"
 
+/**
+ * Define all possible actions
+ *
+ * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+ * @export
+ * @class ActionFacade
+ */
 export class ActionFacade {
+
+    /**
+     * Creates an instance of ActionFacade.
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {TypedStore} store
+     */
     constructor(private readonly store: TypedStore) {
     }
+
+    /**
+     * logUser action
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @param {IUser} user
+     * @return {*} new value
+     */
     logUser(user: IUser) {
         return this.store.dispatch("logUser", user);
     }
+
+    /**
+     * toggle drawer state
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @return {*} new value
+     */
     toggleDrawer() {
         return this.store.dispatch("toggleDrawer");
     }
+
+    updateUserAvatar() {
+        return this.store.dispatch("updateUserAvatar");
+    }
+
+    /**
+     * Log out action
+     *
+     * @author Lucas Fridez <lucas.fridez@he-arc.ch>
+     * @return {*} 
+     */
     logout() {
         return this.store.dispatch("logout");
     }
@@ -26,5 +66,14 @@ type ActionsDefinition = {
 export const actions: ActionsDefinition = {
     logUser: (injectee: ActionContext<State, State>, user: IUser) => injectee.commit("LOGIN", user),
     toggleDrawer: (injectee: ActionContext<State, State>) => injectee.commit("DRAWER_TOGGLE"),
+    updateUserAvatar: (injectee: ActionContext<State, State>) => {
+        Api.get<string>("avatar").then((response: string) => {
+            if(response == "") {
+                injectee.commit("UPDATE_AVATAR", null);
+            } else {
+                injectee.commit("UPDATE_AVATAR", `${response}?time=${Date.now()}`);
+            }
+        });
+    },
     logout: (injectee: ActionContext<State, State>) => injectee.commit("LOGOUT")
 };

@@ -8,7 +8,9 @@ import { IUser } from "@/models/IUser";
  * @interface State
  */
 export interface State {
+    avatar: string;
     isUserLogged: boolean;
     user: IUser | null;
     isDrawerExpanded: boolean;
+    avatarTimestamp: number;
 }
