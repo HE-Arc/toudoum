@@ -28,15 +28,7 @@ class UpdateUserRequest extends ApiRequest
      */
     public function messages()
     {
-        // TODO :
-        // return error_message.updateUserError;
-        return [
-            'name.required'     => 'A name for the user is required.',
-            'firstname.required'     => 'A firstname for the user is required.',
-            'email.required'     => 'A email for the user is required.',
-            'password.required'     => 'A password for the user is required.',
-            'password_confirmation.required'     => 'A password_confirmation for the user is required.'
-        ];
+        return __('error_message.updateUserError');
     }
 
     /**
@@ -47,6 +39,8 @@ class UpdateUserRequest extends ApiRequest
     public function rules()
     {
         $user = User::find(Auth::user()->id);
+        
+        # Password different
         if($this->get("password") != $this->get('password_confirmation'))
         {
             throw new HttpResponseException(
@@ -61,19 +55,23 @@ class UpdateUserRequest extends ApiRequest
                 )
             );
         }
+
+        # Classic rules without email
         $rules = [
-            'name' => 'string',
-            'firstname' => 'string',
+            'name' => 'string|required',
+            'firstname' => 'string|required',
             'password' => 'required|string|min:6',
             'password_confirmation' => 'required|string|min:6',
         ];
+
+        # If new email -> must be unique in the database
         if($user->email == $this->get('email'))
         {
-            $rules['email'] = 'string|email|max:255';
+            $rules['email'] = 'string|required|email|max:255';
         }
         else
         {
-            $rules['email'] = 'unique:users|string|email|max:255';
+            $rules['email'] = 'unique:users|required|string|email|max:255';
         }
         return $rules;
     }

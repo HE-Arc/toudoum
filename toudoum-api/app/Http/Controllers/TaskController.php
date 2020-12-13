@@ -35,6 +35,11 @@ class TaskController extends Controller
         $tasks = Auth::user()->tasks;
         $taskToKeep = [];
         if ($workbookidFilter) {
+            $taskToKeep = $tasks->filter(function($task, $key, $request)
+            {
+                return $task->workbook_id === $request->get("workbook_id");
+            });
+
             foreach ($tasks as $task) {
                 if ($task->workbook_id == $request->get("workbook_id")) {
                     $taskToKeep[] = $task;
@@ -92,10 +97,10 @@ class TaskController extends Controller
 
             $userIDs = [];
 
-            collect($usersInGroup)->map(function ($item, $key)
+            foreach($usersInGroup as $user)
             {
-                $userIDs[$item] = ['checked' => false];
-            });
+                $userIDs[$user->id] = ['checked' => false];
+            };
 
             $task->users()->attach($userIDs);
         } else {
@@ -158,8 +163,7 @@ class TaskController extends Controller
                 $task->pivot->checked = !$task->pivot->checked;
             }
 
-            // ToDo : à tester
-            //$task->update->all(); 
+        
             $task->save();
             $task->pivot->save();
         }
