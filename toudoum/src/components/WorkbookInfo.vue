@@ -43,6 +43,7 @@ import Api from "@/api/ApiRequester";
 import { IUser } from "../models/IUser";
 import { IMember } from "../models/IMember";
 import Modal from "@/components/Modal.vue";
+import router from '../router';
 
 export default Vue.extend({
     components: { UserListItem, Modal },
@@ -82,7 +83,7 @@ export default Vue.extend({
         save: async function () {
             await Api.delete("workbooks/"+this.workbookId);
             this.isModalOpen = false;
-            this.$emit("reload");
+            router.go(-1)
         }
     }
 });
