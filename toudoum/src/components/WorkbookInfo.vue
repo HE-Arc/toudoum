@@ -1,6 +1,15 @@
 <!-- TEMPLATE -->
 <template>
     <v-card class="primary" elevation="4">
+            <Modal
+            title="Delete the workbook ?"
+            :edit="false"
+            :onButtonClick="save"
+            :onCloseClick="() => (this.isModalOpen = false)"
+            :opened="isModalOpen"
+            :del="true"
+            >
+            </Modal>
         <v-card-title class="white--text">Workbook information</v-card-title>
 
         <v-card-text>
@@ -19,6 +28,9 @@
                 />
             </v-list>
         </v-card-text>
+        <v-btn color="primary" dark absolute top right fab @click="openModal">
+            <v-icon>mdi-close</v-icon>
+        </v-btn>
     </v-card>
 </template>
 
@@ -30,9 +42,10 @@ import UserListItem from "@/components/UserListItem.vue";
 import Api from "@/api/ApiRequester";
 import { IUser } from "../models/IUser";
 import { IMember } from "../models/IMember";
+import Modal from "@/components/Modal.vue";
 
 export default Vue.extend({
-    components: { UserListItem },
+    components: { UserListItem, Modal },
     props: {
         workbookId: Number,
         groupId: Number,
@@ -59,7 +72,18 @@ export default Vue.extend({
     },
     data: () => ({
         members: [] as IMember[],
-        author: {} as IMember
-    })
+        author: {} as IMember,
+        isModalOpen: false
+    }),
+    methods:{
+        openModal() {
+            this.isModalOpen = true;
+        },
+        save: async function () {
+            await Api.delete("workbooks/"+this.workbookId);
+            this.isModalOpen = false;
+            this.$emit("reload");
+        }
+    }
 });
 </script>

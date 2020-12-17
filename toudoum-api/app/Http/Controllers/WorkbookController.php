@@ -94,6 +94,13 @@ class WorkbookController extends Controller
     public function destroy($id)
     {
         $workbook = Workbook::findOrFail($id);
+        $tasks = Task::where('workbook_id', $id);
+        foreach($tasks->get() as $task)
+        {
+            $task->users()->detach();
+            $task->delete();
+        }
+
         $workbook->delete();
     }
 }

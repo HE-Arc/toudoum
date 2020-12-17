@@ -14,7 +14,7 @@
                         Dismiss
                     </v-btn>
                     <v-btn color="primary" v-on:click="onButtonClick">{{
-                        edit ? "Edit" : "Save"
+                        edit ? "Edit" : del ? "Delete" : "Save"
                     }}</v-btn>
                 </v-card-actions>
             </v-card>
@@ -33,7 +33,10 @@ export default Vue.extend({
         title: String,
         edit: Boolean,
         onButtonClick: Function,
-        onCloseClick: Function
+        onCloseClick: Function,
+        del: {
+            default: false
+        },
     }
 });
 </script>
